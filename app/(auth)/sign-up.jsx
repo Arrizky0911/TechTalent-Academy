@@ -12,7 +12,7 @@ import ButtonTemplate from "../../components/ButtonTemplate";
 import { createUser } from "../../lib/appwriteConfig";
 import { router } from "expo-router";
 
-const SignIn = () => {
+const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     username: "",
@@ -73,4 +73,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
