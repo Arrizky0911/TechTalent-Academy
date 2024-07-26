@@ -6,7 +6,7 @@ const TextFields = ({ placeholder, type, otherClass, handleChange, value }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <View className={`w-full relative flex-row items-center ${otherClass}`}>
-      <View className="border-gray border-[1px] w-full h-12 rounded-xl flex-row flex-1 items-center px-4">
+      <View className="border-gray border-[1px] w-full h-10 rounded-xl flex-row flex-1 items-center px-4">
         <TextInput
           value={value}
           onChangeText={handleChange}
