@@ -4,11 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#FBFAF7",
-        secondary: "#222831",
+        frame: "#151515",
         gray: {
-          DEFAULT: "#6B7280",
+          DEFAULT: "#1E1E1E",
         },
+        "button-main": "#2A86FF",
       },
       fontFamily: {
         geisThin: ["Geist-thin", "sans-serif"],

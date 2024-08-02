@@ -1,11 +1,18 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
-const ButtonTemplate = ({ containerStyles, textStyles, handlePress, text }) => {
+const ButtonTemplate = ({
+  containerStyles,
+  textStyles,
+  handlePress,
+  text,
+  disable,
+}) => {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      className={`bg-secondary items-center py-2 rounded ${containerStyles}`}
+      className={`bg-button-main items-center py-2 rounded ${containerStyles}`}
+      disabled={disable}
     >
       <Text
         className={`font-geistSemiBold text-white text-[16px] ${textStyles}`}

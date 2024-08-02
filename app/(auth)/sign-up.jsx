@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  ImageBackground,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,6 +12,7 @@ import TextFields from "../../components/TextFields";
 import ButtonTemplate from "../../components/ButtonTemplate";
 import { createUser } from "../../lib/appwriteConfig";
 import { router } from "expo-router";
+import { images } from "../../constants";
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,6 +33,7 @@ const SignUp = () => {
     try {
       const res = await createUser(form.username, form.email, form.password);
       Alert.alert("Success", res.username);
+      router.replace("/home");
     } catch (error) {
       Alert.alert("Error", error.message);
     }
@@ -39,19 +42,24 @@ const SignUp = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView className="h-full bg-primary relative flex-col">
-        <View className="absolute bottom-0 left-0 right-0 px-7 py-10 border-gray border-[1px] rounded-tl-xl rounded-tr-xl drop-shadow-xl flex-col items-center bg-primary">
+      <SafeAreaView className="h-full relative flex-col">
+        <ImageBackground
+          source={images.authBg}
+          className="min-h-[98vh] w-full absolute top-0 bottom-0 bg-black"
+        />
+        <View className="absolute bottom-0 left-0 right-0 px-7 py-10 border-[1px] rounded-tl-xl rounded-tr-xl drop-shadow-xl flex-col items-center bg-frame">
           <View className="flex-row w-full items-center mb-10 justify-center">
             <ButtonTemplate
               text="Sign Up"
               textStyles=""
-              containerStyles="bg-secondary border-[1px] border-gray px-10 mr-10"
+              containerStyles="bg-gray px-10 mr-10"
+              disable={true}
             />
             <ButtonTemplate
               handlePress={() => router.push("/sign-in")}
               text="Sign In"
-              textStyles="text-secondary"
-              containerStyles="bg-primary border-[1px] border-gray px-10"
+              textStyles=""
+              containerStyles="bg-button-main px-10"
             />
           </View>
           <TextFields
