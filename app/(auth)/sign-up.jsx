@@ -13,6 +13,7 @@ import ButtonTemplate from "../../components/ButtonTemplate";
 import { createUser } from "../../lib/appwriteConfig";
 import { router } from "expo-router";
 import { images } from "../../constants";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
