@@ -1,18 +1,31 @@
-import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  FlatList,
+} from "react-native";
 import React from "react";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import Loading from "../../components/Loading";
 import icons from "../../constants/icons";
+import { getAllCourses } from "../../lib/appwriteConfig";
+import useFetchData from "../../lib/useFetchData";
+import HomeCourse from "../../components/HomeCourse";
 
 const Home = () => {
   const { user, setIsLoading, isLoading } = useGlobalContext();
+  const { data: courses, refetch } = useFetchData(getAllCourses);
+
   if (!user) {
     return <Loading />;
   }
+
   return (
     <SafeAreaView className="bg-frame h-full relative">
-      <View className="h-[200px] w-full bg-black rounded-b-[20px] absolute top-0 flex-row justify-between items-center px-10">
-        <View className="flex-row space-x-3">
+      <View className="h-[170px] w-full bg-black rounded-b-[20px] absolute top-0 flex-row justify-between px-10 z-50">
+        <View className="flex-row space-x-3 items-center">
           <View>
             <Image
               source={{ uri: user.avatar }}
@@ -21,7 +34,7 @@ const Home = () => {
             />
           </View>
           <View className="justify-center">
-            <Text className="text-white/70 text-[12px]">Hello</Text>
+            <Text className="text-white/70 text-[12px]">Hello👋</Text>
             <Text className="text-white capitalize font-geistMedium text-md">
               {user.username}
             </Text>
@@ -42,7 +55,9 @@ const Home = () => {
           />
         </View>
       </View>
-      <ScrollView></ScrollView>
+      <ScrollView className="relative top-[120px] py-8">
+        <HomeCourse data={courses} title={"all courses"} />
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -76,6 +76,7 @@ const SignIn = () => {
             placeholder="Email"
             type="email"
             otherClass="mb-5"
+            editable={true}
           />
           <TextFields
             value={form.password}
@@ -83,6 +84,7 @@ const SignIn = () => {
             placeholder="Password"
             type="password"
             otherClass="mb-5"
+            editable={true}
           />
 
           <ButtonTemplate

@@ -7,7 +7,7 @@ const TabIcon = ({ title, color, source }) => {
   return (
     <View className="justify-center items-center gap-1 mx-2">
       <Image
-        className="w-[28px] h-[28px]"
+        className="w-[29px] h-[29px]"
         resizeMode="contain"
         source={source}
         tintColor={color}
@@ -31,13 +31,14 @@ const TabLayout = () => {
           borderTopWidth: 0,
           borderTopRightRadius: 20,
           borderTopLeftRadius: 20,
-          height: 80,
+          height: 95,
           position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
           width: "100%",
           paddingTop: 15,
+          zIndex: 100,
         },
       }}
     >
