@@ -2,6 +2,7 @@ import React from "react";
 import { allFormat, icons, images } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import TextFields from "../../components/TextFields";
+import ButtonTemplate from "../../components/ButtonTemplate";
 import {
   View,
   Text,
@@ -26,7 +27,7 @@ const Profile = () => {
           source={images.authBg}
           className="min-h-[98vh] w-full absolute top-0 bottom-0 bg-black"
         />
-        <View className="bg-frame absolute bottom-0 w-full h-[660px] rounded-t-3xl border-[1px] border-gray items-center">
+        <View className="bg-frame absolute bottom-0 w-full h-[680px] rounded-t-3xl border-[1px] border-gray items-center">
           <View className="bg-[#2c2c2c] w-[365px] h-[85px] rounded-3xl absolute -top-10 px-5 flex-row items-center space-x-4">
             <View className="w-[50px] h-[50px] rounded-full overflow-hidden ml-1">
               <Image
@@ -40,7 +41,9 @@ const Profile = () => {
                 {user.username}
               </Text>
               {user.profession ? (
-                <Text className="text-[#6E6E6E]">{user.profession}</Text>
+                <Text className="text-[#6E6E6E] font-geistMedium">
+                  {user.profession}
+                </Text>
               ) : (
                 <View className="flex-row items-center gap-x-1">
                   <Image
@@ -49,7 +52,7 @@ const Profile = () => {
                     className="w-[18px] h-[18px]"
                     tintColor="red"
                   />
-                  <Text className="text-white/80">
+                  <Text className="text-white/80 font-geistRegular">
                     You haven't input your profession
                   </Text>
                 </View>
@@ -58,12 +61,14 @@ const Profile = () => {
           </View>
           {/* FORMS */}
 
-          <View className="mt-[60px] px-6 w-full space-y-5">
-            <Text className="text-center text-white">
+          <View className="mt-[60px] px-6 w-full">
+            <Text className="text-center text-white font-geistMedium mb-10">
               Created on {formatDate(user.$createdAt)}
             </Text>
-            <View className="w-full">
-              <Text className="text-[#f0efef] mb-2">Username</Text>
+            <View className="w-full mb-5">
+              <Text className="text-[#f0efef] mb-2 font-geistRegular">
+                Username
+              </Text>
               <TextFields
                 placeholder="Username"
                 value={user.username}
@@ -72,8 +77,10 @@ const Profile = () => {
                 editable={true}
               />
             </View>
-            <View className="w-full">
-              <Text className="text-[#f0efef] mb-2">Profession</Text>
+            <View className="w-full mb-5">
+              <Text className="text-[#f0efef] mb-2 font-geistRegular">
+                Profession
+              </Text>
               <TextFields
                 placeholder="Profession"
                 value={user.profession}
@@ -82,8 +89,10 @@ const Profile = () => {
                 editable={true}
               />
             </View>
-            <View className="w-full">
-              <Text className="text-[#f0efef] mb-2">Email</Text>
+            <View className="w-full mb-5">
+              <Text className="text-[#f0efef] mb-2 font-geistRegular">
+                Email
+              </Text>
               <TextFields
                 placeholder="Username"
                 value={user.email}
@@ -92,6 +101,14 @@ const Profile = () => {
                 editable={false}
               />
             </View>
+            <Text className="text-center text-white font-geistMedium mt-5">
+              Last modified on {formatDate(user.$updatedAt)}
+            </Text>
+            <ButtonTemplate text="Update" containerStyles="mt-4 py-3.5" />
+            <ButtonTemplate
+              text="Sign Out"
+              containerStyles="mt-3 py-3.5 bg-gray"
+            />
           </View>
         </View>
       </SafeAreaView>
