@@ -33,7 +33,7 @@ const courseResponse = () => {
           data={categories}
           renderItem={({ item }) => (
             <TouchableOpacity className='py-[6.5px] px-7 mb-4 mr-2 rounded-xl border border-[#6e6e6e] items-center justify-center'>
-              <Text className='text-white'>{item} </Text>
+              <Text className='text-white text-xs font-geistRegular'>{item} </Text>
             </TouchableOpacity>
             )}
           keyExtractor={(item, index) => index.toString()}
@@ -44,17 +44,18 @@ const courseResponse = () => {
         {Array(4)
           .fill("")
           .map((_, index) => (
-            <View key={index} className="bg-gray-800 p-4 mb-4 rounded-lg">
+            <View key={index} className="bg-[#111315] p-4 mb-4 rounded-lg">
               <Image
                 source={{ uri: "https://via.placeholder.com/150" }}
                 className="h-40 w-full rounded-lg mb-4"
               />
-              <Text className="text-white text-lg font-bold mb-1">
+              <Text className="text-white text-xs font-geistSemiBold mb-1">
                 C# Programming Specialization for Unity Game Development by
                 Coursera
               </Text>
-              <Text className="text-gray-400">University of Colorado</Text>
-              <Text className="text-blue-400 mt-1">12 Courses</Text>
+              
+              <Text className="text-gray-500 text-xs font-geistMedium">University of Colorado</Text>
+              <Text className="text-blue-400 text-xs font-geistMedium mt-1">12 Courses</Text>
             </View>
           ))}
       </ScrollView>
