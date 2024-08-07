@@ -28,7 +28,7 @@ const Home = () => {
         <View className="flex-row space-x-3 items-center">
           <View>
             <Image
-              source={{ uri: user.avatar }}
+              source={{ uri: user?.avatar }}
               className="w-[35px] h-[35px] rounded-full"
               resizeMode="cover"
             />

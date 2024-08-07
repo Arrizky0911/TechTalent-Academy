@@ -12,12 +12,22 @@ import {
   Platform,
   Image,
 } from "react-native";
+import { signOut } from "../../lib/appwriteConfig";
+import { Redirect, router } from "expo-router";
 
 const Profile = () => {
-  const { user, setUser } = useGlobalContext();
+  const { user, setUser, setIsLoggedIn } = useGlobalContext();
   const { formatDate } = allFormat;
 
-  console.log(user);
+  const logout = async () => {
+    await signOut();
+    setUser(null);
+    setIsLoggedIn(false);
+    router.push("/sign-in");
+  };
+
+  if (!user) return <Redirect href="/sign-in" />;
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -108,6 +118,7 @@ const Profile = () => {
             <ButtonTemplate
               text="Sign Out"
               containerStyles="mt-3 py-3.5 bg-gray"
+              handlePress={logout}
             />
           </View>
         </View>

@@ -10,11 +10,13 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextFields from "../../components/TextFields";
 import ButtonTemplate from "../../components/ButtonTemplate";
-import { signIn, signOut } from "../../lib/appwriteConfig";
+import { getCurrentUser, signIn, signOut } from "../../lib/appwriteConfig";
 import { router } from "expo-router";
 import { images } from "../../constants";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignIn = () => {
+  const { setUser, setIsLoggedIn } = useGlobalContext();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     email: "",
@@ -31,7 +33,12 @@ const SignIn = () => {
 
     try {
       await signIn(form.email, form.password);
-      Alert.alert("Success");
+
+      const response = await getCurrentUser();
+
+      setUser(response);
+      setIsLoggedIn(true);
+
       router.replace("/home");
     } catch (error) {
       Alert.alert("Error", error.message);
@@ -49,12 +56,6 @@ const SignIn = () => {
           source={images.authBg}
         />
 
-        <ButtonTemplate
-          text="Testt"
-          handlePress={async () => {
-            await signOut();
-          }}
-        />
         <View className="absolute bottom-0 left-0 right-0 px-7 py-10 border-[1px] rounded-tl-xl rounded-tr-xl drop-shadow-xl flex-col items-center bg-frame">
           <View className="flex-row w-full items-center mb-10 justify-center">
             <ButtonTemplate

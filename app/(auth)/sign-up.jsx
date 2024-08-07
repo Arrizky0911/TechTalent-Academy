@@ -16,6 +16,7 @@ import { images } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignUp = () => {
+  const { setUser, setIsLoggedIn } = useGlobalContext();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     username: "",
@@ -33,8 +34,11 @@ const SignUp = () => {
 
     try {
       const res = await createUser(form.username, form.email, form.password);
-      Alert.alert("Success", res.username);
-      router.replace("/home");
+
+      setUser(res);
+      setIsLoggedIn(true);
+
+      router.replace("/");
     } catch (error) {
       Alert.alert("Error", error.message);
     }
