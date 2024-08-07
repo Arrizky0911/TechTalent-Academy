@@ -9,6 +9,7 @@ module.exports = {
           DEFAULT: "#1E1E1E",
         },
         "button-main": "#2A86FF",
+        "home-course": "#1E1E1E",
       },
       fontFamily: {
         geisThin: ["Geist-thin", "sans-serif"],

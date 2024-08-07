@@ -7,6 +7,7 @@ import profile from "../assets/icons/profile.png";
 import aiFeature from "../assets/icons/aiFeature.png";
 import notification from "../assets/icons/notifications.png";
 import search from "../assets/icons/search.png";
+import warning from "../assets/icons/warning.png";
 
 export default {
   eye,
@@ -18,4 +19,5 @@ export default {
   aiFeature,
   search,
   notification,
+  warning,
 };
