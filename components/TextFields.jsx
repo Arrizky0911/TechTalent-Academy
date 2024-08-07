@@ -21,7 +21,7 @@ const TextFields = ({
         <TextInput
           value={value}
           onChangeText={handleChange}
-          className={"flex-1 text-white" + ` ${textInputClass}`}
+          className={"flex-1 text-white font-geistRegular" + ` ${textInputClass}`}
           placeholder={placeholder}
           placeholderTextColor="#6B7280"
           secureTextEntry={type === "password" && !showPassword}
