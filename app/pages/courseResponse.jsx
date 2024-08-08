@@ -2,7 +2,7 @@ import { View, Text, TextInput, ScrollView, Image, TouchableOpacity, FlatList } 
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const courseResponse = () => {
+const CourseResponse = () => {
   const categories = ['Gaming', 'Gaming', 'Gaming', 'Gaming', 'Gaming']
 
   return (
@@ -13,6 +13,7 @@ const courseResponse = () => {
           placeholderTextColor="#6B7280"
           className="flex-1 bg-[#1e1e1e] py-3.5 px-12 h-[43px] rounded border border-[#6e6e6e] text-white font-geistRegular text-xs"
         />
+        
       </View>
       {/* <ScrollView horizontal className="flex flex-row mb-4">
         {['Gaming', 'Gaming', 'Gaming', 'Gaming'].map((category, index) => (
@@ -53,14 +54,16 @@ const courseResponse = () => {
                 C# Programming Specialization for Unity Game Development by
                 Coursera
               </Text>
-              
-              <Text className="text-gray-500 text-xs font-geistMedium">University of Colorado</Text>
-              <Text className="text-blue-400 text-xs font-geistMedium mt-1">12 Courses</Text>
+              <View className='mt-4 flex-row justify-between'>
+                <Text className="text-gray-500 text-xs font-geistMedium">University of Colorado</Text>
+                <Text className="text-blue-400 text-xs font-geistMedium mt-1">12 Courses</Text>
+              </View>
             </View>
+
           ))}
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-export default courseResponse
+export default CourseResponse

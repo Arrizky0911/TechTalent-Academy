@@ -9,14 +9,15 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Courses = () => {
-  const navigation = useNavigation()
-  const [searchInput, setSearchInput] = useState('')
+  const navigation = useNavigation();
+  const [searchInput, setSearchInput] = useState('');
 
   const handleSearch = () => {
+    console.log("Navigating to courseResponse with:", searchInput); // Debugging statement
     if (searchInput.trim()) {
-      navigation.navigate("courseResponse", { courseName: searchInput });
+      navigation.navigate("pages", { courseName: searchInput });
     }
-  }
+  };
 
   return (
     <SafeAreaView className='flex-1 bg-[#111315]  p-4'>

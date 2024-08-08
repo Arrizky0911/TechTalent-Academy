@@ -15,7 +15,7 @@ const ButtonTemplate = ({
       disabled={disable}
     >
       <Text
-        className={`font-geistSemiBold text-white text-[16px] ${textStyles}`}
+        className={`font-geistSemiBold text-white text-sm ${textStyles}`}
       >
         {text}
       </Text>
