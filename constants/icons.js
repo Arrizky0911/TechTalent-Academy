@@ -8,6 +8,11 @@ import aiFeature from "../assets/icons/aiFeature.png";
 import notification from "../assets/icons/notifications.png";
 import search from "../assets/icons/search.png";
 import warning from "../assets/icons/warning.png";
+import starThin from "../assets/icons/starThin.png";
+import starThick from "../assets/icons/starThick.png";
+import questionCircle from "../assets/icons/questionCircle.png";
+import arrowUpRight from "../assets/icons/arrowUpRight.png";
+import cursor from "../assets/icons/cursor.png";
 
 export default {
   eye,
@@ -19,5 +24,10 @@ export default {
   aiFeature,
   search,
   notification,
+  cursor,
+  arrowUpRight,
+  questionCircle,
+  starThick,
+  starThin,
   warning,
 };
