@@ -13,6 +13,7 @@ import starThick from "../assets/icons/starThick.png";
 import questionCircle from "../assets/icons/questionCircle.png";
 import arrowUpRight from "../assets/icons/arrowUpRight.png";
 import cursor from "../assets/icons/cursor.png";
+import arrowLeft from "../assets/icons/arrowLeft.png";
 
 export default {
   eye,
@@ -24,6 +25,7 @@ export default {
   aiFeature,
   search,
   notification,
+  arrowLeft,
   cursor,
   arrowUpRight,
   questionCircle,
