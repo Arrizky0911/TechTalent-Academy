@@ -7,13 +7,13 @@ import {
   View,
   Text,
   SafeAreaView,
-  ImageBackground,
   KeyboardAvoidingView,
   Platform,
   Image,
 } from "react-native";
 import { signOut } from "../../lib/appwriteConfig";
 import { Redirect, router } from "expo-router";
+import BgImage from "../../components/BgImage";
 
 const Profile = () => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
@@ -33,10 +33,7 @@ const Profile = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <SafeAreaView className="h-full">
-        <ImageBackground
-          source={images.authBg}
-          className="min-h-[98vh] w-full absolute top-0 bottom-0 bg-black"
-        />
+        <BgImage />
         <View className="bg-frame absolute bottom-0 w-full h-[680px] rounded-t-3xl border-[1px] border-gray items-center">
           <View className="bg-[#2c2c2c] w-[365px] h-[85px] rounded-3xl absolute -top-10 px-5 flex-row items-center space-x-4">
             <View className="w-[50px] h-[50px] rounded-full overflow-hidden ml-1">

@@ -1,13 +1,21 @@
 import { router, useNavigation } from "expo-router";
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useFetchData from "../../lib/useFetchData";
 import { getAllCategories } from "../../lib/appwriteConfig";
+import Loading from "../../components/Loading";
 
 const Courses = () => {
   const { data: categories } = useFetchData(getAllCategories);
-  console.log(categories);
+
+  if (!categories) return <Loading />;
 
   const [searchInput, setSearchInput] = useState("");
 
@@ -35,10 +43,16 @@ const Courses = () => {
           onChangeText={setSearchInput}
         />
 
-        <View className="w-full mx-2 flex-wrap flex-row gap-3 max-h-[200px]">
+        <View className="w-full mx-2 flex-wrap flex-row gap-2 max-h-[200px] justify-between">
           {categories.map((category) => {
             return (
-              <TouchableOpacity className="px-7 border-[1px] border-white rounded-xl py-2">
+              <TouchableOpacity
+                onPress={() =>
+                  router.push(`/courseResponse/${category.category_name}`)
+                }
+                key={category.$id}
+                className="w-[180px] border-[1px] border-white rounded-xl py-2"
+              >
                 <Text className="text-white text-center">
                   {category.category_name}
                 </Text>
@@ -50,36 +64,36 @@ const Courses = () => {
         {/* <View className="mb-4 flex-row mx-2 w-full">
           <TouchableOpacity className="flex-1 border border-[#6e6e6e] h-8 py-[6.5px]  rounded-xl mr-2">
             <Text className="font-geistRegular text-xs text-[#d9d9d9] text-center">
-              Gaming
+              {categories[0].category_name}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity className="flex-1 border border-[#6e6e6e] h-8 py-[6.5px] px-14 rounded-xl w-full ">
             <Text className="font-geistRegular text-[#d9d9d9] text-xs text-center ">
-              Game Developer
+              {categories[1].category_name}
             </Text>
           </TouchableOpacity>
-        </View> */}
-        {/* <View className="mb-4 flex-row mx-2 w-full">
+        </View>
+        <View className="mb-4 flex-row mx-2 w-full">
           <TouchableOpacity className="flex-1 border border-[#6e6e6e] h-8 py-[6.5px] px-14 rounded-xl w-full mr-2">
             <Text className="font-geistRegular text-[#d9d9d9] text-xs text-center ">
-              Game Developer
+              {categories[2].category_name}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity className="flex-1 border border-[#6e6e6e] h-8 py-[6.5px] rounded-xl">
             <Text className="font-geistRegular text-xs text-[#d9d9d9] text-center">
-              Gaming
+              {categories[3].category_name}
             </Text>
           </TouchableOpacity>
-        </View> */}
-        {/* <View className="mb-4 flex-row mx-2 w-full">
+        </View>
+        <View className="mb-4 flex-row mx-2 w-full">
           <TouchableOpacity className="flex-1 border border-[#6e6e6e] h-8 py-[6.5px]  rounded-xl mr-2">
             <Text className="font-geistRegular text-xs text-[#d9d9d9] text-center">
-              Gaming
+              {categories[4].category_name}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity className="flex-1 border border-[#6e6e6e] h-8 py-[6.5px] px-14 rounded-xl w-full ">
             <Text className="font-geistRegular text-[#d9d9d9] text-xs text-center ">
-              Game Developer
+              {categories[5].category_name}
             </Text>
           </TouchableOpacity>
         </View> */}

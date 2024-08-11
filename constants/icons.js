@@ -14,6 +14,7 @@ import questionCircle from "../assets/icons/questionCircle.png";
 import arrowUpRight from "../assets/icons/arrowUpRight.png";
 import cursor from "../assets/icons/cursor.png";
 import arrowLeft from "../assets/icons/arrowLeft.png";
+import paperPlane from "../assets/icons/paperPlane.png";
 
 export default {
   eye,
@@ -25,6 +26,7 @@ export default {
   aiFeature,
   search,
   notification,
+  paperPlane,
   arrowLeft,
   cursor,
   arrowUpRight,

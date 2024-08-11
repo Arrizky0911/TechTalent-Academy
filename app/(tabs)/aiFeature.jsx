@@ -9,56 +9,26 @@ import {
 import React from "react";
 import { icons, images } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import { router } from "expo-router";
+import UserDisplay from "../../components/UserDisplay";
+import BgImage from "../../components/BgImage";
 
 const AiFeature = () => {
   const { user } = useGlobalContext();
   return (
     <SafeAreaView className="h-full relative">
-      <ImageBackground
-        source={images.authBg}
-        className="min-h-[98vh] w-full absolute top-0 bottom-0 bg-black"
-      />
-      <View className="absolute flex-row w-full top-[100px] justify-between">
-        <View className="flex-row items-center ml-5">
-          <Image
-            source={{ uri: user?.avatar }}
-            resizeMethod="cover"
-            className="w-11 h-11 rounded-full"
-          />
-          <View className="ml-3">
-            <Text className="text-white text-[16px] font-geistMedium mb-1">
-              {user.username}
-            </Text>
-            <View>
-              {user?.profession ? (
-                <Text className="text-white/80 text-[13px] font-geistRegular">
-                  {user?.profession}
-                </Text>
-              ) : (
-                <View className="flex-row gap-x-2 items-center">
-                  <Image
-                    source={icons.warning}
-                    resizeMode="contain"
-                    className="w-[16px] h-[16px]"
-                    tintColor="red"
-                  />
-                  <Text className="text-white/80 text-[13px] font-geistRegular">
-                    You haven't input your profession
-                  </Text>
-                </View>
-              )}
-            </View>
-          </View>
-        </View>
-        <View></View>
-      </View>
+      <BgImage />
+      <UserDisplay user={user} />
       <View className="absolute bottom-0 w-full h-[690px] bg-[#151719] rounded-t-3xl items-center border-[1px] border-white/10">
         <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
         <Text className="text-center text-white font-geistMedium mt-9">
           Ai Powered Tools that Will Help you in Your Career Development
         </Text>
         <View className="flex-row justify-center mt-8 gap-x-5">
-          <TouchableOpacity className="h-[290px] w-[155px] bg-[#353535] rounded-xl px-3 py-6 justify-between">
+          <TouchableOpacity
+            className="h-[290px] w-[155px] bg-[#353535] rounded-xl px-3 py-6 justify-between"
+            onPress={() => router.push("/chatbot")}
+          >
             {/* AI LOGO and title */}
             <View className="space-y-3">
               {/* logo */}
