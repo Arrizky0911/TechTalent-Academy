@@ -7,16 +7,22 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { router, usePathname } from "expo-router";
 import BgImage from "../../components/BgImage";
 import UserDisplay from "../../components/UserDisplay";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
+import { chat } from "../../lib/chatAi";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
+  const [prompt, setPrompt] = useState("");
+
+  const submit = async () => {
+    await chat(prompt);
+  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -36,6 +42,7 @@ const Chatbot = () => {
         <UserDisplay user={user} />
         <View className="absolute -bottom-1 w-full h-[695px] bg-[#151719] rounded-t-3xl items-center border-[1px] border-white/10 px-5">
           <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
+
           <View>
             <View className="mt-[60px]">
               <Text className="text-white text-center text-xl font-geistMedium">
@@ -100,6 +107,8 @@ const Chatbot = () => {
             outerClass="absolute bottom-[50px] px-3"
             containerClass="h-14"
             placeholder="Ask me anything..."
+            handleChange={(e) => setPrompt(e)}
+            handleSubmit={submit}
           />
         </View>
       </SafeAreaView>

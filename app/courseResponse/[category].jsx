@@ -38,16 +38,6 @@ const CourseResponse = () => {
           className="flex-1 bg-[#1e1e1e] py-3.5 px-12 h-[43px] rounded border border-[#6e6e6e] text-white font-geistRegular text-xs"
         />
       </View>
-      {/* <ScrollView horizontal className="flex flex-row mb-4">  
-        {['Gaming', 'Gaming', 'Gaming', 'Gaming'].map((category, index) => (
-          <TouchableOpacity
-            key={index}
-            className="py-2 px-2 h-[28px] mr-2 rounded-xl border border-[#6e6e6e] items-center justify-center"
-          >
-            <Text className="text-white">{category}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView> */}
 
       <View className="mb-4">
         <FlatList
