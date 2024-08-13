@@ -11,10 +11,22 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "../../constants";
 import { Link, router, useLocalSearchParams } from "expo-router";
+import useFetchData from "../../lib/useFetchData";
+import { getAllCategories, searchCategories } from "../../lib/appwriteConfig";
 
 const CourseResponse = () => {
   const { category } = useLocalSearchParams();
-  const categories = ["Gaming", "Gaming", "Gaming", "Gaming", "Gaming"];
+  const { data: categories } = useFetchData(getAllCategories);
+  const { data } = useFetchData(() => searchCategories(category));
+
+  const datas = data.map((item) => item.courses);
+  console.log(datas[0], category);
+
+  const anyCourses = categories
+    .filter(
+      (item) => item.category_name.toLowerCase() === category.toLowerCase()
+    )
+    .map((item) => item.courses)[0];
 
   return (
     <SafeAreaView className="flex-1 bg-[#111315] p-4">
@@ -34,7 +46,7 @@ const CourseResponse = () => {
           className="flex-1 bg-[#1e1e1e] py-3.5 px-12 h-[43px] rounded border border-[#6e6e6e] text-white font-geistRegular text-xs"
         />
       </View>
-      {/* <ScrollView horizontal className="flex flex-row mb-4">
+      {/* <ScrollView horizontal className="flex flex-row mb-4">  
         {['Gaming', 'Gaming', 'Gaming', 'Gaming'].map((category, index) => (
           <TouchableOpacity
             key={index}
@@ -53,39 +65,44 @@ const CourseResponse = () => {
           data={categories}
           renderItem={({ item }) => (
             <TouchableOpacity className="py-[6.5px] px-7 mb-4 mr-2 rounded-xl border border-[#6e6e6e] items-center justify-center">
-              <Text className="text-white text-xs font-geistRegular">
-                {item}{" "}
+              <Text className="text-white text-xs font-geistRegular capitalize">
+                {item.category_name}
               </Text>
             </TouchableOpacity>
           )}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item.$id}
         />
       </View>
 
-      <ScrollView className="flex-1">
-        {Array(4)
-          .fill("")
-          .map((_, index) => (
-            <View key={index} className="bg-[#111315] p-4 mb-4 rounded-lg">
-              <Image
-                source={{ uri: "https://via.placeholder.com/150" }}
-                className="h-40 w-full rounded-lg mb-4"
-              />
-              <Text className="text-white text-xs font-geistSemiBold mb-1">
-                C# Programming Specialization for Unity Game Development by
-                Coursera
-              </Text>
-              <View className="mt-4 flex-row justify-between">
-                <Text className="text-gray-500 text-xs font-geistMedium">
-                  University of Colorado
+      {!anyCourses || anyCourses.length < 0 ? (
+        <View>
+          <Text className="text-white">NO Course found</Text>
+        </View>
+      ) : (
+        <ScrollView className="flex-1">
+          {anyCourses.map((item) => {
+            return (
+              <TouchableOpacity
+                key={item.$id}
+                className="bg-[#111315] p-4 mb-4 rounded-lg"
+              >
+                <Image
+                  source={{ uri: item.thumbnail_url }}
+                  className="h-40 w-full rounded-lg mb-4"
+                />
+                <Text className="text-white text-xs font-geistSemiBold mb-1">
+                  {item.title}
                 </Text>
-                <Text className="text-blue-400 text-xs font-geistMedium mt-1">
-                  12 Courses
-                </Text>
-              </View>
-            </View>
-          ))}
-      </ScrollView>
+                <View className="mt-4 flex-row justify-between">
+                  <Text className="text-gray-500 text-xs font-geistMedium">
+                    University of Colorado
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };

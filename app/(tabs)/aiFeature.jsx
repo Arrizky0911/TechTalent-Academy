@@ -21,10 +21,10 @@ const AiFeature = () => {
       <UserDisplay user={user} />
       <View className="absolute bottom-0 w-full h-[690px] bg-[#151719] rounded-t-3xl items-center border-[1px] border-white/10">
         <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
-        <Text className="text-center text-white font-geistMedium mt-9">
+        <Text className="text-center text-white font-geistMedium mt-[60px]">
           Ai Powered Tools that Will Help you in Your Career Development
         </Text>
-        <View className="flex-row justify-center mt-8 gap-x-5">
+        <View className="flex-row justify-center mt-[60px] gap-x-5">
           <TouchableOpacity
             className="h-[290px] w-[155px] bg-[#353535] rounded-xl px-3 py-6 justify-between"
             onPress={() => router.push("/chatbot")}
