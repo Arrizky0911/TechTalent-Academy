@@ -18,15 +18,7 @@ const CourseResponse = () => {
   const { category } = useLocalSearchParams();
   const { data: categories } = useFetchData(getAllCategories);
   const { data } = useFetchData(() => searchCategories(category));
-
-  const datas = data.map((item) => item.courses);
-  console.log(datas[0], category);
-
-  const anyCourses = categories
-    .filter(
-      (item) => item.category_name.toLowerCase() === category.toLowerCase()
-    )
-    .map((item) => item.courses)[0];
+  const datas = data.map((item) => item.courses)[0];
 
   return (
     <SafeAreaView className="flex-1 bg-[#111315] p-4">
@@ -74,13 +66,13 @@ const CourseResponse = () => {
         />
       </View>
 
-      {!anyCourses || anyCourses.length < 0 ? (
+      {!datas || datas.length < 0 ? (
         <View>
           <Text className="text-white">NO Course found</Text>
         </View>
       ) : (
         <ScrollView className="flex-1">
-          {anyCourses.map((item) => {
+          {datas.map((item) => {
             return (
               <TouchableOpacity
                 key={item.$id}

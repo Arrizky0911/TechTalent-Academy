@@ -55,7 +55,7 @@ const Home = () => {
           />
         </View>
       </View>
-      <ScrollView className="relative top-[120px] py-8">
+      <ScrollView className="relative top-[140px] py-8">
         <HomeCourse data={courses} title={"all courses"} />
       </ScrollView>
     </SafeAreaView>
