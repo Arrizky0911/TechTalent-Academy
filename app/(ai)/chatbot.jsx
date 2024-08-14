@@ -23,7 +23,7 @@ const Chatbot = () => {
     >
       <SafeAreaView className="h-full relative">
         <BgImage />
-        <View className="mx-5 mt-2">
+        <View className="mx-5 mt-5">
           <TouchableOpacity onPress={() => router.back()}>
             <Image
               source={icons.arrowLeft}

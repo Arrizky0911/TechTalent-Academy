@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { allFormat, icons, images } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import TextFields from "../../components/TextFields";
@@ -11,7 +11,7 @@ import {
   Platform,
   Image,
 } from "react-native";
-import { signOut } from "../../lib/appwriteConfig";
+import { getCurrentUser, signOut, updateUser } from "../../lib/appwriteConfig";
 import { Redirect, router } from "expo-router";
 import BgImage from "../../components/BgImage";
 
@@ -19,11 +19,28 @@ const Profile = () => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
   const { formatDate } = allFormat;
 
+  const [form, setForm] = useState({
+    username: user.username,
+    profession: user.profession,
+  });
+
+  console.log(user.$updatedAt);
+
   const logout = async () => {
     await signOut();
     setUser(null);
     setIsLoggedIn(false);
     router.push("/sign-in");
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const res = await updateUser(user.$id, form, user.$permissions);
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (!user) return <Redirect href="/sign-in" />;
@@ -48,7 +65,7 @@ const Profile = () => {
                 {user.username}
               </Text>
               {user.profession ? (
-                <Text className="text-[#6E6E6E] font-geistMedium">
+                <Text className="text-white/70 font-geistMedium">
                   {user.profession}
                 </Text>
               ) : (
@@ -78,7 +95,8 @@ const Profile = () => {
               </Text>
               <TextFields
                 placeholder="Username"
-                value={user.username}
+                value={form.username}
+                handleChange={(e) => setForm({ ...form, username: e })}
                 textInputClass="text-[#f0efef]"
                 containerClass="h-12 border-[#f0efef]"
                 editable={true}
@@ -90,7 +108,8 @@ const Profile = () => {
               </Text>
               <TextFields
                 placeholder="Profession"
-                value={user.profession}
+                value={form.profession}
+                handleChange={(e) => setForm({ ...form, profession: e })}
                 textInputClass="text-[#f0efef]"
                 containerClass="h-12 border-[#f0efef]"
                 editable={true}
@@ -111,7 +130,11 @@ const Profile = () => {
             <Text className="text-center text-white font-geistMedium mt-5">
               Last modified on {formatDate(user.$updatedAt)}
             </Text>
-            <ButtonTemplate text="Update" containerStyles="mt-4 py-3.5" />
+            <ButtonTemplate
+              text="Update"
+              containerStyles="mt-4 py-3.5"
+              handlePress={handleUpdate}
+            />
             <ButtonTemplate
               text="Sign Out"
               containerStyles="mt-3 py-3.5 bg-gray"
