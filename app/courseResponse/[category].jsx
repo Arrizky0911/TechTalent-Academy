@@ -77,6 +77,7 @@ const CourseResponse = () => {
               <TouchableOpacity
                 key={item.$id}
                 className="bg-[#111315] p-4 mb-4 rounded-lg"
+                onPress={() => router.push(`courseDetail/${item.$id}`)}
               >
                 <Image
                   source={{ uri: item.thumbnail_url }}

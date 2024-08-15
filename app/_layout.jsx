@@ -41,6 +41,10 @@ export default function RootLayout() {
           name="courseResponse/[category]"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="courseDetail/[id]"
+          options={{ headerShown: false }}
+        />
       </Stack>
     </GlobalProvider>
   );

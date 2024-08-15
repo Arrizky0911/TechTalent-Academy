@@ -51,9 +51,9 @@ const Courses = () => {
                   router.push(`/courseResponse/${category.category_name}`)
                 }
                 key={category.$id}
-                className="w-[180px] border-[1px] border-white rounded-xl py-2"
+                className="w-[180px] border-[1px] border-[#6e6e6e] rounded-xl py-2"
               >
-                <Text className="text-white text-center">
+                <Text className="text-[#d9d9d9] text-xs font-geistRegular text-center">
                   {category.category_name}
                 </Text>
               </TouchableOpacity>
