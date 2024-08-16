@@ -1,8 +1,12 @@
 import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import { router } from "expo-router";
 
 const CourseCardHome = ({ item }) => (
-  <TouchableOpacity className="ml-2 mr-5 bg-home-course w-[180px] h-[210px] my-2 rounded-2xl p-3 overflow-hidden relative shadow-[0_35px_60px_-15px_rgba(200,0,0,0.7)]">
+  <TouchableOpacity
+    className="ml-2 mr-5 bg-home-course w-[180px] h-[210px] my-2 rounded-2xl p-3 overflow-hidden relative shadow-[0_35px_60px_-15px_rgba(200,0,0,0.7)]"
+    onPress={() => router.push(`courseDetail/${item.$id}`)}
+  >
     <View className="w-full h-[120px] rounded-xl overflow-hidden relative">
       <Image
         className="w-full h-full rounded-md"

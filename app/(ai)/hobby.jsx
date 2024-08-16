@@ -12,10 +12,11 @@ const Hobby = () => {
     <SafeAreaView className="flex-1 bg-[#111315]  p-4">
       <View className="flex-1 items-center justify-center">
         <Text className="text-white text-2xl font-geistBold mb-4">
-          Find course
+          Hobby/Interest
         </Text>
         <Text className="text-gray-400 mb-8 text-xs text-center font-geistRegular">
-          Find tutorial Lorem ipsum description dari find tutorial
+          Input what you interested in, so we can know what position is suitable
+          for you
         </Text>
 
         <TextInput
