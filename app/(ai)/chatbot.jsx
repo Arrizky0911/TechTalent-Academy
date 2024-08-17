@@ -27,7 +27,7 @@ const Chatbot = () => {
           <TouchableOpacity onPress={() => router.back()}>
             <Image
               source={icons.arrowLeft}
-              className="w-7 h-7"
+              className="w-7 h-7 mt-10"
               resizeMethod="contain"
               tintColor="white"
             />

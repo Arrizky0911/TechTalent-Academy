@@ -68,7 +68,7 @@ const CourseResponse = () => {
 
       {!datass || datass.length < 0 ? (
         <View>
-          <Text className="text-white">NO Course found</Text>
+          <Text className="text-white">NO Course found</Text> 
         </View>
       ) : (
         <ScrollView className="flex-1">

@@ -56,7 +56,10 @@ const AiFeature = () => {
             </Text>
           </TouchableOpacity>
           <View className="h-[290px] w-[180px] justify-between">
-            <TouchableOpacity className="w-full h-[130px] bg-[#353535] rounded-2xl p-4 justify-between">
+            <TouchableOpacity 
+              className="w-full h-[130px] bg-[#353535] rounded-2xl p-4 justify-between"
+              onPress={() => router.push('hobby')}
+              >
               <View className="flex-row items-center justify-between">
                 <Image
                   source={icons.questionCircle}

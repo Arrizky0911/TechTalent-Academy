@@ -32,7 +32,10 @@ const Hobby = () => {
           onPress={handleSearch}
           className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
         >
-          <Text className="text-white text-center font-geistSemiBold">
+          <Text 
+            className="text-white text-center font-geistSemiBold"
+            onPress={() => router.push('hobby/roadmapResponse')}
+          >
             Search
           </Text>
         </TouchableOpacity>
@@ -41,7 +44,7 @@ const Hobby = () => {
           onPress={() => router.back()}
         >
           <Text className="text-white text-center font-geistSemiBold">
-            Back
+            Change Feature
           </Text>
         </TouchableOpacity>
       </View>
