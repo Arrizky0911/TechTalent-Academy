@@ -12,10 +12,16 @@ import { Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import useFetchData from "../../lib/useFetchData";
 import { getCourseById } from "../../lib/appwriteConfig";
+import icons from "../../constants/icons";
+import { Video as VideoAV, ResizeMode } from "expo-av";
 
 const CourseDetail = () => {
   const { id } = useLocalSearchParams();
   const { data: course } = useFetchData(() => getCourseById(id));
+
+  console.log(course);
+
+  const [isPlay, setIsPlay] = useState(false);
 
   const [activeTab, setActiveTab] = useState("overview");
   const [overviewWidth, setOverviewWidth] = useState(0);
@@ -42,26 +48,58 @@ const CourseDetail = () => {
         <AntDesign name="arrowleft" size={24} color="#fff" />
       </TouchableOpacity>
 
-      <View className="h-[245px] w-full relative">
-        <Image
-          source={{ uri: course?.thumbnail_url }}
-          className="h-full w-full"
-          resizeMethod="contain"
-        />
-        <View className="bg-black/50 h-full w-full absolute top-0 bottom-0"></View>
+      <View className="h-[220px] w-full relative items-center justify-center">
+        {isPlay ? (
+          <>
+            <VideoAV
+              source={{
+                uri: course.video_url,
+              }}
+              className="w-full h-full bg-black"
+              resizeMode={ResizeMode.CONTAIN}
+              onError={(err) => console.error(err)}
+              shouldPlay
+              useNativeControls={false}
+              onPlaybackStatusUpdate={(status) => {
+                if (status.didJustFinish) {
+                  setIsPlay(false);
+                }
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <Image
+              source={{ uri: course?.thumbnail_url }}
+              className="h-full w-full"
+              resizeMethod="contain"
+            />
+            <View className="bg-black/60 h-full w-full absolute top-0 bottom-0"></View>
+            <TouchableOpacity
+              className="bg-white/50 w-[60px] h-[60px] rounded-full absolute justify-center items-center"
+              onPress={() => setIsPlay(true)}
+            >
+              <Image
+                source={icons.play}
+                tintColor="white"
+                className="ml-1 w-9 h-9"
+              />
+            </TouchableOpacity>
+          </>
+        )}
       </View>
       <View
-        style={{ marginTop: -28 }}
-        className="px-8 py-6 bg-[#111315] flex-1 border-[1px] border-black/50 rounded-tr-xl rounded-tl-xl"
+        style={{}}
+        className=" py-6 bg-[#111315] flex-1 border-t-[1px] border-t-black/30"
       >
-        <Text className="text-white text-xl font-geistBold">
+        <Text className="text-white text-xl font-geistBold mx-8">
           {course.title}
         </Text>
-        <Text className="text-[#737373] text-xs font-geistMedium mt-4">
+        <Text className="text-[#737373] text-xs font-geistMedium mt-4 mx-8">
           {course.description}
         </Text>
         <View className="mt-16 mb-4">
-          <View className="flex-row justify-between">
+          <View className="flex-row w-full">
             <TouchableOpacity
               onPress={() => setActiveTab("overview")}
               onLayout={(event) => {
@@ -69,10 +107,10 @@ const CourseDetail = () => {
                 setOverviewWidth(width);
                 setOverviewX(x);
               }}
-              className={`px-4 py-2`}
+              className={`py-2 w-1/2`}
             >
               <Text
-                className={`font-geistSemiBold ${
+                className={`font-geistSemiBold text-center ${
                   activeTab === "overview" ? "text-white" : "text-white/60"
                 }`}
               >
@@ -86,10 +124,10 @@ const CourseDetail = () => {
                 setChatbotWidth(width);
                 setChatbotX(x);
               }}
-              className={`px-4 py-2`}
+              className={`py-2 w-1/2`}
             >
               <Text
-                className={`font-geistSemiBold ${
+                className={`font-geistSemiBold text-center ${
                   activeTab === "chatbot" ? "text-white" : "text-white/60"
                 }`}
               >
@@ -117,7 +155,7 @@ const CourseDetail = () => {
           }}
         >
           {activeTab === "overview" ? (
-            <View className="items-start h-full">
+            <View className="items-start h-full px-6">
               <Text className="font-geistRegular text-white text-sm leading-4">
                 {course.summary}
               </Text>
