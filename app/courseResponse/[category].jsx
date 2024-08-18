@@ -6,8 +6,9 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  RefreshControl,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "../../constants";
 import { Link, router, useLocalSearchParams } from "expo-router";
@@ -17,8 +18,21 @@ import { getAllCategories, searchCategories } from "../../lib/appwriteConfig";
 const CourseResponse = () => {
   const { category } = useLocalSearchParams();
   const { data: categories } = useFetchData(getAllCategories);
-  const { data } = useFetchData(() => searchCategories(category));
+  const { data, refetch } = useFetchData(() => searchCategories(category));
   const datass = data.map((item) => item.courses)[0];
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refetch();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-[#111315] p-4">
@@ -68,10 +82,15 @@ const CourseResponse = () => {
 
       {!datass || datass.length < 0 ? (
         <View>
-          <Text className="text-white">NO Course found</Text> 
+          <Text className="text-white">NO Course found</Text>
         </View>
       ) : (
-        <ScrollView className="flex-1">
+        <ScrollView
+          className="flex-1"
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
           {datass.map((item) => {
             return (
               <TouchableOpacity

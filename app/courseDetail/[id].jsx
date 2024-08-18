@@ -11,15 +11,19 @@ import { router, useLocalSearchParams } from "expo-router";
 import { Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import useFetchData from "../../lib/useFetchData";
-import { getCourseById } from "../../lib/appwriteConfig";
+import {
+  getCourseById,
+  getCurrentUser,
+  updateUser,
+} from "../../lib/appwriteConfig";
 import icons from "../../constants/icons";
 import { Video as VideoAV, ResizeMode } from "expo-av";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const CourseDetail = () => {
   const { id } = useLocalSearchParams();
-  const { data: course } = useFetchData(() => getCourseById(id));
-
-  console.log(course);
+  const { data: course, isLoading } = useFetchData(() => getCourseById(id));
+  const { user, setUser } = useGlobalContext();
 
   const [isPlay, setIsPlay] = useState(false);
 
@@ -39,6 +43,23 @@ const CourseDetail = () => {
     }).start();
   }, [activeTab, overviewX, chatbotX]);
 
+  const updateHistory = async () => {
+    setIsPlay(true);
+
+    const histories = user.courses_history.filter((cour) => id !== cour.$id);
+    histories.push(course);
+
+    const updatedHistory = {
+      courses_history: histories,
+    };
+    try {
+      updateUser(user.$id, updatedHistory, user.$permissions);
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <SafeAreaView className="flex-1 bg-[#111315]">
       <TouchableOpacity
@@ -75,16 +96,18 @@ const CourseDetail = () => {
               resizeMethod="contain"
             />
             <View className="bg-black/60 h-full w-full absolute top-0 bottom-0"></View>
-            <TouchableOpacity
-              className="bg-white/50 w-[60px] h-[60px] rounded-full absolute justify-center items-center"
-              onPress={() => setIsPlay(true)}
-            >
-              <Image
-                source={icons.play}
-                tintColor="white"
-                className="ml-1 w-9 h-9"
-              />
-            </TouchableOpacity>
+            {!isLoading && (
+              <TouchableOpacity
+                className="bg-white/50 w-[60px] h-[60px] rounded-full absolute justify-center items-center"
+                onPress={updateHistory}
+              >
+                <Image
+                  source={icons.play}
+                  tintColor="white"
+                  className="ml-1 w-9 h-9"
+                />
+              </TouchableOpacity>
+            )}
           </>
         )}
       </View>

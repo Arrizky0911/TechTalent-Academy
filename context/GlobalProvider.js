@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getCurrentUser } from "../lib/appwriteConfig";
+import useFetchData from "../lib/useFetchData";
 
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);

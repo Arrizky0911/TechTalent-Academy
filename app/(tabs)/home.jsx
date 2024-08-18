@@ -18,6 +18,10 @@ const Home = () => {
   const { user, setIsLoading, isLoading } = useGlobalContext();
   const { data: courses, refetch } = useFetchData(getAllCourses);
 
+  const test = [1, 2, 3, 4, 5];
+  const test1 = [...test, 6, 7, 9];
+  console.log(test1);
+
   if (!user) {
     return <Loading />;
   }
