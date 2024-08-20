@@ -18,9 +18,12 @@ import {
 } from "../../lib/appwriteConfig";
 import icons from "../../constants/icons";
 import { Video as VideoAV, ResizeMode } from "expo-av";
+
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 const CourseDetail = () => {
+  const videoElement = useRef(null);
+
   const { id } = useLocalSearchParams();
   const { data: course, isLoading } = useFetchData(() => getCourseById(id));
   const { user, setUser } = useGlobalContext();
@@ -45,7 +48,6 @@ const CourseDetail = () => {
 
   const updateHistory = async () => {
     setIsPlay(true);
-
     const histories = user.courses_history.filter((cour) => id !== cour.$id);
     histories.push(course);
 
@@ -71,8 +73,9 @@ const CourseDetail = () => {
 
       <View className="h-[220px] w-full relative items-center justify-center">
         {isPlay ? (
-          <>
+          <View className="w-full h-full bg-black relative items-center justify-center">
             <VideoAV
+              ref={videoElement}
               source={{
                 uri: course.video_url,
               }}
@@ -87,7 +90,20 @@ const CourseDetail = () => {
                 }
               }}
             />
-          </>
+            <TouchableOpacity
+              className="absolute z-[100] bottom-3 right-3"
+              onPress={() => {
+                videoElement.current.presentFullscreenPlayer();
+              }}
+            >
+              <Image
+                source={icons.fullScreen}
+                tintColor="#fff"
+                className="w-5 h-5"
+                resizeMethod="contain"
+              />
+            </TouchableOpacity>
+          </View>
         ) : (
           <>
             <Image

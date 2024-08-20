@@ -16,6 +16,7 @@ import cursor from "../assets/icons/cursor.png";
 import arrowLeft from "../assets/icons/arrowLeft.png";
 import paperPlane from "../assets/icons/paperPlane.png";
 import play from "../assets/icons/play.png";
+import fullScreen from "../assets/icons/fullScreen.png";
 
 export default {
   eye,
@@ -27,6 +28,7 @@ export default {
   aiFeature,
   search,
   notification,
+  fullScreen,
   play,
   paperPlane,
   arrowLeft,

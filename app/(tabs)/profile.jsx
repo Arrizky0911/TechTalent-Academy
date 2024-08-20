@@ -10,13 +10,16 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
+  Keyboard,
 } from "react-native";
 import { getCurrentUser, signOut, updateUser } from "../../lib/appwriteConfig";
 import { Redirect, router } from "expo-router";
 import BgImage from "../../components/BgImage";
+import Loading from "../../components/Loading";
 
 const Profile = () => {
-  const { user, setUser, setIsLoggedIn } = useGlobalContext();
+  const { user, setUser, setIsLoggedIn, isLoading, setIsLoading } =
+    useGlobalContext();
   const { formatDate } = allFormat;
 
   const [form, setForm] = useState({
@@ -34,12 +37,16 @@ const Profile = () => {
   };
 
   const handleUpdate = async () => {
+    Keyboard.dismiss();
+    setIsLoading(true);
     try {
-      const res = await updateUser(user.$id, form, user.$permissions);
+      await updateUser(user.$id, form, user.$permissions);
       const currentUser = await getCurrentUser();
       setUser(currentUser);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,7 +56,10 @@ const Profile = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView className="h-full">
+      <SafeAreaView className="h-full relative">
+        {isLoading && (
+          <Loading additionStyle="absolute h-full w-full z-[1000] bg-black/70" />
+        )}
         <BgImage />
         <View className="bg-frame absolute bottom-0 w-full h-[680px] rounded-t-3xl border-[1px] border-gray items-center">
           <View className="bg-[#2c2c2c] w-[365px] h-[85px] rounded-3xl absolute -top-10 px-5 flex-row items-center space-x-4">

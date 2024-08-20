@@ -1,11 +1,16 @@
-import { View, Text, SafeAreaView } from "react-native";
+import { View, ActivityIndicator, Text } from "react-native";
 import React from "react";
 
-const Loading = () => {
+const Loading = ({ additionStyle }) => {
   return (
-    <SafeAreaView>
-      <Text className="text-black font-geistBold text-3xl">Loading......</Text>
-    </SafeAreaView>
+    <View
+      className={`h-full w-full top-0 z-50 items-center justify-center bg-black ${additionStyle}`}
+    >
+      <ActivityIndicator color="#fff" size="90px" />
+      <Text className="text-white text-sm font-geistMedium mt-5">
+        Please Wait
+      </Text>
+    </View>
   );
 };
 

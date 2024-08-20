@@ -38,7 +38,7 @@ const TabLayout = () => {
           right: 0,
           width: "100%",
           paddingTop: 15,
-          zIndex: 100,
+          zIndex: 90,
         },
       }}
     >
