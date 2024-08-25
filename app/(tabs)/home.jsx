@@ -5,22 +5,34 @@ import {
   ScrollView,
   Image,
   FlatList,
+  RefreshControl,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import Loading from "../../components/Loading";
 import icons from "../../constants/icons";
-import { getAllCourses } from "../../lib/appwriteConfig";
+import { getAllCourses, getCurrentUser } from "../../lib/appwriteConfig";
 import useFetchData from "../../lib/useFetchData";
 import HomeCourse from "../../components/HomeCourse";
 
 const Home = () => {
-  const { user, setIsLoading, isLoading } = useGlobalContext();
+  const { user, setIsLoading, isLoading, setUser } = useGlobalContext();
   const { data: courses, refetch } = useFetchData(getAllCourses);
 
-  const test = [1, 2, 3, 4, 5];
-  const test1 = [...test, 6, 7, 9];
-  console.log(test1);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+
+    try {
+      const data = await getCurrentUser();
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   if (!user) {
     return <Loading />;
@@ -59,7 +71,12 @@ const Home = () => {
           />
         </View>
       </View>
-      <ScrollView className="relative top-[140px] py-8">
+      <ScrollView
+        className="relative top-[140px] py-8"
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <HomeCourse data={courses} title={"all courses"} />
       </ScrollView>
     </SafeAreaView>
