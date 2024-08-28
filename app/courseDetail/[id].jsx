@@ -14,12 +14,13 @@ import useFetchData from "../../lib/useFetchData";
 import {
   getCourseById,
   getCurrentUser,
-  updateUser,
+  updateHistory,
 } from "../../lib/appwriteConfig";
 import icons from "../../constants/icons";
 import { Video as VideoAV, ResizeMode } from "expo-av";
 
 import { useGlobalContext } from "../../context/GlobalProvider";
+import { StatusBar } from "expo-status-bar";
 
 const CourseDetail = () => {
   const videoElement = useRef(null);
@@ -46,7 +47,7 @@ const CourseDetail = () => {
     }).start();
   }, [activeTab, overviewX, chatbotX]);
 
-  const updateHistory = async () => {
+  const handleUpdate = async () => {
     setIsPlay(true);
     const histories = user.courses_history.filter((cour) => id !== cour.$id);
     histories.push(course);
@@ -55,7 +56,7 @@ const CourseDetail = () => {
       courses_history: histories,
     };
     try {
-      updateUser(user.$id, updatedHistory, user.$permissions);
+      updateHistory(user.$id, updatedHistory, user.$permissions);
       const currentUser = await getCurrentUser();
       setUser(currentUser);
     } catch (error) {
@@ -63,10 +64,10 @@ const CourseDetail = () => {
     }
   };
   return (
-    <SafeAreaView className="flex-1 bg-[#111315]">
+    <SafeAreaView className="flex-1 bg-[#111315] relative">
       <TouchableOpacity
         onPress={() => router.back()}
-        className="absolute mt-14 left-4 z-10 p-2 rounded-full"
+        className="absolute top-[5%] left-4 z-10 p-2 rounded-full"
       >
         <AntDesign name="arrowleft" size={24} color="#fff" />
       </TouchableOpacity>
@@ -115,7 +116,7 @@ const CourseDetail = () => {
             {!isLoading && (
               <TouchableOpacity
                 className="bg-white/50 w-[60px] h-[60px] rounded-full absolute justify-center items-center"
-                onPress={updateHistory}
+                onPress={handleUpdate}
               >
                 <Image
                   source={icons.play}

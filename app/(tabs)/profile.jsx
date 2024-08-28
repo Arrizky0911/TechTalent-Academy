@@ -15,12 +15,7 @@ import {
   Alert,
   FlatList,
 } from "react-native";
-import {
-  getCurrentUser,
-  getInitialsUserPics,
-  signOut,
-  updateUser,
-} from "../../lib/appwriteConfig";
+import { getCurrentUser, signOut, updateUser } from "../../lib/appwriteConfig";
 import { Redirect, router, useFocusEffect } from "expo-router";
 import BgImage from "../../components/BgImage";
 import Loading from "../../components/Loading";
@@ -30,15 +25,6 @@ import { ID } from "react-native-appwrite";
 const Profile = () => {
   const { user, setUser, setIsLoggedIn, isLoading, setIsLoading } =
     useGlobalContext();
-
-  // const test = async () => {
-  //   try {
-  //     const test = await getInitialsUserPics();
-  //     console.log(test);
-  //   } catch (error) {}
-  // };
-
-  // test();
 
   const { formatDate } = allFormat;
 

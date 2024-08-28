@@ -6,19 +6,27 @@ import {
   Image,
   FlatList,
   RefreshControl,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import Loading from "../../components/Loading";
 import icons from "../../constants/icons";
-import { getAllCourses, getCurrentUser } from "../../lib/appwriteConfig";
+import {
+  getAllCourses,
+  getCurrentUser,
+  getUserLabels,
+} from "../../lib/appwriteConfig";
 import useFetchData from "../../lib/useFetchData";
 import HomeCourse from "../../components/HomeCourse";
+import { router } from "expo-router";
 
 const Home = () => {
   const { user, setIsLoading, isLoading, setUser } = useGlobalContext();
   const { data: courses, refetch } = useFetchData(getAllCourses);
 
+  const { data: labels, refetch: refetchLabels } = useFetchData(getUserLabels);
+  const adminLabel = labels.filter((label) => label.toLowerCase() === "admin");
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
@@ -26,6 +34,7 @@ const Home = () => {
 
     try {
       const data = await getCurrentUser();
+      refetch();
       setUser(data);
     } catch (error) {
       console.log(error);
@@ -57,18 +66,34 @@ const Home = () => {
           </View>
         </View>
         <View className="flex-row items-center space-x-5">
-          <Image
-            source={icons.search}
-            className="w-[20px] h-[20px]"
-            tintColor="#fff"
-            resizeMode="contain"
-          />
-          <Image
-            source={icons.notification}
-            className="w-[30px] h-[30px]"
-            tintColor="#fff"
-            resizeMode="contain"
-          />
+          <TouchableOpacity>
+            <Image
+              source={icons.search}
+              className="w-[20px] h-[20px]"
+              tintColor="#fff"
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+
+          {adminLabel && (
+            <TouchableOpacity onPress={() => router.push("/createCourse")}>
+              <Image
+                source={icons.addCircle}
+                className="w-[20px] h-[20px]"
+                tintColor="#fff"
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          )}
+
+          <TouchableOpacity>
+            <Image
+              source={icons.notification}
+              className="w-[30px] h-[30px]"
+              tintColor="#fff"
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
         </View>
       </View>
       <ScrollView
