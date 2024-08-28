@@ -5,6 +5,7 @@ import {
   Platform,
   Alert,
   ImageBackground,
+  Keyboard,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,6 +15,7 @@ import { getCurrentUser, signIn, signOut } from "../../lib/appwriteConfig";
 import { router } from "expo-router";
 import { images } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import Loading from "../../components/Loading";
 
 const SignIn = () => {
   const { setUser, setIsLoggedIn } = useGlobalContext();
@@ -30,7 +32,7 @@ const SignIn = () => {
     }
 
     setIsSubmitting(true);
-
+    Keyboard.dismiss();
     try {
       await signIn(form.email, form.password);
 
@@ -50,7 +52,10 @@ const SignIn = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView className="h-full relative flex-col bg-black">
+      <View className="h-full relative flex-col bg-black">
+        {isSubmitting && (
+          <Loading additionStyle="absolute bottom-0 top-0 w-full z-[1000] bg-black/70" />
+        )}
         <ImageBackground
           className="min-h-[98vh] w-full absolute top-0 bottom-0"
           source={images.authBg}
@@ -94,7 +99,7 @@ const SignIn = () => {
             containerStyles="w-full rounded-lg mt-10 mb-5 py-3"
           />
         </View>
-      </SafeAreaView>
+      </View>
     </KeyboardAvoidingView>
   );
 };

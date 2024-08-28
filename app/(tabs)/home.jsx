@@ -5,22 +5,43 @@ import {
   ScrollView,
   Image,
   FlatList,
+  RefreshControl,
+  TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import Loading from "../../components/Loading";
 import icons from "../../constants/icons";
-import { getAllCourses } from "../../lib/appwriteConfig";
+import {
+  getAllCourses,
+  getCurrentUser,
+  getUserLabels,
+} from "../../lib/appwriteConfig";
 import useFetchData from "../../lib/useFetchData";
 import HomeCourse from "../../components/HomeCourse";
+import { router } from "expo-router";
 
 const Home = () => {
-  const { user, setIsLoading, isLoading } = useGlobalContext();
+  const { user, setIsLoading, isLoading, setUser } = useGlobalContext();
   const { data: courses, refetch } = useFetchData(getAllCourses);
 
-  const test = [1, 2, 3, 4, 5];
-  const test1 = [...test, 6, 7, 9];
-  console.log(test1);
+  const { data: labels, refetch: refetchLabels } = useFetchData(getUserLabels);
+  const adminLabel = labels.filter((label) => label.toLowerCase() === "admin");
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+
+    try {
+      const data = await getCurrentUser();
+      refetch();
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   if (!user) {
     return <Loading />;
@@ -45,21 +66,42 @@ const Home = () => {
           </View>
         </View>
         <View className="flex-row items-center space-x-5">
-          <Image
-            source={icons.search}
-            className="w-[20px] h-[20px]"
-            tintColor="#fff"
-            resizeMode="contain"
-          />
-          <Image
-            source={icons.notification}
-            className="w-[30px] h-[30px]"
-            tintColor="#fff"
-            resizeMode="contain"
-          />
+          <TouchableOpacity>
+            <Image
+              source={icons.search}
+              className="w-[20px] h-[20px]"
+              tintColor="#fff"
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+
+          {adminLabel && (
+            <TouchableOpacity onPress={() => router.push("/createCourse")}>
+              <Image
+                source={icons.addCircle}
+                className="w-[20px] h-[20px]"
+                tintColor="#fff"
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          )}
+
+          <TouchableOpacity>
+            <Image
+              source={icons.notification}
+              className="w-[30px] h-[30px]"
+              tintColor="#fff"
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
         </View>
       </View>
-      <ScrollView className="relative top-[140px] py-8">
+      <ScrollView
+        className="relative top-[140px] py-8"
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <HomeCourse data={courses} title={"all courses"} />
       </ScrollView>
     </SafeAreaView>

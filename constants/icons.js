@@ -17,6 +17,7 @@ import arrowLeft from "../assets/icons/arrowLeft.png";
 import paperPlane from "../assets/icons/paperPlane.png";
 import play from "../assets/icons/play.png";
 import fullScreen from "../assets/icons/fullScreen.png";
+import addCircle from "../assets/icons/addCircle.png";
 
 export default {
   eye,
@@ -28,6 +29,7 @@ export default {
   aiFeature,
   search,
   notification,
+  addCircle,
   fullScreen,
   play,
   paperPlane,

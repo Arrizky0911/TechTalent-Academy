@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { allFormat, icons, images } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import TextFields from "../../components/TextFields";
@@ -11,36 +11,95 @@ import {
   Platform,
   Image,
   Keyboard,
+  TouchableOpacity,
+  Alert,
+  FlatList,
 } from "react-native";
 import { getCurrentUser, signOut, updateUser } from "../../lib/appwriteConfig";
-import { Redirect, router } from "expo-router";
+import { Redirect, router, useFocusEffect } from "expo-router";
 import BgImage from "../../components/BgImage";
 import Loading from "../../components/Loading";
+import * as ImagePicker from "expo-image-picker";
+import { ID } from "react-native-appwrite";
 
 const Profile = () => {
   const { user, setUser, setIsLoggedIn, isLoading, setIsLoading } =
     useGlobalContext();
+
   const { formatDate } = allFormat;
 
   const [form, setForm] = useState({
-    username: user.username,
-    profession: user.profession,
+    avatar: null,
+    username: user?.username,
+    profession: user?.profession,
   });
 
-  console.log(user.$updatedAt);
+  const fetchUserData = async () => {
+    setIsLoading(true);
+    try {
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserData();
+    }, [])
+  );
+
+  const openPicker = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      aspect: [4, 3],
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const avatarAssets = result.assets[0];
+
+      const assetId = avatarAssets.assetId || ID.unique();
+      const fileName = avatarAssets.uri.split("/").pop();
+      const mimeType = fileName.split(".").pop();
+
+      setForm({
+        ...form,
+        avatar: { ...avatarAssets, assetId, fileName, mimeType },
+      });
+    }
+  };
 
   const logout = async () => {
-    await signOut();
-    setUser(null);
-    setIsLoggedIn(false);
-    router.push("/sign-in");
+    setIsLoading(true);
+    try {
+      await signOut();
+      setIsLoggedIn(false);
+      setUser(null);
+      setIsLoading(false);
+      router.replace("/sign-in");
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   const handleUpdate = async () => {
     Keyboard.dismiss();
     setIsLoading(true);
+
+    if (!form.username || !form.profession)
+      return Alert.alert("Please fill in all the fields");
+
     try {
-      await updateUser(user.$id, form, user.$permissions);
+      const asset = form.avatar
+        ? form
+        : { username: form.username, profession: form.profession };
+
+      await updateUser(user.$id, asset, user.$permissions);
       const currentUser = await getCurrentUser();
       setUser(currentUser);
     } catch (error) {
@@ -63,20 +122,25 @@ const Profile = () => {
         <BgImage />
         <View className="bg-frame absolute bottom-0 w-full h-[680px] rounded-t-3xl border-[1px] border-gray items-center">
           <View className="bg-[#2c2c2c] w-[365px] h-[85px] rounded-3xl absolute -top-10 px-5 flex-row items-center space-x-4">
-            <View className="w-[50px] h-[50px] rounded-full overflow-hidden ml-1">
+            <TouchableOpacity
+              className="w-[50px] h-[50px] rounded-full ml-1"
+              onPress={openPicker}
+            >
               <Image
                 className="w-full h-full rounded-full"
                 resizeMode="cover"
-                source={{ uri: user.avatar }}
+                source={{
+                  uri: !form.avatar ? user?.avatar : form.avatar.uri,
+                }}
               />
-            </View>
+            </TouchableOpacity>
             <View className="items-start gap-y-2">
               <Text className="text-white text-md font-geistMedium">
-                {user.username}
+                {user?.username}
               </Text>
               {user.profession ? (
                 <Text className="text-white/70 font-geistMedium">
-                  {user.profession}
+                  {user?.profession}
                 </Text>
               ) : (
                 <View className="flex-row items-center gap-x-1">
@@ -97,7 +161,7 @@ const Profile = () => {
 
           <View className="mt-[60px] px-6 w-full">
             <Text className="text-center text-white font-geistMedium mb-10">
-              Created on {formatDate(user.$createdAt)}
+              Created on {formatDate(user?.$createdAt)}
             </Text>
             <View className="w-full mb-5">
               <Text className="text-[#f0efef] mb-2 font-geistRegular">
@@ -131,7 +195,7 @@ const Profile = () => {
               </Text>
               <TextFields
                 placeholder="Username"
-                value={user.email}
+                value={user?.email}
                 textInputClass="text-gray-400"
                 containerClass="h-12 border-[#f0efef]"
                 editable={false}
