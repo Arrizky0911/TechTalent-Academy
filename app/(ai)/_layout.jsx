@@ -6,6 +6,7 @@ const AILayout = () => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="chatbot" options={{ headerShown: false }} />
+      <Stack.Screen name="mockLanding" options={{ headerShown: false }} />
     </Stack>
   );
 };

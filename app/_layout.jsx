@@ -45,10 +45,8 @@ export default function RootLayout() {
           name="courseDetail/[id]"
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="hobby"
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="hobby" options={{ headerShown: false }} />
+        <Stack.Screen name="mockInterview" options={{ headerShown: false }} />
       </Stack>
     </GlobalProvider>
   );

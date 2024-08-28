@@ -82,7 +82,10 @@ const AiFeature = () => {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity className="w-full h-[130px] bg-[#353535] rounded-2xl p-4 justify-between">
+            <TouchableOpacity 
+              className="w-full h-[130px] bg-[#353535] rounded-2xl p-4 justify-between"
+              onPress={() => router.push('/mockLanding')}  
+            >
               <View className="flex-row items-center">
                 <Image
                   source={icons.cursor}
