@@ -19,6 +19,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Video, ResizeMode } from "expo-av";
 import { router } from "expo-router";
 import Loading from "../../components/Loading";
+import Ionicons from '@expo/vector-icons/Ionicons';
 import font from '../../assets/fonts/Geist-Regular.ttf'
 
 const CreateCourse = () => {
@@ -119,7 +120,90 @@ const CreateCourse = () => {
               value={form.name}
             />
           </View>
-          <View className="flex-1 font-geistRegular">
+
+          <View className="flex-1">
+            <Text className="text-white font-geistRegular mb-2">AI Prompt</Text>
+            <TextInput
+              className="border border-[#6B7280] font-geistRegular h-12 text-[#6B7280] p-3 rounded-lg"
+              placeholder="Prompt for your video"
+              placeholderTextColor="gray"
+              onChangeText={(value) => handleChangeText("prompt", value)}
+              value={form.prompt}
+            />
+          </View>
+          
+          </View>
+          <View className="mt-6">
+            <Text className="text-white font-geistRegular mb-2">Description</Text>
+            <TextInput
+              className="border border-[#6B7280] font-geistRegular h-12 text-white p-3 w-auto rounded-lg"
+              placeholder="Describe your video"
+              placeholderTextColor="#6B7280"
+              onChangeText={(value) => handleChangeText("description", value)}
+              value={form.description}
+            />
+          </View>
+
+          <View className="mt-6">
+            <Text className="text-white font-geistRegular mb-2">Summary</Text>
+            <TextInput
+              className="border border-[#6B7280] font-geistRegular h-12 text-white p-3 w-auto rounded-lg"
+              placeholder="Summarize your video"
+              placeholderTextColor="#6B7280"
+              onChangeText={(value) => handleChangeText("summary", value)}
+              value={form.summary}
+              multiline
+            />
+          </View>
+          <View className="mt-7 space-y-2">
+            <Text className="text-base font-geistRegular text-white font-medium">
+              Upload Video
+            </Text>
+            <TouchableOpacity className='bg-white/5' onPress={() => openPicker("video")}>
+              {form.video ? (
+                <Video
+                  resizeMode={ResizeMode.COVER}
+                  source={{ uri: form.video.uri }}
+                  className="w-full h-64 rounded-2xl "
+                  useNativeControls
+                  isLooping
+                />
+              ) : (
+                <View className="w-full h-40 px-4 rounded-2xl border border-[#6B7280] border-dashed justify-center items-center">
+                  <Ionicons name="folder-open-outline" size={48} color="white" />
+                  <Text className="text-sm text-gray-300 mt-4 font-geistRegular">
+                    Choose a video
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          </View>
+
+          <View className="mt-7 space-y-2">
+            <Text className="text-base font-geistRegular text-white font-medium">
+              Thumbnail Image
+            </Text>
+            <TouchableOpacity className='bg-white/5' onPress={() => openPicker("image")}>
+              {form.thumbnail ? (
+                <Image
+                  source={{ uri: form.thumbnail.uri }}
+                  resizeMode="cover"
+                  className="w-full h-64 rounded-2xl "
+                />
+              ) : (
+                <View className="w-full h-auto px-4 py-6 rounded-2xl flex-col justify-center items-center border border-[#6B7280] space-x-2">
+                  <Ionicons name="images-outline" size={24} color="white" className='m-5' />
+                  <Text className="text-sm text-gray-300 mt-4 font-geistRegular">
+                    Choose a image
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          </View>
+
+          
+
+          <View className="flex-1 mt-6 font-geistRegular">
           <Text className="text-white font-geistRegular mb-2">Video Category</Text>
             <MultipleSelectList
               data={formatedCategory}
@@ -148,83 +232,6 @@ const CreateCourse = () => {
               }}
             />
           </View>
-          </View>
-          <View className="mt-6">
-            <Text className="text-white font-geistRegular mb-2">Description</Text>
-            <TextInput
-              className="border border-[#6B7280] font-geistRegular h-12 text-white p-3 w-auto rounded-lg"
-              placeholder="Describe your video"
-              placeholderTextColor="#6B7280"
-              onChangeText={(value) => handleChangeText("description", value)}
-              value={form.description}
-            />
-          </View>
-
-          <View className="mt-6">
-            <Text className="text-white font-geistRegular mb-2">Summary</Text>
-            <TextInput
-              className="border border-[#6B7280] font-geistRegular h-12 text-white p-3 w-auto rounded-lg"
-              placeholder="Summarize your video"
-              placeholderTextColor="#6B7280"
-              onChangeText={(value) => handleChangeText("summary", value)}
-              value={form.summary}
-              multiline
-            />
-          </View>
-          <View className="mt-7 space-y-2">
-            <Text className="text-base font-geistRegular text-white font-medium">
-              Upload Video
-            </Text>
-            <TouchableOpacity onPress={() => openPicker("video")}>
-              {form.video ? (
-                <Video
-                  resizeMode={ResizeMode.COVER}
-                  source={{ uri: form.video.uri }}
-                  className="w-full h-64 rounded-2xl "
-                  useNativeControls
-                  isLooping
-                />
-              ) : (
-                <View className="w-full h-40 px-4 rounded-2xl border border-[#6B7280] border-dashed justify-center items-center">
-                  <View className="w-14 h-14 border border-dashed border-gray-600 justify-center items-center"></View>
-                </View>
-              )}
-            </TouchableOpacity>
-          </View>
-
-          <View className="mt-7 space-y-2">
-            <Text className="text-base font-geistRegular text-white font-medium">
-              Thumbnail Image
-            </Text>
-            <TouchableOpacity onPress={() => openPicker("image")}>
-              {form.thumbnail ? (
-                <Image
-                  source={{ uri: form.thumbnail.uri }}
-                  resizeMode="cover"
-                  className="w-full h-64 rounded-2xl "
-                />
-              ) : (
-                <View className="w-full h-16 px-4 rounded-2xl justify-center items-center border border-[#6B7280] flex-row space-x-2">
-                  <Text className="text-sm text-gray-300 font-geistRegular">
-                    Choose a file
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
-          </View>
-
-          <View className="mt-6">
-            <Text className="text-white font-geistRegular mb-2">AI Prompt</Text>
-            <TextInput
-              className="border border-[#6B7280] font-geistRegular text-[#6B7280] p-3 rounded-lg"
-              placeholder="The prompt you used to create this video"
-              placeholderTextColor="gray"
-              onChangeText={(value) => handleChangeText("prompt", value)}
-              value={form.prompt}
-            />
-          </View>
-
-          
 
           <TouchableOpacity
             className="mt-7 bg-blue-600 p-4 rounded-lg"
