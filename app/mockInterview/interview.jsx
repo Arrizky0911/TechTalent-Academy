@@ -12,7 +12,7 @@ import { FontAwesome } from "@expo/vector-icons"; // pastikan Anda sudah mengins
 import { useRouter } from "expo-router";
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-const MockInterviewScreen = () => {
+const Interview = () => {
   const router = useRouter()
 
   return (
@@ -83,4 +83,4 @@ const MockInterviewScreen = () => {
   );
 };
 
-export default MockInterviewScreen;
+export default Interview;

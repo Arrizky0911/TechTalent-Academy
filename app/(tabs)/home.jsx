@@ -19,6 +19,7 @@ import {
 } from "../../lib/appwriteConfig";
 import useFetchData from "../../lib/useFetchData";
 import HomeCourse from "../../components/HomeCourse";
+
 import { router } from "expo-router";
 
 const Home = () => {

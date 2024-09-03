@@ -19,8 +19,8 @@ import * as ImagePicker from "expo-image-picker";
 import { Video, ResizeMode } from "expo-av";
 import { router } from "expo-router";
 import Loading from "../../components/Loading";
-import Ionicons from '@expo/vector-icons/Ionicons';
-import font from '../../assets/fonts/Geist-Regular.ttf'
+import Ionicons from "@expo/vector-icons/Ionicons";
+import font from "../../assets/fonts/Geist-Regular.ttf";
 
 const CreateCourse = () => {
   const [isPublishing, setIsPublishing] = useState(false);
@@ -86,7 +86,6 @@ const CreateCourse = () => {
     }
   };
 
-  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -109,32 +108,36 @@ const CreateCourse = () => {
         </View>
         <ScrollView className="px-4 my-6">
           <View className="flex flex-row w-auto gap-2">
+            <View className="flex-1">
+              <Text className="text-white font-geistRegular mb-2">
+                Video Title
+              </Text>
+              <TextInput
+                className="border border-[#6B7280] font-geistRegular h-12 text-white p-3 w-auto rounded-lg"
+                placeholder="Give your video a title"
+                placeholderTextColor="#6B7280"
+                onChangeText={(value) => handleChangeText("name", value)}
+                value={form.name}
+              />
+            </View>
 
-          <View className="flex-1">
-            <Text className="text-white font-geistRegular mb-2">Video Title</Text>
-            <TextInput
-              className="border border-[#6B7280] font-geistRegular h-12 text-white p-3 w-auto rounded-lg"
-              placeholder="Give your video a title"
-              placeholderTextColor="#6B7280"
-              onChangeText={(value) => handleChangeText("name", value)}
-              value={form.name}
-            />
-          </View>
-
-          <View className="flex-1">
-            <Text className="text-white font-geistRegular mb-2">AI Prompt</Text>
-            <TextInput
-              className="border border-[#6B7280] font-geistRegular h-12 text-[#6B7280] p-3 rounded-lg"
-              placeholder="Prompt for your video"
-              placeholderTextColor="gray"
-              onChangeText={(value) => handleChangeText("prompt", value)}
-              value={form.prompt}
-            />
-          </View>
-          
+            <View className="flex-1">
+              <Text className="text-white font-geistRegular mb-2">
+                AI Prompt
+              </Text>
+              <TextInput
+                className="border border-[#6B7280] font-geistRegular h-12 text-[#6B7280] p-3 rounded-lg"
+                placeholder="Prompt for your video"
+                placeholderTextColor="gray"
+                onChangeText={(value) => handleChangeText("prompt", value)}
+                value={form.prompt}
+              />
+            </View>
           </View>
           <View className="mt-6">
-            <Text className="text-white font-geistRegular mb-2">Description</Text>
+            <Text className="text-white font-geistRegular mb-2">
+              Description
+            </Text>
             <TextInput
               className="border border-[#6B7280] font-geistRegular h-12 text-white p-3 w-auto rounded-lg"
               placeholder="Describe your video"
@@ -159,7 +162,10 @@ const CreateCourse = () => {
             <Text className="text-base font-geistRegular text-white font-medium">
               Upload Video
             </Text>
-            <TouchableOpacity className='bg-white/5' onPress={() => openPicker("video")}>
+            <TouchableOpacity
+              className="bg-white/5"
+              onPress={() => openPicker("video")}
+            >
               {form.video ? (
                 <Video
                   resizeMode={ResizeMode.COVER}
@@ -170,7 +176,11 @@ const CreateCourse = () => {
                 />
               ) : (
                 <View className="w-full h-40 px-4 rounded-2xl border border-[#6B7280] border-dashed justify-center items-center">
-                  <Ionicons name="folder-open-outline" size={48} color="white" />
+                  <Ionicons
+                    name="folder-open-outline"
+                    size={48}
+                    color="white"
+                  />
                   <Text className="text-sm text-gray-300 mt-4 font-geistRegular">
                     Choose a video
                   </Text>
@@ -183,7 +193,10 @@ const CreateCourse = () => {
             <Text className="text-base font-geistRegular text-white font-medium">
               Thumbnail Image
             </Text>
-            <TouchableOpacity className='bg-white/5' onPress={() => openPicker("image")}>
+            <TouchableOpacity
+              className="bg-white/5"
+              onPress={() => openPicker("image")}
+            >
               {form.thumbnail ? (
                 <Image
                   source={{ uri: form.thumbnail.uri }}
@@ -192,7 +205,12 @@ const CreateCourse = () => {
                 />
               ) : (
                 <View className="w-full h-auto px-4 py-6 rounded-2xl flex-col justify-center items-center border border-[#6B7280] space-x-2">
-                  <Ionicons name="images-outline" size={24} color="white" className='m-5' />
+                  <Ionicons
+                    name="images-outline"
+                    size={24}
+                    color="white"
+                    className="m-5"
+                  />
                   <Text className="text-sm text-gray-300 mt-4 font-geistRegular">
                     Choose a image
                   </Text>
@@ -201,40 +219,49 @@ const CreateCourse = () => {
             </TouchableOpacity>
           </View>
 
-          
-
           <View className="flex-1 mt-6 font-geistRegular">
-          <Text className="text-white font-geistRegular mb-2">Video Category</Text>
-            <MultipleSelectList
-              data={formatedCategory}
-              save="key"
-              setSelected={(val) => setSelectedCategories(val)}
-              onSelect={() => console.log(selectedCategories)}
-              label="Categories"
-              labelStyles={{ color: "white" }}
-              boxStyles={{
-                borderColor: "#6B7280",
-                borderWidth: 1,
-                height: 48
-              }}
-              placeholder="Select Categories"
-              inputStyles={{ color: "white" }}
-              dropdownStyles={{ backgroundColor: "black" }}
-              dropdownItemStyles={{
-                
-              }}
-              dropdownTextStyles={{ color: "white", fontFamily: '' }}
-              badgeStyles={{ backgroundColor: "#3B82F6" }}
-              badgeTextStyles={{ color: "white" }}
-              checkBoxStyles={{
-                backgroundColor: "white",
-                borderColor: "white",
-              }}
-            />
+            <Text className="text-white font-geistRegular mb-2">
+              Video Category
+            </Text>
+            <View className="border border-[#6B7280] rounded-lg p-2">
+              <MultipleSelectList
+                data={formatedCategory}
+                save="key"
+                setSelected={(val) => setSelectedCategories(val)}
+                onSelect={() => console.log(selectedCategories)}
+                label="Categories"
+                labelStyles={{ color: "white" }}
+                boxStyles={{
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  height: "auto",
+                }}
+                placeholder="Select Categories"
+                inputStyles={{ color: "white" }}
+                dropdownStyles={{ backgroundColor: "black" }}
+                dropdownItemStyles={{}}
+                dropdownTextStyles={{ color: "white" }}
+                badgeStyles={{
+                  backgroundColor: "#2563eb",
+                  borderRadius: 10,
+                  paddingHorizontal: 15,
+                  paddingVertical: 5,
+                  marginRight: 5,
+                }}
+                badgeTextStyles={{
+                  color: "#FFFFFF",
+                  fontSize: 14,
+                }}
+                checkBoxStyles={{
+                  backgroundColor: "white",
+                  borderColor: "white",
+                }}
+              />
+            </View>
           </View>
 
           <TouchableOpacity
-            className="mt-7 bg-blue-600 p-4 rounded-lg"
+            className="mt-7 mb-16 bg-blue-600 p-4 rounded-lg"
             onPress={publish}
           >
             <Text className="text-white font-geistSemiBold text-center font-semibold">

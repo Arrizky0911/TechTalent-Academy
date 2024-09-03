@@ -19,7 +19,7 @@ const AiFeature = () => {
     <SafeAreaView className="h-full relative">
       <BgImage />
       <UserDisplay user={user} />
-      <View className="absolute bottom-0 w-full h-[690px] bg-[#151719] rounded-t-3xl items-center border-[1px] border-white/10">
+      <View className="absolute bottom-0 w-full h-[690px] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 ">
         <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
         <Text className="text-center text-white font-geistMedium mt-[60px]">
           Ai Powered Tools that Will Help you in Your Career Development
@@ -32,34 +32,44 @@ const AiFeature = () => {
             {/* AI LOGO and title */}
             <View className="space-y-3">
               {/* logo */}
-              <View className="relative">
-                <Image
-                  source={icons.starThin}
-                  tintColor="white"
-                  className="w-6 h-6"
-                  resizeMethod="contain"
-                />
-                <Image
-                  source={icons.starThick}
-                  tintColor="white"
-                  className="w-3 h-3 absolute left-3.5 top-3.5"
-                  resizeMethod="contain"
-                />
+              <View className="relative flex-row justify-between">
+                <View>
+                  <Image
+                    source={icons.starThin}
+                    tintColor="white"
+                    className="w-6 h-6"
+                    resizeMethod="contain"
+                  />
+                  <Image
+                    source={icons.starThick}
+                    tintColor="white"
+                    className="w-3 h-3 absolute left-3.5 top-3.5"
+                    resizeMethod="contain"
+                  />
+                </View>
+                <View>
+                  <Image
+                    source={icons.arrowUpRight}
+                    tintColor="white"
+                    className="w-5 h-5"
+                    resizeMethod="contain"
+                  />
+                </View>
               </View>
 
               <Text className="font-geistSemiBold text-lg text-white">
                 Savior
               </Text>
             </View>
-            <Text className="text-white text-[13px] font-geistRegular">
+            <Text className="text-white text-xs font-geistRegular">
               AI chatbot that will help you in your career development
             </Text>
           </TouchableOpacity>
           <View className="h-[290px] w-[180px] justify-between">
-            <TouchableOpacity 
+            <TouchableOpacity
               className="w-full h-[130px] bg-[#353535] rounded-2xl p-4 justify-between"
-              onPress={() => router.push('hobby')}
-              >
+              onPress={() => router.push("hobby")}
+            >
               <View className="flex-row items-center justify-between">
                 <Image
                   source={icons.questionCircle}
@@ -76,17 +86,17 @@ const AiFeature = () => {
                 />
               </View>
               <View>
-                <Text className="text-white font-geistRegular">
+                <Text className="text-white text-xs font-geistRegular">
                   AI powered tools to find the roadmap of careers from your
                   hobby/interest
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity 
+            <TouchableOpacity
               className="w-full h-[130px] bg-[#353535] rounded-2xl p-4 justify-between"
-              onPress={() => router.push('/mockLanding')}  
+              onPress={() => router.push("/mockLanding")}
             >
-              <View className="flex-row items-center">
+              <View className="flex-row items-center justify-between">
                 <Image
                   source={icons.cursor}
                   tintColor="white"
@@ -94,9 +104,15 @@ const AiFeature = () => {
                   resizeMethod="contain"
                 />
                 <Text className="text-white font-geistSemiBold">Judgement</Text>
+                <Image
+                  source={icons.arrowUpRight}
+                  tintColor="white"
+                  className="w-5 h-5"
+                  resizeMethod="contain"
+                />
               </View>
               <View>
-                <Text className="text-white font-geistRegular">
+                <Text className="text-white text-xs font-geistRegular">
                   AI tools for mock interviews with job-specific questions and
                   feedback.
                 </Text>

@@ -34,7 +34,7 @@ const Chatbot = () => {
           </TouchableOpacity>
         </View>
         <UserDisplay user={user} />
-        <View className="absolute -bottom-1 w-full h-[695px] bg-[#151719] rounded-t-3xl items-center border-[1px] border-white/10 px-5">
+        <View className="absolute -bottom-1 w-full h-[695px] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5">
           <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
           <View>
             <View className="mt-[60px]">

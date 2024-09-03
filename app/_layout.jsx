@@ -50,6 +50,10 @@ export default function RootLayout() {
           name="hobby"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="mockInterview"
+          options={{ headerShown: false }}
+        />
       </Stack>
     </GlobalProvider>
   );
