@@ -1,13 +1,20 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useState } from 'react';
 import { View, Text, Image, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import data from './dummyData';
-import { router } from 'expo-router';
+import data from '../mockInterview/dummyData'
+import { router, useLocalSearchParams } from 'expo-router';
+import useFetchData from '../../lib/useFetchData';
+import { getFeedbacks } from '../../lib/AIConfig';
+import Loading from '../../components/Loading';
 
 const MockFeedback = () => {
   const bottomSheetRef = useRef(null);
+  const result = useLocalSearchParams(); 
+  const {data: feedbacks, setIsLoading} = useFetchData(() => getFeedbacks(
+    result.questions.spl, JSON.parse(result).answers
+  ));
 
   // Define snap points as memoized value to prevent re-renders
   const snapPoints = useMemo(() => ['35%', '90%'], []);
@@ -64,7 +71,7 @@ const MockFeedback = () => {
             Mock Interview
           </Text>
           <Text className="text-white text-center font-geistSemiBold text-base mt-3">
-            Front-End Developer Job Mock Interview
+            {result.interviewResult} Developer Job Mock Interview
           </Text>
           <Image
             source={{ uri: 'background-image-url' }}
@@ -81,11 +88,6 @@ const MockFeedback = () => {
             <View className="rounded-full w-48 h-48 border border-[#9CA3AF] bg-[#6B7280]/30 items-center justify-center">
               <Text className="text-white font-geistSemiBold text-base">Good</Text>
               <Ionicons name="checkmark-done" size={96} color="green" />
-            </View>
-            <View className="items-center justify-center bg-blue-500 py-3 px-6 rounded-md mb-4">
-              <Text className="text-white font-geistSemiBold text-xs">
-                You have answered 10 questions!
-              </Text>
             </View>
           </View>
           <BottomSheet

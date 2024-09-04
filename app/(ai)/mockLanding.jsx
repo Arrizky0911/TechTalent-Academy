@@ -1,10 +1,11 @@
 // App.js
 import { router } from "expo-router";
-import React from "react";
+import React, {useState} from "react";
 import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 export default function App() {
+  const [jobInterview, setJobInterview] = useState("");
 
   return (
     <SafeAreaView className="bg-[#30353C] w-full h-full absolute pt-14">
@@ -45,6 +46,7 @@ export default function App() {
                   ? "bg-[#eeeeeb]"
                   : "bg-[#353535] text-white"
               } py-7 px-4 rounded-xl m-1 mt-2.5 w-[30%] items-center justify-center`}
+              onPress={() => router.push(`mockInterview/${job}`)}
             >
               <Text
                 className={`${
@@ -59,7 +61,7 @@ export default function App() {
         <View className="flex-1 justify-end items-center pb-5 mx-5">
           {/* Next Button */}
           <TouchableOpacity 
-            onPress={() => router.push('mockInterview')}
+            onPress={() => router.push(`mockInterview/"Frontend`)}
             className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full">
             <Text className="text-white text-center font-geistSemiBold">
               Next

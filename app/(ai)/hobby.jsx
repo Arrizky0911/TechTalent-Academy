@@ -2,12 +2,11 @@ import { router } from "expo-router";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import axios from 'axios';
 
 const Hobby = () => {
   const [searchInput, setSearchInput] = useState("");
-
-  const handleSearch = () => {};
-
+  
   return (
     <SafeAreaView className="flex-1 bg-[#111315]  p-4">
       <View className="flex-1 items-center justify-center">
@@ -29,12 +28,11 @@ const Hobby = () => {
       </View>
       <View className="bottom-[0.1%] left-0 right-0">
         <TouchableOpacity
-          onPress={handleSearch}
           className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
+          onPress={() => router.push(`hobby/${searchInput}`)}
         >
           <Text 
             className="text-white text-center font-geistSemiBold"
-            onPress={() => router.push('hobby/roadmapResponse')}
           >
             Search
           </Text>

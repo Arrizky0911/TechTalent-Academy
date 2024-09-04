@@ -1,16 +1,16 @@
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import { View, Text, TextInput, TouchableOpacity, Image, Te } from "react-native";
+import React, {useState} from "react";
 import { icons } from "../constants";
 
 const BotTextFields = ({
   outerClass,
   containerClass,
   textStyles,
-  value,
-  handleChange,
   handleSubmit,
   placeholder,
   editable,
+  value,
+  handleChangeText,
 }) => {
   return (
     <View className={`w-full items-center flex-row ${outerClass}`}>
@@ -19,7 +19,7 @@ const BotTextFields = ({
       >
         <TextInput
           value={value}
-          onChangeText={handleChange}
+          onChangeText={handleChangeText}
           className={
             "flex-1 w-full text-white font-geistRegular" + ` ${textStyles}`
           }

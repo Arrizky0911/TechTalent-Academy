@@ -1,15 +1,19 @@
 import { View, Text, TouchableOpacity, ScrollView, LayoutAnimation } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Animated, { useAnimatedStyle,useSharedValue, withTiming, withSpring } from "react-native-reanimated";
-import data from "./dummyData";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { searchHobby } from "../../lib/AIConfig";
+import useFetchData from "../../lib/useFetchData";
+import Loading from "../../components/Loading";
 
 const RoadmapResponse = () => {
+  const {input} = useLocalSearchParams()
   const [activeAccordion, setActiveAccordion] = useState(null);
   const animationOpacity = useSharedValue(1); // manage opacity
   const animationScale = useSharedValue(1); // manage scale
-
+  const {data: jobs, isLoading} = useFetchData(() => searchHobby(input));
+  
   const toggleAccordion = (accordion) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut); // Smooth expansion and collapse
 
@@ -44,8 +48,11 @@ const RoadmapResponse = () => {
   });
 
   return (
-    <SafeAreaView className="flex-1 bg-[#111315]">
-      <View className="p-6">
+    <View className="flex-1 bg-[#111315] relative">
+      {isLoading && (
+          <Loading additionStyle="absolute h-full w-full z-[1000] bg-black" />
+        )}
+      <View className="p-6 mt-4">
         <Text className="text-white text-xl font-geistSemiBold">
           | Study Planning
         </Text>
@@ -60,21 +67,26 @@ const RoadmapResponse = () => {
             Your hobby:
           </Text>
           <Text className="text-white text-xl font-geistBold mt-1 mb-4">
-            Gaming
+            {input}
           </Text>
         </View>
-
-        {data.map(({ jobName, roadMapPoints }, index) => {
-          const isActive = activeAccordion === jobName;
+        
+      
+        {jobs.length < 1 ? (
+          <View>
+            <Text>No jobs found!</Text>
+          </View>
+        ) : jobs?.map(({ name, path }, index) => {
+          const isActive = activeAccordion === name;
 
           return (
             <View key={index} style={{ marginBottom: 16 }}>
               <TouchableOpacity
                 className="bg-[#111315]/50 rounded-lg border border-[#6B7280] p-4"
-                onPress={() => toggleAccordion(jobName)}
+                onPress={() => toggleAccordion(name)}
               >
                 <Text className="text-white font-geistSemiBold text-sm">
-                  {jobName}
+                  {name}
                 </Text>
               </TouchableOpacity>
               {isActive && (
@@ -96,13 +108,13 @@ const RoadmapResponse = () => {
                       See related tutorial
                     </Text>
                   </View>
-                  {roadMapPoints.map(({ point, description }, idx) => (
+                  {path.map(({ subject, description }, idx) => (
                     <View
                       key={idx}
                       className="bg-[#111315] p-4 mt-4 rounded-lg"
                     >
                       <Text className="text-white font-geistSemiBold text-sm">
-                        {point}
+                        {subject}
                       </Text>
                       <Text className="text-gray-400 font-geistRegular text-xs mt-2">
                         {description}
@@ -120,7 +132,7 @@ const RoadmapResponse = () => {
         className="bg-blue-500 py-3 px-6 mb-4 mx-6 absolute bottom-0 left-0 right-0 rounded-md">
         <Text className="text-white text-center font-geistSemiBold">Done</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 
