@@ -1,7 +1,6 @@
 import { View, Text, ImageBackground, Image } from "react-native";
 import React from "react";
 import { images } from "../constants";
-import { Image } from "react-native";
 
 const BgImage = () => {
   return (

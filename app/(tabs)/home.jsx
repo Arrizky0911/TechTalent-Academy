@@ -54,7 +54,7 @@ const Home = () => {
 
   return (
     <SafeAreaView className="bg-frame h-full relative">
-      <View className="h-[170px] w-full bg-black rounded-b-[20px] absolute top-0 flex-row justify-between px-10 z-50">
+      <View className="h-[170px] w-full bg-black rounded-b-[20px] absolute  flex-row justify-between px-10 z-50">
         <View className="flex-row space-x-3 items-center">
           <View>
             <Image
@@ -100,9 +100,9 @@ const Home = () => {
           )}
         </View>
       </View>
-      <View className="relative mt-[140px] mb-16">
+      <View className="relative mt-[150px] pb-[90px]">
         <ScrollView
-          className="pt-10 mb-[10px]"
+          className="pt-10 mb-[30px]"
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -110,7 +110,7 @@ const Home = () => {
           {categories.map((category, index) => {
             if (category.courses.length > 1) {
               return (
-                <View className="mt-2" key={index}>
+                <View className="mt-4" key={index}>
                   <HomeCourse
                     data={category.courses}
                     title={category.category_name}
