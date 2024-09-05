@@ -235,7 +235,7 @@ const MockTest = () => {
                 <FontAwesome name="times" size={24} color="white" />
                 </TouchableOpacity>
               <TouchableOpacity 
-                onPress={() => recording ? stopRecording() : startRecording()}
+                disabled
                 className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full mx-16">
                 <FontAwesome name="microphone" size={24} color="white" />
               </TouchableOpacity>
