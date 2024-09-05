@@ -56,9 +56,9 @@ const Chatbot = () => {
 
       console.log("Ini updated chat with bot", updatedChatWithBot);
 
+      setUserInput("");
       setChat(updatedChatWithBot);
 
-      setUserInput("");
       console.log("Ini chat akhir", chat);
     } catch (error) {
       console.error(error);
@@ -76,7 +76,7 @@ const Chatbot = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      <SafeAreaView className="h-full relative">
+      <View className="h-full relative">
         <BgImage />
         <View className="mx-5 mt-5">
           <TouchableOpacity onPress={() => router.back()}>
@@ -242,8 +242,9 @@ const Chatbot = () => {
           value={userInput}
           handleSubmit={sendMessage}
           buttonDisable={isLoading}
+          editable={!isLoading}
         />
-      </SafeAreaView>
+      </View>
     </KeyboardAvoidingView>
   );
 };

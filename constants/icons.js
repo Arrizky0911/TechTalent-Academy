@@ -18,6 +18,7 @@ import paperPlane from "../assets/icons/paperPlane.png";
 import play from "../assets/icons/play.png";
 import fullScreen from "../assets/icons/fullScreen.png";
 import addCircle from "../assets/icons/addCircle.png";
+import sadEmo from "../assets/icons/sadEmo.png";
 
 export default {
   eye,
@@ -29,6 +30,7 @@ export default {
   aiFeature,
   search,
   notification,
+  sadEmo,
   addCircle,
   fullScreen,
   play,
