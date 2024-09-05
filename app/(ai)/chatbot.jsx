@@ -6,6 +6,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import React from "react";
 import { router, usePathname } from "expo-router";
@@ -14,9 +15,47 @@ import UserDisplay from "../../components/UserDisplay";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
+import { getResponse } from "../../lib/AIConfig";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
+  const [chat, setChat] = useState([]);
+  const [userInput, setUserInput] = useState("");
+  const [isNewChat, setIsNewChat] = useState(true);
+  const {isLoading, setIsLoading} = useState(false);
+
+  const sendMessage = async () => {
+    let input = {
+      role: "user",
+      parts: [{ text: userInput }],
+    }
+    let updatedChat = [
+      ...chat,
+      input,
+    ];
+
+    console.log(updatedChat)
+
+    const response = await getResponse(updatedChat)
+    console.log(response);
+    
+    setChat(chat => chat.push(
+      input,
+      {
+        role: "model",
+        parts: [{ text: response }],
+      },
+    ));
+
+    console.log(response);
+    console.log(typeof response);
+    console.log(chat[0])
+    setUserInput("");
+    setIsNewChat(false);
+    
+    
+  }
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <SafeAreaView className="h-full relative">
@@ -96,6 +135,9 @@ const Chatbot = () => {
             outerClass="absolute bottom-[50px] px-3"
             containerClass="h-14"
             placeholder="Ask me anything..."
+            handleChange={sendMessage}
+            value={userInput}
+            handleSubmit={(e) => setUserInput(e)}
           />
         </View>
       </SafeAreaView>

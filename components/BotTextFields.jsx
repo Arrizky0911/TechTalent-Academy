@@ -11,6 +11,7 @@ const BotTextFields = ({
   handleSubmit,
   placeholder,
   editable,
+  buttonDisable
 }) => {
   return (
     <View className={`w-full items-center flex-row ${outerClass}`}>
@@ -28,7 +29,7 @@ const BotTextFields = ({
           editable={editable}
         />
 
-        <TouchableOpacity onPress={handleSubmit}>
+        <TouchableOpacity onPress={handleSubmit} disabled={buttonDisable} className={`${buttonDisable ? "opacity-50" : ""}`}>
           <Image
             source={icons.paperPlane}
             className="w-6 h-6"
