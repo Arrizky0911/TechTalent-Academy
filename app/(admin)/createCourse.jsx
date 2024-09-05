@@ -223,41 +223,31 @@ const CreateCourse = () => {
             <Text className="text-white font-geistRegular mb-2">
               Video Category
             </Text>
-            <View className="border border-[#6B7280] rounded-lg p-2">
-              <MultipleSelectList
-                data={formatedCategory}
-                save="key"
-                setSelected={(val) => setSelectedCategories(val)}
-                onSelect={() => console.log(selectedCategories)}
-                label="Categories"
-                labelStyles={{ color: "white" }}
-                boxStyles={{
-                  borderColor: "transparent",
-                  borderWidth: 0,
-                  height: "auto",
-                }}
-                placeholder="Select Categories"
-                inputStyles={{ color: "white" }}
-                dropdownStyles={{ backgroundColor: "black" }}
-                dropdownItemStyles={{}}
-                dropdownTextStyles={{ color: "white" }}
-                badgeStyles={{
-                  backgroundColor: "#2563eb",
-                  borderRadius: 10,
-                  paddingHorizontal: 15,
-                  paddingVertical: 5,
-                  marginRight: 5,
-                }}
-                badgeTextStyles={{
-                  color: "#FFFFFF",
-                  fontSize: 14,
-                }}
-                checkBoxStyles={{
-                  backgroundColor: "white",
-                  borderColor: "white",
-                }}
-              />
-            </View>
+            <MultipleSelectList
+              data={formatedCategory}
+              save="key"
+              setSelected={(val) => setSelectedCategories(val)}
+              onSelect={() => console.log(selectedCategories)}
+              label="Categories"
+              labelStyles={{ color: "white" }}
+              boxStyles={{
+                borderColor: "#6B7280",
+                borderWidth: 1,
+                height: 48,
+                overflow: "hidden",
+              }}
+              placeholder="Select Categories"
+              inputStyles={{ color: "white" }}
+              dropdownStyles={{ backgroundColor: "black" }}
+              dropdownItemStyles={{}}
+              dropdownTextStyles={{ color: "white", fontFamily: "" }}
+              badgeStyles={{ backgroundColor: "#3B82F6" }}
+              badgeTextStyles={{ color: "white" }}
+              checkBoxStyles={{
+                backgroundColor: "white",
+                borderColor: "white",
+              }}
+            />
           </View>
 
           <TouchableOpacity

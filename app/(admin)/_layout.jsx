@@ -6,6 +6,7 @@ const AdminLayout = () => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="createCourse" options={{ headerShown: false }} />
+      <Stack.Screen name="createCategory" options={{ headerShown: false }} />
     </Stack>
   );
 };

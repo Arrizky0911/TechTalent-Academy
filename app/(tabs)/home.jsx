@@ -13,6 +13,7 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import Loading from "../../components/Loading";
 import icons from "../../constants/icons";
 import {
+  getAllCategories,
   getAllCourses,
   getCurrentUser,
   getUserLabels,
@@ -25,6 +26,8 @@ import { router } from "expo-router";
 const Home = () => {
   const { user, setIsLoading, isLoading, setUser } = useGlobalContext();
   const { data: courses, refetch } = useFetchData(getAllCourses);
+  const { data: categories, refetch: refetchCategories } =
+    useFetchData(getAllCategories);
 
   const { data: labels, refetch: refetchLabels } = useFetchData(getUserLabels);
   const adminLabel = labels.filter((label) => label.toLowerCase() === "admin");
@@ -36,6 +39,7 @@ const Home = () => {
     try {
       const data = await getCurrentUser();
       refetch();
+      refetchCategories();
       setUser(data);
     } catch (error) {
       console.log(error);
@@ -86,25 +90,37 @@ const Home = () => {
               />
             </TouchableOpacity>
           )}
-
-          <TouchableOpacity>
-            <Image
-              source={icons.notification}
-              className="w-[30px] h-[30px]"
-              tintColor="#fff"
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+          {adminLabel && (
+            <TouchableOpacity
+              className="border-[1px] border-white py-0.5 px-2 rounded-xl"
+              onPress={() => router.push("/createCategory")}
+            >
+              <Text className="text-white">Add category</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
-      <ScrollView
-        className="relative top-[140px] py-8"
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <HomeCourse data={courses} title={"all courses"} />
-      </ScrollView>
+      <View className="relative mt-[140px] mb-16">
+        <ScrollView
+          className="pt-10 mb-[10px]"
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          {categories.map((category, index) => {
+            if (category.courses.length > 1) {
+              return (
+                <View className="mt-2" key={index}>
+                  <HomeCourse
+                    data={category.courses}
+                    title={category.category_name}
+                  />
+                </View>
+              );
+            }
+          })}
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
