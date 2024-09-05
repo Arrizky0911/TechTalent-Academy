@@ -47,11 +47,15 @@ export default function RootLayout() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="hobby"
+          name="hobby/[hobby]"
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="mockInterview"
+          name="mockInterview/[input]"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="mockFeedback/[interviewResult]"
           options={{ headerShown: false }}
         />
       </Stack>

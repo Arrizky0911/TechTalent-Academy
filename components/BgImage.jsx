@@ -5,7 +5,6 @@ import { images } from "../constants";
 const BgImage = () => {
   return (
     <Image
-      resizeMode="cover"
       source={images.authBg}
       className="min-h-[98vh] w-full absolute top-0 bottom-0 bg-black"
     />

@@ -21,6 +21,8 @@ const CourseResponse = () => {
   const { data, refetch } = useFetchData(() => searchCategories(category));
   const datass = data.map((item) => item.courses)[0];
 
+  console.log(category);
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {

@@ -34,7 +34,7 @@ const Hobby = () => {
         >
           <Text 
             className="text-white text-center font-geistSemiBold"
-            onPress={() => router.push('hobby/roadmapResponse')}
+            onPress={() => router.push(`hobby/${searchInput}`)}
           >
             Search
           </Text>
