@@ -6,6 +6,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import React, {useState} from "react";
 import { router, usePathname } from "expo-router";
@@ -14,15 +15,19 @@ import UserDisplay from "../../components/UserDisplay";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
+import { getResponse } from "../../lib/AIConfig";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
   const [chat, setChat] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [isNewChat, setIsNewChat] = useState(true);
-  const {isLoading, setIsLoading} = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const sendMessage = async () => {
+    console.log(chat)
+    console.log(typeof chat)
+    setIsLoading(true);
     let input = {
       role: "user",
       parts: [{ text: userInput }],
@@ -34,24 +39,34 @@ const Chatbot = () => {
 
     console.log(updatedChat)
 
-    const response = await getResponse(updatedChat)
-    console.log(response);
-    
-    setChat(chat => chat.push(
-      input,
-      {
-        role: "model",
-        parts: [{ text: response }],
-      },
-    ));
+    try {
+      const response = await getResponse(updatedChat)
+      console.log(response);
 
-    console.log(response);
-    console.log(typeof response);
-    console.log(chat[0])
-    setUserInput("");
-    setIsNewChat(false);
-    
-    
+      let updatedChatWithModel = [
+        ...updatedChat, 
+        {
+          role: "model",
+          parts: [{ text: response }],
+        },
+      ]
+      
+      
+      setChat(updatedChatWithModel);
+
+      console.log(response);
+      console.log(typeof chat);
+      console.log("hello")
+      console.log(JSON.stringify(chat))
+      setUserInput("");
+      setIsNewChat(false);
+    } catch (error) {
+      Alert.alert("Error", error.message)
+    } finally {
+      setIsLoading(false)
+      console.log(chat)
+    }
+
   }
 
   return (
@@ -143,9 +158,10 @@ const Chatbot = () => {
             outerClass="absolute bottom-[50px] px-3"
             containerClass="h-14"
             placeholder="Ask me anything..."
-            handleChange={sendMessage}
+            handleChange={(e) => setUserInput(e)}
             value={userInput}
-            handleSubmit={(e) => setUserInput(e)}
+            buttonDisable={isLoading}
+            handleSubmit={sendMessage}
           />
         </View>
       </SafeAreaView>
