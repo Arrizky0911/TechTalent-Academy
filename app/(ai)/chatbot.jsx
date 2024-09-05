@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   ActivityIndicator,
+  Keyboard,
 } from "react-native";
 import React, { useState } from "react";
 import { router } from "expo-router";
@@ -26,29 +27,39 @@ const Chatbot = () => {
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
+    Keyboard.dismiss();
+    console.log("Ini chat awal", chat);
+    let updatedChat = [
+      ...chat,
+      {
+        role: "user",
+        parts: [{ text: userInput }],
+      },
+    ];
 
-    let input = {
-      role: "user",
-      parts: [{ text: userInput }],
-    };
-
-    let updatedChat = [...chat, input];
     setChat(updatedChat);
 
-    setUserInput("");
+    console.log("Ini updatedChat", updatedChat);
 
     setIsLoading(true);
 
     try {
       const response = await getResponse(updatedChat);
 
-      setChat((prevChat) => [
-        ...prevChat,
+      let updatedChatWithBot = [
+        ...updatedChat,
         {
-          role: "bot",
+          role: "model",
           parts: [{ text: response }],
         },
-      ]);
+      ];
+
+      console.log("Ini updated chat with bot", updatedChatWithBot);
+
+      setChat(updatedChatWithBot);
+
+      setUserInput("");
+      console.log("Ini chat akhir", chat);
     } catch (error) {
       console.error(error);
     } finally {
@@ -78,7 +89,7 @@ const Chatbot = () => {
           </TouchableOpacity>
         </View>
 
-        {!chat.length ? (
+        {chat.length < 1 ? (
           <>
             <UserDisplay user={user} />
             <View className="absolute -bottom-1 w-full h-[695px] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5">
@@ -97,9 +108,7 @@ const Chatbot = () => {
                   <View className="flex-row w-full justify-center gap-x-4">
                     <TouchableOpacity
                       className="w-[170px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between"
-                      onPress={() =>
-                        handlePromptClick("What this bot can do?")
-                      }
+                      onPress={() => handlePromptClick("What this bot can do?")}
                     >
                       <Image
                         source={icons.questionCircle}
@@ -113,9 +122,7 @@ const Chatbot = () => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       className="w-[170px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between"
-                      onPress={() =>
-                        handlePromptClick("How to use this bot?")
-                      }
+                      onPress={() => handlePromptClick("How to use this bot?")}
                     >
                       <Image
                         source={icons.cursor}
@@ -169,7 +176,7 @@ const Chatbot = () => {
               paddingBottom: 100,
             }}
           >
-            {chat.map((message, index) => (
+            {chat?.map((message, index) => (
               <View
                 key={index}
                 style={{
@@ -192,7 +199,7 @@ const Chatbot = () => {
                     color: message.role === "user" ? "#fff" : "#333",
                     fontSize: 16,
                   }}
-                  className='font-geistRegular'
+                  className="font-geistRegular"
                 >
                   {message.parts[0].text}
                 </Text>
@@ -217,7 +224,10 @@ const Chatbot = () => {
                 }}
               >
                 <ActivityIndicator size="small" color="#333" />
-                <Text className='font-geistRegular' style={{ marginLeft: 10, color: "#333", fontSize: 16 }}>
+                <Text
+                  className="font-geistRegular"
+                  style={{ marginLeft: 10, color: "#333", fontSize: 16 }}
+                >
                   Waiting for response
                 </Text>
               </View>
@@ -228,9 +238,10 @@ const Chatbot = () => {
           outerClass="absolute bottom-5 px-3"
           containerClass="h-14 bg-black flex-1"
           placeholder="Ask me anything..."
-          handleChange={setUserInput}
+          handleChange={(e) => setUserInput(e)}
           value={userInput}
           handleSubmit={sendMessage}
+          buttonDisable={isLoading}
         />
       </SafeAreaView>
     </KeyboardAvoidingView>
