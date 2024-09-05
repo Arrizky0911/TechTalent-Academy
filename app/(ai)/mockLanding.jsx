@@ -40,6 +40,7 @@ export default function App() {
           ].map((job, index) => (
             <TouchableOpacity
               key={index}
+              onPress={() => router.push(`mockInterview/${job}`)}
               className={`${
                 job === "Another job"
                   ? "bg-[#eeeeeb]"
@@ -59,7 +60,6 @@ export default function App() {
         <View className="flex-1 justify-end items-center pb-5 mx-5">
           {/* Next Button */}
           <TouchableOpacity 
-            onPress={() => router.push('mockInterview')}
             className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full">
             <Text className="text-white text-center font-geistSemiBold">
               Next

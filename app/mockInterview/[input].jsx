@@ -20,10 +20,10 @@ import { Audio } from "expo-av";
 
 const MockTest = () => {
   const {input} = useLocalSearchParams();
-  let i = 0;
   const {data: questions, isLoading} = useFetchData(() => getQuestions(input));
+  console.log(questions);
   const [index, setIndex] = useState(0);
-  const {data: answers, setAnswers} = useState([]);
+  const [answers, setAnswers] = useState([]);
   const [isTranscripting, setIsTranscripting] = useState(false);
   const [permissionResponse, requestPermission] = Audio.usePermissions();
   const [recording, setRecording] = useState();
@@ -63,9 +63,8 @@ const MockTest = () => {
     const uri = recording.getURI();
     console.log('Recording stopped and stored at', uri);
     const transcriptedText = await getTranscript(uri);
-    setAnswers(answers => answers?.push(transcriptedText));
-    console.log(answers);
-    console.log(typeof answers);
+    let updatedAnswer = [...answers, transcriptedText];
+    setAnswers(updatedAnswer);
     setIsTranscripting(false);
   }
   
@@ -144,7 +143,9 @@ const MockTest = () => {
   }
 
   const refreshCurrentAnswer = () => {
-    setAnswers( answers => answers.length = index - 1)
+    console.log(answers?.length)
+    setAnswers( answers => answers.length = index)
+    console.log(answers?.length)
   }
 
   
@@ -180,7 +181,7 @@ const MockTest = () => {
         {index == questions?.length ? (
           <View className=" mt-10 w-auto ml-4 bg-[#242627] p-3 rounded-t-2xl rounded-br-2xl flex flex-col justify-between">
             <Text className="text-white font-geistRegular text-xs">
-              There are no more questions {answers.length == questions.length ? "Your answer has been saved" : ""}
+              There are no more questions {answers?.length == questions?.length ? "Your answer has been saved" : ""}
             </Text>
             <View className="mt-4 border-t rounded-full w-full border-gray-500"></View>
           </View>
@@ -197,21 +198,21 @@ const MockTest = () => {
         )}
       </View>
 
-      {answers?.length == index? (
-        <View className="mt-20 mb-10 items-center ">
-          <LinearGradient
-            colors={["#3b5998", "#192f6a"]}
-            className="h-48 w-48 rounded-full border border-gray-200 items-center justify-center">
-            <Text className="text-white font-geistRegular text-xl">02.00</Text>
-          </LinearGradient>
-        </View>
-      ) : (
+      {answers?.[index] ? (
         <View className=" mt-10 w-auto ml-4 bg-[#242627] p-3 rounded-t-2xl rounded-br-2xl flex flex-col justify-between">
           <Text className="text-white font-geistRegular text-xs">
             {answers?.[index]}
           </Text>
           <View className="mt-4 border-t rounded-full w-full border-gray-500"></View>
           <Text className="text-gray-400 font-geistMedium text-[10px] mt-2 text-right ">{index + 1} of {questions?.length + 1}</Text>
+        </View>
+      ) : (
+        <View className="mt-20 mb-10 items-center ">
+          <LinearGradient
+            colors={["#3b5998", "#192f6a"]}
+            className="h-48 w-48 rounded-full border border-gray-200 items-center justify-center">
+            <Text className="text-white font-geistRegular text-xl">02.00</Text>
+          </LinearGradient>
         </View>
       )}
 
@@ -226,7 +227,7 @@ const MockTest = () => {
           </TouchableOpacity>
         </View>
         ) : 
-          answers[index] ? (
+          answers?.[index] ? (
             <View className="flex-row justify-center w-full mb-10">
               <TouchableOpacity 
                 onPress={() => refreshCurrentAnswer()}
@@ -252,15 +253,7 @@ const MockTest = () => {
                 className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full mx-16">
                 <FontAwesome name="microphone" size={24} color="white" />
               </TouchableOpacity>
-              <TouchableOpacity 
-                onPress={() => setIndex(i => i + 1)}
-                className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full ">
-                <FontAwesome name="play" size={24} color="white" />
-              </TouchableOpacity>
             </View>
-
-          
-
         )}
     </SafeAreaView>
     </ImageBackground>

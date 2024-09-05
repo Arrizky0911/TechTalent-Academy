@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import React from "react";
+import React, {useState} from "react";
 import { router, usePathname } from "expo-router";
 import BgImage from "../../components/BgImage";
 import UserDisplay from "../../components/UserDisplay";
@@ -17,20 +17,19 @@ import BotTextFields from "../../components/BotTextFields";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
-<<<<<<< Updated upstream
-=======
   const [chat, setChat] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [isNewChat, setIsNewChat] = useState(true);
   const {isLoading, setIsLoading} = useState(false);
 
   const sendMessage = async () => {
+    let input = {
+      role: "user",
+      parts: [{ text: userInput }],
+    }
     let updatedChat = [
       ...chat,
-      {
-        role: "user",
-        parts: [{ text: userInput }],
-      },
+      input,
     ];
 
     console.log(updatedChat)
@@ -39,6 +38,7 @@ const Chatbot = () => {
     console.log(response);
     
     setChat(chat => chat.push(
+      input,
       {
         role: "model",
         parts: [{ text: response }],
@@ -54,7 +54,6 @@ const Chatbot = () => {
     
   }
 
->>>>>>> Stashed changes
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -86,7 +85,9 @@ const Chatbot = () => {
 
             <View className="mx-5 mt-[60px] w-full items-center">
               <View className="flex-row w-full justify-center gap-x-4">
-                <TouchableOpacity className="w-[170px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between">
+                <TouchableOpacity 
+                  onPress={() => setUserInput("What this bot can do?")}
+                  className="w-[170px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between">
                   <Image
                     source={icons.questionCircle}
                     className="w-6 h-6"
@@ -97,7 +98,9 @@ const Chatbot = () => {
                     What this bot can do?
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity className="w-[170px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between">
+                <TouchableOpacity 
+                  onPress={() => setUserInput("How to use this bot?")}
+                  className="w-[170px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between">
                   <Image
                     source={icons.cursor}
                     className="w-6 h-6"
@@ -109,7 +112,9 @@ const Chatbot = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity className="w-[350px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between mt-4">
+              <TouchableOpacity 
+                onPress={() => setUserInput("Make a roadmap to become a fullstack web developer")}
+                className="w-[350px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between mt-4">
                 <View className="relative">
                   <Image
                     source={icons.starThin}
@@ -138,6 +143,9 @@ const Chatbot = () => {
             outerClass="absolute bottom-[50px] px-3"
             containerClass="h-14"
             placeholder="Ask me anything..."
+            handleChange={sendMessage}
+            value={userInput}
+            handleSubmit={(e) => setUserInput(e)}
           />
         </View>
       </SafeAreaView>
