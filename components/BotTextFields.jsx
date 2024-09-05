@@ -16,7 +16,7 @@ const BotTextFields = ({
   return (
     <View className={`w-full items-center flex-row ${outerClass}`}>
       <View
-        className={`border-white/10 border-[1px] w-full h-10 rounded-xl flex-row flex-1 items-center px-4 ${containerClass}`}
+        className={`border-white/40 border-[1px] w-full h-10 rounded-xl flex-row flex-1 items-center px-4 ${containerClass}`}
       >
         <TextInput
           value={value}
