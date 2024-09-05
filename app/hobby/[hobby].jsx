@@ -4,10 +4,11 @@ import {
   TouchableOpacity,
   ScrollView,
   LayoutAnimation,
+  Modal,
   Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -23,15 +24,15 @@ import { icons } from "../../constants";
 const RoadmapResponse = () => {
   const { hobby } = useLocalSearchParams();
   const [activeAccordion, setActiveAccordion] = useState(null);
-  const animationOpacity = useSharedValue(1); // manage opacity
-  const animationScale = useSharedValue(1); // manage scale
-  // const { data: jobs } = useFetchData(() => searchHobby(hobby));
+  const [modalVisible, setModalVisible] = useState(false); // Modal state
+  const [selectedRoadmap, setSelectedRoadmap] = useState(null);
+  const animationOpacity = useSharedValue(1);
+  const animationScale = useSharedValue(1);
   const [jobs, setJobs] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchJobs = async () => {
     setIsLoading(true);
-
     try {
       const jobsData = await searchHobby(hobby);
       setJobs(jobsData);
@@ -46,8 +47,8 @@ const RoadmapResponse = () => {
     fetchJobs();
   }, []);
 
-  const toggleAccordion = (accordion) => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut); // Smooth expansion and collapse
+  const toggleAccordion = (accordion, path) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
     if (activeAccordion === accordion) {
       setActiveAccordion(null);
@@ -55,6 +56,8 @@ const RoadmapResponse = () => {
     } else {
       setActiveAccordion(accordion);
       openAnimation();
+      setSelectedRoadmap(path); 
+      setModalVisible(true); 
     }
   };
 
@@ -117,60 +120,64 @@ const RoadmapResponse = () => {
           </View>
         ) : (
           jobs?.map(({ name, path }, index) => {
-            const isActive = activeAccordion === name;
-
             return (
               <View key={index} style={{ marginBottom: 16 }}>
                 <TouchableOpacity
                   className="bg-[#111315]/50 rounded-lg border border-[#6B7280] p-4"
-                  onPress={() => toggleAccordion(name)}
+                  onPress={() => toggleAccordion(name, path)}
                 >
                   <Text className="text-white font-geistSemiBold text-sm">
                     {name}
                   </Text>
                 </TouchableOpacity>
-                {isActive && (
-                  <Animated.View
-                    style={[
-                      animatedStyle,
-                      {
-                        marginTop: 16,
-                        marginBottom: 16,
-                      },
-                    ]}
-                    className="bg-[#111315]/50 rounded-lg border border-[#6B7280] p-4 overflow-hidden"
-                  >
-                    <View className="flex-row justify-between items-center">
-                      <Text className="text-white text-[11px] font-geistRegular">
-                        Roadmap
-                      </Text>
-                      <Text className="text-white font-geistRegular underline text-[10px]">
-                        See related tutorial
-                      </Text>
-                    </View>
-                    {path.map(({ subject, description }, idx) => (
-                      <View
-                        key={idx}
-                        className="bg-[#111315] p-4 mt-4 rounded-lg"
-                      >
-                        <Text className="text-white font-geistSemiBold text-sm">
-                          {subject}
-                        </Text>
-                        <Text className="text-gray-400 font-geistRegular text-xs mt-2">
-                          {description}
-                        </Text>
-                      </View>
-                    ))}
-                  </Animated.View>
-                )}
               </View>
             );
           })
         )}
       </ScrollView>
+
+      {/* Modal for Roadmap Content */}
+      <Modal
+        visible={modalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View className="flex-1 justify-center items-center bg-black/70">
+          <View className="bg-[#111315] rounded-xl w-[90%] p-6">
+            <Text className="text-white font-geistSemiBold text-lg mb-4">
+              Roadmap Details
+            </Text>
+            <ScrollView>
+              {selectedRoadmap &&
+                selectedRoadmap.map(({ subject, description }, idx) => (
+                  <View key={idx} className="mb-4">
+                    <Text className="text-white font-geistSemiBold text-sm">
+                      {subject}
+                    </Text>
+                    <Text className="text-gray-400 font-geistRegular text-xs mt-2">
+                      {description}
+                    </Text>
+                  </View>
+                ))}
+            </ScrollView>
+            <TouchableOpacity
+              onPress={() => setModalVisible(false)}
+              className="bg-blue-500 py-2 px-4 rounded-md mt-4"
+            >
+              <Text className="text-white text-center font-geistSemiBold">
+                Close
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Done Button */}
       <TouchableOpacity
         onPress={() => router.push(`aiFeature`)}
         className="bg-blue-500 py-3 px-6 mb-4 mx-6 absolute bottom-0 left-0 right-0 rounded-md"
+        style={{ opacity: modalVisible ? 0.5 : 1 }}
       >
         <Text className="text-white text-center font-geistSemiBold">Done</Text>
       </TouchableOpacity>
