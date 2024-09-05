@@ -17,6 +17,44 @@ import BotTextFields from "../../components/BotTextFields";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
+<<<<<<< Updated upstream
+=======
+  const [chat, setChat] = useState([]);
+  const [userInput, setUserInput] = useState("");
+  const [isNewChat, setIsNewChat] = useState(true);
+  const {isLoading, setIsLoading} = useState(false);
+
+  const sendMessage = async () => {
+    let updatedChat = [
+      ...chat,
+      {
+        role: "user",
+        parts: [{ text: userInput }],
+      },
+    ];
+
+    console.log(updatedChat)
+
+    const response = await getResponse(updatedChat)
+    console.log(response);
+    
+    setChat(chat => chat.push(
+      {
+        role: "model",
+        parts: [{ text: response }],
+      },
+    ));
+
+    console.log(response);
+    console.log(typeof response);
+    console.log(chat[0])
+    setUserInput("");
+    setIsNewChat(false);
+    
+    
+  }
+
+>>>>>>> Stashed changes
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

@@ -8,13 +8,21 @@ import { router } from 'expo-router';
 
 const MockFeedback = () => {
   const bottomSheetRef = useRef(null);
+<<<<<<< Updated upstream:app/mockInterview/mockFeedback.jsx
+=======
+  const result = useLocalSearchParams(); 
+  const {data: feedbacks, isLoading} = useFetchData(() => getFeedbacks(
+    result.questions.split("#$%,"), 
+    result.answers.split("#$%,")
+  ));
+>>>>>>> Stashed changes:app/mockFeedback/[interviewResult].jsx
+
 
   // Define snap points as memoized value to prevent re-renders
   const snapPoints = useMemo(() => ['35%', '90%'], []);
 
   const renderContent = () => (
     <BottomSheetScrollView>
-      
     <View className="bg-[#131417] w-full h-auto p-5">
       <View className="flex-row justify-between">
         <Text className="text-white font-geistSemiBold">Details</Text>
@@ -23,7 +31,7 @@ const MockFeedback = () => {
         </Text>
       </View>
       <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-        {data.map(({ question, answer, feedback }, index) => (
+        {feedbacks?.[0]?.feedbacks.map(({ question, answer, feedback }, index) => (
           <View key={index}>
             {/* Question */}
             <View className="mt-10 w-auto bg-[#242627] p-3 rounded-t-2xl rounded-br-2xl flex flex-col justify-between">
@@ -32,7 +40,7 @@ const MockFeedback = () => {
               </Text>
               <View className="mt-4 border-t rounded-full w-full border-gray-500"></View>
               <Text className="text-gray-400 font-geistMedium text-[10px] mt-2 text-right">
-                {index + 1} of {data.length}
+                {index + 1} of {feedbacks?.[0]?.feedbacks.length}
               </Text>
             </View>
             {/* Answer */}
@@ -58,13 +66,20 @@ const MockFeedback = () => {
 
   return (
     <SafeAreaView className="bg-[#111315] h-full w-full flex items-center pt-14">
+      {isLoading && (
+        <Loading additionStyle="absolute h-full w-full z-[1000] bg-black" />
+      )}
       <GestureHandlerRootView className="flex-1 w-full">
         <View className="flex-1 w-full justify-center items-center">
           <Text className="text-white text-center text-xl font-geistBold mb-10">
-            Mock Interview
+            Job Interview
           </Text>
           <Text className="text-white text-center font-geistSemiBold text-base mt-3">
+<<<<<<< Updated upstream:app/mockInterview/mockFeedback.jsx
             Front-End Developer Job Mock Interview
+=======
+            {result.interviewResult} Job Interview
+>>>>>>> Stashed changes:app/mockFeedback/[interviewResult].jsx
           </Text>
           <Image
             source={{ uri: 'background-image-url' }}
@@ -79,8 +94,8 @@ const MockFeedback = () => {
           {/* Check Circle */}
           <View className="flex-1 items-center w-full pt-24 gap-7">
             <View className="rounded-full w-48 h-48 border border-[#9CA3AF] bg-[#6B7280]/30 items-center justify-center">
-              <Text className="text-white font-geistSemiBold text-base">Good</Text>
-              <Ionicons name="checkmark-done" size={96} color="green" />
+              <Text className="text-white font-geistSemiBold text-base">{feedbacks?.[0]?.grade}</Text>
+              <Ionicons name={feedbacks?.[0]?.icons?.name} size={96} color={feedbacks?.[0]?.icons?.color} />
             </View>
             <View className="items-center justify-center bg-blue-500 py-3 px-6 rounded-md mb-4">
               <Text className="text-white font-geistSemiBold text-xs">
