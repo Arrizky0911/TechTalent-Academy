@@ -138,7 +138,7 @@ const Profile = () => {
               <Text className="text-white text-md font-geistMedium">
                 {user?.username}
               </Text>
-              {user.profession ? (
+              {user?.profession ? (
                 <Text className="text-white/70 font-geistMedium">
                   {user?.profession}
                 </Text>
@@ -202,7 +202,7 @@ const Profile = () => {
               />
             </View>
             <Text className="text-center text-white font-geistMedium mt-5">
-              Last modified on {formatDate(user.$updatedAt)}
+              Last modified on {formatDate(user?.$updatedAt)}
             </Text>
             <ButtonTemplate
               text="Update"

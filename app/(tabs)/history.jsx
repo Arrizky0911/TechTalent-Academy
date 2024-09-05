@@ -51,8 +51,6 @@ const History = () => {
 
   const { courses_history: history } = user;
 
-  console.log(history);
-
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {

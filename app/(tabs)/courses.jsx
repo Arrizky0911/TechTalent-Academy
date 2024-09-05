@@ -44,20 +44,22 @@ const Courses = () => {
         />
 
         <View className="w-full mx-2 flex-wrap flex-row gap-2 max-h-[200px] justify-between">
-          {categories.map((category) => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  router.push(`/courseResponse/${category.category_name}`)
-                }
-                key={category.$id}
-                className="w-[180px] border-[1px] border-[#6e6e6e] rounded-xl py-2"
-              >
-                <Text className="text-[#d9d9d9] text-xs font-geistRegular text-center">
-                  {category.category_name}
-                </Text>
-              </TouchableOpacity>
-            );
+          {categories.map((category, index) => {
+            if (index < 6) {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    router.push(`/courseResponse/${category.category_name}`)
+                  }
+                  key={category.$id}
+                  className="w-[180px] border-[1px] border-[#6e6e6e] rounded-xl py-2"
+                >
+                  <Text className="text-[#d9d9d9] text-xs font-geistRegular text-center">
+                    {category.category_name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            }
           })}
         </View>
 
