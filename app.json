@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AIC",
-    "slug": "AIC",
+    "slug": "aic-triumphants",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -14,14 +14,16 @@
     },
     "ios": {
       "supportsTablet": true,
-      "package": "com.triumphants.aic"
+      "package": "com.triumphants.aic",
+      "bundleIdentifier": "com.arrizkyaditha.a.aictriumphants"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff",
         "package": "com.triumphants.aic"
-      }
+      },
+      "package": "com.arrizkyaditha.a.aictriumphants"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +33,15 @@
     "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "96d3ab09-a0b3-4373-a7c2-6f94be56170b"
+      }
+    },
+    "owner": "arrizkyaditha.a"
   }
 }
