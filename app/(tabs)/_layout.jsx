@@ -2,6 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { router, Tabs } from "expo-router";
 import { icons } from "../../constants/";
+import { images } from "../../constants/";
 
 const TabIcon = ({ title, color, source }) => {
   return (
@@ -73,8 +74,8 @@ const TabLayout = () => {
               className="bg-gray w-[65px] h-[65px] items-center justify-center rounded-full absolute -top-8"
             >
               <Image
-                source={icons.aiFeature}
-                className="w-[28px] h-[28px]"
+                source={images.logo}
+                className="w-[48px] h-[48px]"
                 resizeMode="contain"
                 tintColor="#fff"
               />
