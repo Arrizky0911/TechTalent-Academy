@@ -25,9 +25,6 @@ const MockFeedback = () => {
     <View className="bg-[#131417] w-full h-auto p-5">
       <View className="flex-row justify-between">
         <Text className="text-white font-geistSemiBold">Details</Text>
-        <Text className="text-[#e0e0e0] font-geistRegular text-xs">
-          Monday, 26 August 2024 - 12.00 AM
-        </Text>
       </View>
       <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
         {feedbacks?.[0]?.feedbacks.map(({ question, answer, feedback }, index) => (
