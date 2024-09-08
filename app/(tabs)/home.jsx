@@ -31,7 +31,6 @@ const Home = () => {
 
   const { data: labels, refetch: refetchLabels } = useFetchData(getUserLabels);
   const adminLabel = labels.filter((label) => label.toLowerCase() === "admin");
-  console.log(adminLabel);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {

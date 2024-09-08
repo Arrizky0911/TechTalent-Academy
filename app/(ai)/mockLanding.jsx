@@ -1,20 +1,24 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { View, Text, TouchableOpacity, SafeAreaView, Modal } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView, Modal, TextInput } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 export default function App() {
   const [selectedJob, setSelectedJob] = useState(null); // state to track selected job
+  const [anotherJob, setJob] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   const jobs = [
     "Front End Developer",
-    "Network Engineer",
+    "Back End Developer",
     "Fullstack Developer",
     "UI UX Designer",
+    "Network Engineer",
     "Game Developer",
-    "Cyber Security",
+    "AI Researcher",
+    "Penetration Tester",
+    "Another Job",
   ];
 
   return (
@@ -34,7 +38,7 @@ export default function App() {
           <Text className="text-white font-geistBold text-center text-lg mt-10">
             What kind of job are you interested in?
           </Text>
-          <Text className="text-gray-400 font-geistRegular text-center text-xs mt-2">
+          <Text className="text-gray-400 font-geistRegular text-center text-xs m-2">
             Input what you are interested in, so we can know what position is
             suitable for you.
           </Text>
@@ -51,17 +55,30 @@ export default function App() {
                 <Text
                   className={`${
                     selectedJob === job ? "text-[#353535]" : "text-white"
-                  } font-geistRegular text-center text-sm`}
+                  } font-geistRegular text-center text-xs`}
                 >
                   {job}
                 </Text>
               </TouchableOpacity>
             ))}
+            {selectedJob === "Another Job" ? (
+              <TextInput
+                className="mt-5 bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] w-full h-10 rounded-xl mb-4 w-full"
+                placeholder="Input here"
+                placeholderTextColor="gray"
+                value={anotherJob}
+                onChangeText={() => setJob()}
+              />
+
+            ) : (
+              <></>
+            )}
           </View>
           <View className="flex-1 justify-end items-center pb-5 mx-5">
             <TouchableOpacity
               onPress={() => setModalVisible(true)}
               className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
+              disabled={selectedJob && (selectedJob !== "Another Job" || !(anotherJob == "")) ? false : true}
             >
               <Text className="text-white text-center font-geistSemiBold">Next</Text>
             </TouchableOpacity>
@@ -106,7 +123,8 @@ export default function App() {
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(false);
-                  router.push(`mockInterview/${selectedJob}`);
+                  setJob("");
+                  router.push(`mockInterview/${selectedJob == "Another Job" ? anotherJob : selectedJob}`);
                 }}
                 className="bg-blue-500 py-3 rounded-md mt-4"
               >

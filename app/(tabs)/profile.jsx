@@ -78,13 +78,13 @@ const Profile = () => {
     setIsLoading(true);
     try {
       await signOut();
+      router.replace("/sign-in");
     } catch (error) {
       Alert.alert(error.message);
     } finally {
       setIsLoggedIn(false);
       setIsLoading(false);
       setUser(null);
-      router.replace("/sign-in");
     }
   };
 
@@ -100,11 +100,16 @@ const Profile = () => {
         ? form
         : { username: form.username, profession: form.profession };
 
-      await updateUser(user.$id, asset, user.$permissions);
+      const response = await updateUser(user.$id, asset, user.$permissions);
+      console.log(response)
       const currentUser = await getCurrentUser();
       setUser(currentUser);
     } catch (error) {
-      console.log(error);
+      if (error.message === "AppwriteException: Network request failed") {
+        Alert.alert("")
+      }
+
+      console.log(error.message, typeof error.message)
     } finally {
       setIsLoading(false);
     }

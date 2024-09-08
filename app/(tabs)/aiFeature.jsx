@@ -19,14 +19,14 @@ const AiFeature = () => {
     <SafeAreaView className="h-full relative">
       <BgImage />
       <UserDisplay user={user} />
-      <View className="absolute bottom-0 w-full h-[690px] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 ">
+      <View className="absolute bottom-0 w-full h-[80%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 ">
         <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
         <Text className="text-center text-white font-geistMedium mt-[60px]">
           Ai Powered Tools that Will Help you in Your Career Development
         </Text>
-        <View className="flex-row justify-center mt-[60px] gap-x-5">
+        <View className="flex-row justify-center mt-[20%] gap-x-5">
           <TouchableOpacity
-            className="h-[290px] w-[155px] bg-[#353535] rounded-xl px-3 py-6 justify-between"
+            className="h-[76%] w-[40%] bg-[#353535] rounded-xl px-3 py-6 justify-between"
             onPress={() => router.push("/chatbot")}
           >
             {/* AI LOGO and title */}
@@ -65,9 +65,9 @@ const AiFeature = () => {
               AI chatbot that will help you in your career development
             </Text>
           </TouchableOpacity>
-          <View className="h-[290px] w-[180px] justify-between">
+          <View className="h-[80%] w-[40%]">
             <TouchableOpacity
-              className="w-full h-[130px] bg-[#353535] rounded-2xl p-4 justify-between"
+              className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between"
               onPress={() => router.push("hobby")}
             >
               <View className="flex-row items-center justify-between">
@@ -93,7 +93,7 @@ const AiFeature = () => {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              className="w-full h-[130px] bg-[#353535] rounded-2xl p-4 justify-between"
+              className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between mt-4"
               onPress={() => router.push("/mockLanding")}
             >
               <View className="flex-row items-center justify-between">
@@ -111,7 +111,7 @@ const AiFeature = () => {
                   resizeMethod="contain"
                 />
               </View>
-              <View>
+              <View className="mt-4">
                 <Text className="text-white text-xs font-geistRegular">
                   AI tools for mock interviews with job-specific questions and
                   feedback.

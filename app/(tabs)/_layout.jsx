@@ -13,7 +13,7 @@ const TabIcon = ({ title, color, source }) => {
         source={source}
         tintColor={color}
       />
-      <Text className="text-white font-geistSemiBold" style={{ color: color }}>
+      <Text className="text-white font-geistSemiBold text-xs" style={{ color: color }}>
         {title}
       </Text>
     </View>
@@ -59,7 +59,7 @@ const TabLayout = () => {
           headerShown: false,
           title: "Courses",
           tabBarIcon: ({ color, focused }) => (
-            <TabIcon source={icons.course} color={color} title="Courses" />
+            <TabIcon source={icons.course} color={color} title="Courses"/>
           ),
         }}
       />
