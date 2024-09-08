@@ -20,6 +20,7 @@ import { searchHobby } from "../../lib/AIConfig";
 import useFetchData from "../../lib/useFetchData";
 import Loading from "../../components/Loading";
 import { icons } from "../../constants";
+import { images } from "../../constants";
 
 const RoadmapResponse = () => {
   const { hobby } = useLocalSearchParams();
@@ -109,13 +110,13 @@ const RoadmapResponse = () => {
         {!jobs || jobs.length < 1 ? (
           <View className="items-center justify-center h-[65vh]">
             <Image
-              source={icons.sadEmo}
+              source={images.noFoundHobby}
               tintColor="#a8aaac"
-              className="w-[150px] h-[150px] mr-2 mb-4"
+              className="w-full h-auto mr-2 mb-4"
               resizeMode="contain"
             />
-            <Text className="font-geistRegular text-xl text-[#a8aaac]">
-              No IT Jobs found!
+            <Text className="font-geistRegular  text-[#a8aaac] text-center">
+              We're sorry, but we couldn't find any IT jobs related to your hobby.
             </Text>
           </View>
         ) : (

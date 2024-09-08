@@ -32,7 +32,7 @@ const Courses = () => {
           Find course
         </Text>
         <Text className="text-gray-400 mb-8 text-xs text-center font-geistRegular">
-          Find tutorial Lorem ipsum description dari find tutorial
+          Unlock the digital realm! Dive into cutting-edge IT courses and level up your tech skills today.
         </Text>
 
         <TextInput

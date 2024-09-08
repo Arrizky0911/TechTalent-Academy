@@ -39,6 +39,7 @@ const BotTextFields = ({
             source={icons.paperPlane}
             className="w-6 h-6"
             resizeMethod="contain"
+            
           />
         </TouchableOpacity>
       </View>

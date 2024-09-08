@@ -7,13 +7,15 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "../../constants";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import useFetchData from "../../lib/useFetchData";
 import { getAllCategories, searchCategories } from "../../lib/appwriteConfig";
+import { images } from "../../constants";
 
 const CourseResponse = () => {
   const { category } = useLocalSearchParams();
@@ -24,6 +26,21 @@ const CourseResponse = () => {
   console.log(category);
 
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        await refetch();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [category]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -82,9 +99,22 @@ const CourseResponse = () => {
         />
       </View>
 
-      {!datass || datass.length < 0 ? (
-        <View>
-          <Text className="text-white">NO Course found</Text>
+      {isLoading ? (
+        <View className="flex-1 justify-center items-center">
+          <ActivityIndicator size="large" color="#FFFFFF" />
+          <Text className="text-white mt-4 font-geistMedium">Mencari kursus...</Text>
+        </View>
+      ) : !datass || datass.length === 0 ? (
+        <View className="flex-1 justify-center items-center">
+          <Image
+            source={images.noFound}
+            className="w-64 h-64 mb-4"
+            resizeMode="contain"
+          />
+          <Text className="text-white text-lg font-geistSemiBold mb-2">Oops! Course not found</Text>
+          <Text className="text-gray-400 text-center font-geistRegular">
+            We're so sorry, but we couldn't find any courses that match your search.
+          </Text>
         </View>
       ) : (
         <ScrollView
