@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   Keyboard,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { router } from "expo-router";
 import BgImage from "../../components/BgImage";
 import UserDisplay from "../../components/UserDisplay";
@@ -24,6 +24,20 @@ const Chatbot = () => {
   const [chat, setChat] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [greeting, setGreeting] = useState("");
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) {
+      setGreeting("Good Morning");
+    } else if (hour >= 12 && hour < 17) {
+      setGreeting("Good Afternoon");
+    } else if (hour >= 17 && hour < 21) {
+      setGreeting("Good Evening");
+    } else {
+      setGreeting("Good Night");
+    }
+  }, []);
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -78,7 +92,7 @@ const Chatbot = () => {
     >
       <View className="h-full relative">
         <BgImage />
-        <View className="mx-5 mt-5">
+        <View className="mx-5 mt-5 flex-row items-center justify-between">
           <TouchableOpacity onPress={() => router.back()}>
             <Image
               source={icons.arrowLeft}
@@ -87,6 +101,8 @@ const Chatbot = () => {
               tintColor="white"
             />
           </TouchableOpacity>
+          <Text className="text-white text-center text-xl font-geistMedium mt-10">Savior</Text>
+          <View className="w-7 h-7"></View> 
         </View>
 
         {chat.length < 1 ? (
@@ -97,7 +113,7 @@ const Chatbot = () => {
               <View>
                 <View className="mt-[60px]">
                   <Text className="text-white text-center text-xl font-geistMedium">
-                    Good Morning, {user.username} 👋
+                    {greeting}, {user.username} 👋
                   </Text>
                   <Text className="text-white text-center text-xl font-geistMedium">
                     What can I do for you?
