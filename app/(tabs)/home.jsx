@@ -8,7 +8,7 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import Loading from "../../components/Loading";
 import icons from "../../constants/icons";
@@ -26,6 +26,7 @@ import { router } from "expo-router";
 const Home = () => {
   const { user, setIsLoading, isLoading, setUser } = useGlobalContext();
   const { data: courses, refetch } = useFetchData(getAllCourses);
+  const [currentDate, setCurrentDate] = useState('');
   const { data: categories, refetch: refetchCategories } =
     useFetchData(getAllCategories);
 
@@ -53,17 +54,18 @@ const Home = () => {
     return <Loading />;
   }
 
+  useEffect(() => {
+    const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+    const today = new Date().toLocaleDateString('en-US', options);
+    setCurrentDate(today);
+  }, []);
+  
   return (
-    <SafeAreaView className="bg-frame h-full relative">
-      <View className="h-[170px] w-full bg-black rounded-b-[20px] absolute  flex-row justify-between px-10 z-50">
+    <SafeAreaView className="bg-frame flex-1">
+      <View className="h-[170px] w-full bg-black rounded-b-[20px] px-10 pt-6">
+        <View className="flex-row justify-between items-center  top-10">
+
         <View className="flex-row space-x-3 items-center">
-          <View>
-            <Image
-              source={{ uri: user?.avatar }}
-              className="w-[35px] h-[35px] rounded-full"
-              resizeMode="cover"
-            />
-          </View>
           <View className="justify-center">
             <Text className="text-white/70 text-[12px]">Hello👋</Text>
             <Text className="text-white capitalize font-geistMedium text-md">
@@ -72,14 +74,11 @@ const Home = () => {
           </View>
         </View>
         <View className="flex-row items-center space-x-5">
-          <TouchableOpacity>
             <Image
-              source={icons.search}
-              className="w-[20px] h-[20px]"
-              tintColor="#fff"
-              resizeMode="contain"
+              source={{ uri: user?.avatar }}
+              className="w-[35px] h-[35px] rounded-full"
+              resizeMode="cover"
             />
-          </TouchableOpacity>
 
           {adminLabel?.length > 1 && (
             <TouchableOpacity onPress={() => router.push("/createCourse")}>
@@ -100,14 +99,19 @@ const Home = () => {
             </TouchableOpacity>
           )}
         </View>
+        </View>
+        <View >
+          <Text className="text-white text-start top-16 text-xs  font-geistMedium">{currentDate}</Text>
+        </View>
       </View>
-      <View className="relative mt-[150px] pb-[90px]">
-        <ScrollView
-          className="pt-10 mb-[30px]"
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{ paddingBottom: 90 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <View className="pt-4">
           {categories.map((category, index) => {
             if (category.courses.length > 1) {
               return (
@@ -119,9 +123,10 @@ const Home = () => {
                 </View>
               );
             }
+            return null;
           })}
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
