@@ -54,7 +54,7 @@ const Home = () => {
 
   return (
     <SafeAreaView className="bg-frame h-full relative">
-      <View className="h-[170px] w-full bg-black rounded-b-[20px] absolute  flex-row justify-between px-10 z-50">
+      <View className="h-[15%] w-full bg-black rounded-b-[10px] absolute  flex-row justify-between px-10 z-50 items-center">
         <View className="flex-row space-x-3 items-center">
           <View>
             <Image

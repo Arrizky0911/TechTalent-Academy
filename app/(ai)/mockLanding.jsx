@@ -42,8 +42,7 @@ export default function App() {
             Input what you are interested in, so we can know what position is
             suitable for you.
           </Text>
-
-          <View className="flex-wrap flex-row mt-10 w-full px-5 justify-between">
+          <View className="flex-wrap flex-row mt-2 w-full px-5 justify-between">
             {jobs.map((job, index) => (
               <TouchableOpacity
                 key={index}

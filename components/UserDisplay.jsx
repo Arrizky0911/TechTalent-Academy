@@ -2,9 +2,9 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import { icons } from "../constants";
 
-const UserDisplay = ({ user, position=8 }) => {
+const UserDisplay = ({ user}) => {
   return (
-    <View className={`absolute flex-row w-full top-[${position}%] justify-between`}>
+    <View className={"absolute flex-row w-full top-[8%] justify-between"}>
       <View className="flex-row items-center ml-5">
         <Image
           source={{ uri: user?.avatar }}
