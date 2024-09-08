@@ -61,9 +61,8 @@ const Home = () => {
   
   return (
     <SafeAreaView className="bg-frame flex-1">
-      <View className="h-[15%] w-full bg-black rounded-b-[10px] absolute  flex-row justify-between px-10 z-50 items-center">
+      <View className="h-[170px] w-full bg-black rounded-b-[20px] px-10 pt-6">
         <View className="flex-row justify-between items-center  top-10">
-
         <View className="flex-row space-x-3 items-center">
           <View className="justify-center">
             <Text className="text-white/70 text-[12px]">Hello👋</Text>
