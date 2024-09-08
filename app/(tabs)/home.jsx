@@ -31,6 +31,7 @@ const Home = () => {
 
   const { data: labels, refetch: refetchLabels } = useFetchData(getUserLabels);
   const adminLabel = labels.filter((label) => label.toLowerCase() === "admin");
+  console.log(adminLabel);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
@@ -80,7 +81,7 @@ const Home = () => {
             />
           </TouchableOpacity>
 
-          {adminLabel && (
+          {adminLabel?.length > 1 && (
             <TouchableOpacity onPress={() => router.push("/createCourse")}>
               <Image
                 source={icons.addCircle}
@@ -90,7 +91,7 @@ const Home = () => {
               />
             </TouchableOpacity>
           )}
-          {adminLabel && (
+          {adminLabel.length > 1 && (
             <TouchableOpacity
               className="border-[1px] border-white py-0.5 px-2 rounded-xl"
               onPress={() => router.push("/createCategory")}

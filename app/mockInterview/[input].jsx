@@ -5,23 +5,25 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
-  PermissionsAndroid
+  PermissionsAndroid,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient"; // pastikan Anda sudah menginstal expo-linear-gradient
 import { FontAwesome } from "@expo/vector-icons"; // pastikan Anda sudah menginstal @expo/vector-icons
-import AntDesign from '@expo/vector-icons/AntDesign';
-import React, {useState} from 'react';
+import AntDesign from "@expo/vector-icons/AntDesign";
+import React, { useState } from "react";
 import { router } from "expo-router";
-import { useLocalSearchParams } from 'expo-router';
-import useFetchData from '../../lib/useFetchData';
-import { getQuestions, getTranscript } from '../../lib/AIConfig';
+import { useLocalSearchParams } from "expo-router";
+import useFetchData from "../../lib/useFetchData";
+import { getQuestions, getTranscript } from "../../lib/AIConfig";
 import Loading from "../../components/Loading";
 import { Audio } from "expo-av";
-import {images} from '../../constants'
+import { images } from "../../constants";
 
 const MockTest = () => {
-  const {input} = useLocalSearchParams();
-  const {data: questions, isLoading} = useFetchData(() => getQuestions(input));
+  const { input } = useLocalSearchParams();
+  const { data: questions, isLoading } = useFetchData(() =>
+    getQuestions(input)
+  );
   console.log(questions);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -30,10 +32,10 @@ const MockTest = () => {
   const [recording, setRecording] = useState();
 
   const startRecording = async () => {
-    console.log("Run start recording")
+    console.log("Run start recording");
     try {
-      if (permissionResponse.status !== 'granted') {
-        console.log('Requesting permission..');
+      if (permissionResponse.status !== "granted") {
+        console.log("Requesting permission..");
         await requestPermission();
       }
       await Audio.setAudioModeAsync({
@@ -41,57 +43,55 @@ const MockTest = () => {
         playsInSilentModeIOS: true,
       });
 
-      console.log('Starting recording..');
-      const { recording } = await Audio.Recording.createAsync( Audio.RecordingOptionsPresets.HIGH_QUALITY
+      console.log("Starting recording..");
+      const { recording } = await Audio.Recording.createAsync(
+        Audio.RecordingOptionsPresets.HIGH_QUALITY
       );
       setRecording(recording);
-      console.log('Recording started');
+      console.log("Recording started");
     } catch (err) {
-      console.error('Failed to start recording', err);
+      console.error("Failed to start recording", err);
     }
-  }
+  };
 
   const stopRecording = async () => {
-    console.log('Stopping recording..');
+    console.log("Stopping recording..");
     setRecording(undefined);
     setIsTranscripting(true);
     await recording.stopAndUnloadAsync();
-    await Audio.setAudioModeAsync(
-      {
-        allowsRecordingIOS: false,
-      }
-    );
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+    });
     const uri = recording.getURI();
-    console.log('Recording stopped and stored at', uri);
+    console.log("Recording stopped and stored at", uri);
     const transcriptedText = await getTranscript(uri);
     if (transcriptedText) {
       let updatedAnswer = [...answers, transcriptedText];
       console.log(updatedAnswer);
       setAnswers(updatedAnswer);
     } else {
-      console.log("Voice error")
+      console.log("Voice error");
     }
     setIsTranscripting(false);
-  }
-  
+  };
+
   const handleSubmit = () => {
-    const formattedQuestions = questions.map(string => string + "#$%");
-    const formattedAnswers = answers.map(string => string + "#$%");
+    const formattedQuestions = questions.map((string) => string + "#$%");
+    const formattedAnswers = answers.map((string) => string + "#$%");
     let result = {
       questions: formattedQuestions,
-      answers: formattedAnswers
-    }
-    console.log("redirecting")
-    router.push({pathname: `mockFeedback/${input}`, params:result})
-  }
+      answers: formattedAnswers,
+    };
+    console.log("redirecting");
+    router.push({ pathname: `mockFeedback/${input}`, params: result });
+  };
 
   const refreshCurrentAnswer = () => {
-    console.log(answers?.length)
-    setAnswers( answers => answers.slice(0,-1))
-    console.log(answers?.length)
-  }
+    console.log(answers?.length);
+    setAnswers((answers) => answers.slice(0, -1));
+    console.log(answers?.length);
+  };
 
-  
   return (
     <ImageBackground
       source={require("./bgmock.png")} // Ensure the path is correct to your bgmock.png
@@ -125,11 +125,10 @@ const MockTest = () => {
                   resizeMode="contain"
                   source={images.done}
                 />
-              <Text className=" text-white text-center mt-6 px-6 font-geistRegular">
-                Your answer has been saved, click submit to see your grade.
-              </Text>
+                <Text className=" text-white text-center mt-6 px-6 font-geistRegular">
+                  Your answer has been saved, click submit to see your grade.
+                </Text>
               </View>
-
             </>
           ) : (
             <>
@@ -156,7 +155,7 @@ const MockTest = () => {
               {answers?.[index]}
             </Text>
             <View className="mt-4 border-t rounded-full w-full border-gray-600"></View>
-            <Text className="text-red-500 font-geistMedium text-[10px] mt-2 text-right">
+            <Text className="text-gray-500 font-geistMedium text-[10px] mt-2 text-right">
               {index + 1} of {questions?.length + 1}
             </Text>
           </View>
@@ -211,6 +210,6 @@ const MockTest = () => {
       </SafeAreaView>
     </ImageBackground>
   );
-}
+};
 
-export default MockTest
+export default MockTest;

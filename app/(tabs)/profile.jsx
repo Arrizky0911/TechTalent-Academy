@@ -78,12 +78,13 @@ const Profile = () => {
     setIsLoading(true);
     try {
       await signOut();
-      setIsLoggedIn(false);
-      setUser(null);
-      setIsLoading(false);
-      router.replace("/sign-in");
     } catch (error) {
       Alert.alert(error.message);
+    } finally {
+      setIsLoggedIn(false);
+      setIsLoading(false);
+      setUser(null);
+      router.replace("/sign-in");
     }
   };
 

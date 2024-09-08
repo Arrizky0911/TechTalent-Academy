@@ -21,6 +21,7 @@ import { Video as VideoAV, ResizeMode } from "expo-av";
 
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { StatusBar } from "expo-status-bar";
+import { images } from "../../constants";
 
 const CourseDetail = () => {
   const videoElement = useRef(null);
@@ -202,9 +203,9 @@ const CourseDetail = () => {
             </View>
           ) : (
             <View className="flex-row gap-10 justify-center items-center ">
-              <View className="w-20 h-20 p-2 bg-white rounded-[100px] justify-center items-center">
+              <View className="w-20 h-20 p-2 rounded-[100px] justify-center items-center">
                 <Image
-                  source={{ uri: "https://via.placeholder.com/42x42" }}
+                  source={images.logo}
                   className=" self-center w-[42px] h-[42px]"
                 />
               </View>
