@@ -92,7 +92,7 @@ const Chatbot = () => {
     >
       <View className="h-full relative">
         <BgImage />
-        <View className="mx-5 mt-5">
+        <View className="mx-6 mt-3">
           <TouchableOpacity onPress={() => router.back()}>
             <Image
               source={icons.arrowLeft}
@@ -112,7 +112,8 @@ const Chatbot = () => {
               <View>
                 <View className="mt-[15%]">
                   <Text className="text-white text-center text-xl font-geistMedium">
-                    Good Morning, {user.username} 👋
+
+                    {greeting}, {user.username} 👋
                   </Text>
                   <Text className="text-white text-center text-xl font-geistMedium">
                     What can I do for you?
