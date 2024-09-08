@@ -19,7 +19,7 @@ const AiFeature = () => {
     <SafeAreaView className="h-full relative">
       <BgImage />
       <UserDisplay user={user} />
-      <View className="absolute bottom-0 w-full h-[80%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 ">
+      <View className="absolute bottom-0 w-full h-[78%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 ">
         <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
         <Text className="text-center text-white font-geistMedium mt-[60px]">
           Ai Powered Tools that Will Help you in Your Career Development
@@ -27,7 +27,7 @@ const AiFeature = () => {
         <View className="flex-row justify-center mt-[20%] gap-x-5">
           <TouchableOpacity
             className="h-[76%] w-[40%] bg-[#353535] rounded-xl px-3 py-6 justify-between"
-            onPress={() => router.push("/chatbot")}
+            onPress={() => router.push("/mockLanding")}
           >
             {/* AI LOGO and title */}
             <View className="space-y-3">
@@ -57,12 +57,13 @@ const AiFeature = () => {
                 </View>
               </View>
 
-              <Text className="font-geistSemiBold text-lg text-white">
-                Savior
+              <Text className="font-geistSemiBold text-lg text-white m-1">
+                Judgement
               </Text>
             </View>
-            <Text className="text-white text-xs font-geistRegular">
-              AI chatbot that will help you in your career development
+            <Text className="text-white text-xs font-geistRegular m-2">
+              AI tools for mock interviews with job-specific questions and
+              feedback.
             </Text>
           </TouchableOpacity>
           <View className="h-[80%] w-[40%]">
@@ -86,7 +87,7 @@ const AiFeature = () => {
                 />
               </View>
               <View>
-                <Text className="text-white text-xs font-geistRegular">
+                <Text className="text-white text-xs font-geistRegular m-1">
                   AI powered tools to find the roadmap of careers from your
                   hobby/interest
                 </Text>
@@ -94,7 +95,7 @@ const AiFeature = () => {
             </TouchableOpacity>
             <TouchableOpacity
               className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between mt-4"
-              onPress={() => router.push("/mockLanding")}
+              onPress={() => router.push("/chatbot")}
             >
               <View className="flex-row items-center justify-between">
                 <Image
@@ -103,7 +104,7 @@ const AiFeature = () => {
                   className="w-5 h-5 mr-5"
                   resizeMethod="contain"
                 />
-                <Text className="text-white font-geistSemiBold">Judgement</Text>
+                <Text className="text-white font-geistSemiBold">Guidance</Text>
                 <Image
                   source={icons.arrowUpRight}
                   tintColor="white"
@@ -112,9 +113,8 @@ const AiFeature = () => {
                 />
               </View>
               <View className="mt-4">
-                <Text className="text-white text-xs font-geistRegular">
-                  AI tools for mock interviews with job-specific questions and
-                  feedback.
+                <Text className="text-white text-xs font-geistRegular m-1">
+                  AI chatbot that will help you in your career development
                 </Text>
               </View>
             </TouchableOpacity>

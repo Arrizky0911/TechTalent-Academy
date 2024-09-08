@@ -52,7 +52,7 @@ const Courses = () => {
                     router.push(`/courseResponse/${category.category_name}`)
                   }
                   key={category.$id}
-                  className="w-[180px] border-[1px] border-[#6e6e6e] rounded-xl py-2"
+                  className="w-[45%] border-[1px] border-[#6e6e6e] rounded-xl py-2"
                 >
                   <Text className="text-[#d9d9d9] text-xs font-geistRegular text-center">
                     {category.category_name}
@@ -100,7 +100,7 @@ const Courses = () => {
           </TouchableOpacity>
         </View> */}
       </View>
-      <View className=" bottom-20 left-0 right-0">
+      <View className=" bottom-[16%] left-0 right-0">
         <TouchableOpacity
           onPress={handleSearch}
           className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"

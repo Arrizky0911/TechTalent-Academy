@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   PermissionsAndroid,
+  KeyboardAvoidingView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient"; // pastikan Anda sudah menginstal expo-linear-gradient
 import { FontAwesome } from "@expo/vector-icons"; // pastikan Anda sudah menginstal @expo/vector-icons
@@ -18,7 +19,6 @@ import { getQuestions, getTranscript } from "../../lib/AIConfig";
 import Loading from "../../components/Loading";
 import { Audio } from "expo-av";
 import { images } from "../../constants";
-import { Alert, Modal } from "react-native";
 
 const MockTest = () => {
   const { input } = useLocalSearchParams();
@@ -112,7 +112,7 @@ const MockTest = () => {
       {(isLoading || isTranscripting) && (
         <Loading additionStyle="absolute h-full w-full z-[1000] bg-black" />
       )}
-      <SafeAreaView className="bg-[#111315] h-full w-full flex pt-16">
+      <KeyboardAvoidingView className="bg-[#111315] h-full w-full flex pt-16">
         <View className="flex-row justify-between ">
           <TouchableOpacity className="ml-6" onPress={handleBackPress}>
             <AntDesign name="arrowleft" size={24} color="white" />
@@ -126,7 +126,6 @@ const MockTest = () => {
         <Text className="text-white text-center font-geistSemiBold text-base mt-3">
           {input} Job Interview
         </Text>
-
         <View className="flex flex-row h-1/2 justify-center items-center mr-16 ml-3">
           {index == questions?.length ? (
             <>
@@ -147,7 +146,7 @@ const MockTest = () => {
                 source={{ uri: "https://via.placeholder.com/40" }}
                 className="  w-10 h-10 rounded-full border-2 ml-8 border-white"
               />
-              <View className=" mt-10 w-auto ml-4 bg-[#242627] p-3 rounded-t-2xl rounded-br-2xl flex flex-col justify-between">
+              <View className="w-auto ml-4 bg-[#242627] p-3 rounded-t-2xl rounded-br-2xl flex flex-col justify-between">
                 <Text className="text-white font-geistRegular text-xs">
                   {questions?.[index]}
                 </Text>
@@ -161,13 +160,13 @@ const MockTest = () => {
         </View>
 
         {answers?.[index] ? (
-          <View className="mt-4 ml-10 mr-4 bg-[#3F454D] p-4 rounded-t-2xl rounded-bl-2xl flex flex-col justify-between shadow-lg max-w-[80%] self-end">
+          <View className="-top-20 ml-10 mr-4 bg-[#3F454D] p-4 rounded-t-2xl rounded-bl-2xl flex flex-col justify-between shadow-lg max-w-[80%] self-end">
             <Text className="text-white font-geistRegular text-sm leading-5">
               {answers?.[index]}
             </Text>
             <View className="mt-4 border-t rounded-full w-full border-gray-600"></View>
             <Text className="text-gray-500 font-geistMedium text-[10px] mt-2 text-right">
-              {index + 1} of {questions?.length + 1}
+              {index + 1} of {questions?.length}
             </Text>
           </View>
         ) : (
@@ -219,38 +218,6 @@ const MockTest = () => {
           </View>
         )}
       </SafeAreaView>
-
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={showConfirmModal}
-        onRequestClose={() => setShowConfirmModal(false)}
-      >
-        <View className="flex-1 justify-center items-center bg-black/50">
-          <View className="bg-[#242627] p-6 rounded-2xl w-4/5 max-w-[300px]">
-            <Text className="text-white text-lg font-geistBold mb-4 text-center">
-              Exit Interview?
-            </Text>
-            <Text className="text-gray-300 text-sm font-geistRegular mb-6 text-center">
-              Your interview progress will be lost. Are you sure you want to leave?
-            </Text>
-            <View className="flex-row justify-between">
-              <TouchableOpacity
-                onPress={() => setShowConfirmModal(false)}
-                className="bg-gray-600 py-2 px-4 rounded-full"
-              >
-                <Text className="text-white font-geistMedium">Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={handleConfirmExit}
-                className="bg-red-500 py-2 px-4 rounded-full"
-              >
-                <Text className="text-white font-geistMedium">Exit</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
     </ImageBackground>
   );
 };

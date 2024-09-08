@@ -86,8 +86,8 @@ const MockFeedback = () => {
           {/* Check Circle */}
           <View className="flex-1 items-center w-full pt-24 gap-7">
             <View className="rounded-full w-48 h-48 border border-[#9CA3AF] bg-[#6B7280]/30 items-center justify-center">
-              <Text className="text-white font-geistSemiBold text-base">{feedbacks?.[0]?.grade}</Text>
               <Ionicons name={feedbacks?.[0]?.icons?.name} size={96} color={feedbacks?.[0]?.icons?.color} />
+              <Text className="text-white font-geistSemiBold text-base mt-2">{feedbacks?.[0]?.grade}</Text>
             </View>
           </View>
           <BottomSheet

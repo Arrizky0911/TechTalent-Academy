@@ -18,6 +18,7 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
 import { getResponse } from "../../lib/AIConfig";
+import WebView from "react-native-webview";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -38,6 +39,16 @@ const Chatbot = () => {
       setGreeting("Good Night");
     }
   }, []);
+
+  const markdownParser = (text) => {
+    const toHTML = text
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>') // h3 tag
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>') // h2 tag
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>') // h1 tag
+      .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>') // bold text
+      .replace(/\*(.*)\*/gim, '<i>$1</i>'); // italic text
+    return toHTML.trim(); // using trim method to remove whitespace
+  }
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -101,7 +112,7 @@ const Chatbot = () => {
               tintColor="white"
             />
           </TouchableOpacity>
-          <Text className="text-white text-center text-xl font-geistMedium mt-10">Savior</Text>
+          <Text className="text-white text-center text-xl font-geistMedium my-5">Guidance</Text>
           <View className="w-7 h-7"></View> 
         </View>
 
@@ -123,7 +134,7 @@ const Chatbot = () => {
                 <View className="mx-5 mt-[60px] w-full items-center">
                   <View className="flex-row w-full justify-center gap-x-4">
                     <TouchableOpacity
-                      className="w-[170px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between"
+                      className="w-[44%] h-[100%] rounded-xl bg-[#353535]"
                       onPress={() => handlePromptClick("What this bot can do?")}
                     >
                       <Image
@@ -132,12 +143,12 @@ const Chatbot = () => {
                         resizeMethod="contain"
                         tintColor="white"
                       />
-                      <Text className="text-white font-geistRegular text-sm">
+                      <Text className="text-white text-sm mx-[15%] mb-[20%]">
                         What this bot can do?
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      className="w-[170px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between"
+                      className="size-4 w-[44%] h-[100%] rounded-xl bg-[#353535]"
                       onPress={() => handlePromptClick("How to use this bot?")}
                     >
                       <Image
@@ -146,7 +157,7 @@ const Chatbot = () => {
                         resizeMethod="contain"
                         tintColor="white"
                       />
-                      <Text className="text-white font-geistRegular text-sm">
+                      <Text className="text-white text-sm mx-[15%] mb-[20%]">
                         How to use this bot?
                       </Text>
                     </TouchableOpacity>
@@ -217,7 +228,11 @@ const Chatbot = () => {
                   }}
                   className="font-geistRegular"
                 >
-                  {message.parts[0].text}
+                  <WebView
+                    originWhitelist={['*']}
+                    source={{ html: message.parts[0].text }}
+                  >
+                  </WebView>
                 </Text>
               </View>
             ))}
