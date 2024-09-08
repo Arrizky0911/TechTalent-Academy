@@ -18,6 +18,7 @@ import { getQuestions, getTranscript } from "../../lib/AIConfig";
 import Loading from "../../components/Loading";
 import { Audio } from "expo-av";
 import { images } from "../../constants";
+import { Alert, Modal } from "react-native";
 
 const MockTest = () => {
   const { input } = useLocalSearchParams();
@@ -30,6 +31,7 @@ const MockTest = () => {
   const [isTranscripting, setIsTranscripting] = useState(false);
   const [permissionResponse, requestPermission] = Audio.usePermissions();
   const [recording, setRecording] = useState();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const startRecording = async () => {
     console.log("Run start recording");
@@ -92,6 +94,15 @@ const MockTest = () => {
     console.log(answers?.length);
   };
 
+  const handleBackPress = () => {
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmExit = () => {
+    setShowConfirmModal(false);
+    router.back();
+  };
+
   return (
     <ImageBackground
       source={require("./bgmock.png")} // Ensure the path is correct to your bgmock.png
@@ -103,7 +114,7 @@ const MockTest = () => {
       )}
       <SafeAreaView className="bg-[#111315] h-full w-full flex pt-16">
         <View className="flex-row justify-between ">
-          <TouchableOpacity className="ml-6" onPress={() => router.back()}>
+          <TouchableOpacity className="ml-6" onPress={handleBackPress}>
             <AntDesign name="arrowleft" size={24} color="white" />
           </TouchableOpacity>
           <View className="flex-1 mr-8">
@@ -208,6 +219,38 @@ const MockTest = () => {
           </View>
         )}
       </SafeAreaView>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={showConfirmModal}
+        onRequestClose={() => setShowConfirmModal(false)}
+      >
+        <View className="flex-1 justify-center items-center bg-black/50">
+          <View className="bg-[#242627] p-6 rounded-2xl w-4/5 max-w-[300px]">
+            <Text className="text-white text-lg font-geistBold mb-4 text-center">
+              Exit Interview?
+            </Text>
+            <Text className="text-gray-300 text-sm font-geistRegular mb-6 text-center">
+              Your interview progress will be lost. Are you sure you want to leave?
+            </Text>
+            <View className="flex-row justify-between">
+              <TouchableOpacity
+                onPress={() => setShowConfirmModal(false)}
+                className="bg-gray-600 py-2 px-4 rounded-full"
+              >
+                <Text className="text-white font-geistMedium">Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleConfirmExit}
+                className="bg-red-500 py-2 px-4 rounded-full"
+              >
+                <Text className="text-white font-geistMedium">Exit</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ImageBackground>
   );
 };

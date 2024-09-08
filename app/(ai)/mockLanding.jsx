@@ -39,8 +39,7 @@ export default function App() {
             What kind of job are you interested in?
           </Text>
           <Text className="text-gray-400 font-geistRegular text-center text-xs m-2">
-            Input what you are interested in, so we can know what position is
-            suitable for you.
+            Select your dream job role and let's kickstart a tailored interview simulation just for you!
           </Text>
           <View className="flex-wrap flex-row mt-2 w-full px-5 justify-between">
             {jobs.map((job, index) => (
@@ -91,30 +90,30 @@ export default function App() {
           onRequestClose={() => setModalVisible(false)}
         >
           <View className="flex-1 justify-center items-center bg-black bg-opacity-50">
-            <View className="bg-white rounded-lg p-6 w-11/12 max-h-3/4">
-              <Text className="text-lg font-geistBold text-center mb-4">
+            <View className="bg-[#111315] rounded-lg p-6 w-11/12 max-h-3/4">
+              <Text className="text-lg text-white font-geistBold text-center mb-4">
                 Must be read before!
               </Text>
 
               {/* Wrapping ScrollView to handle overflow */}
               <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 300 }}>
                 <View className="ml-5">
-                  <Text className="text-gray-800 font-geistRegular text-base mb-3">
+                  <Text className="text-gray-200 font-geistRegular text-sm mb-3">
                     <Text className="font-geistSemiBold">1.</Text> Prepare yourself properly before starting.
                   </Text>
-                  <Text className="text-gray-800 font-geistRegular text-base mb-3">
+                  <Text className="text-gray-200 font-geistRegular text-sm mb-3">
                     <Text className="font-geistSemiBold">2.</Text> Speak clearly and keep your voice loud.
                   </Text>
-                  <Text className="text-gray-800 font-geistRegular text-base mb-3">
+                  <Text className="text-gray-200 font-geistRegular text-sm mb-3">
                     <Text className="font-geistSemiBold">3.</Text> Button Functions:
                   </Text>
                   <View className="ml-5">
-                    <Text className="text-gray-800 font-geistRegular text-base mb-2">- To start speaking, click the mic button in the center. Click it again to stop the recording.</Text>
-                    <Text className="text-gray-800 font-geistRegular text-base mb-2">- Click the "Next" button on the right to move to the next question. At the last question, click the button to end the mock interview.</Text>
-                    <Text className="text-gray-800 font-geistRegular text-base mb-2">- Click the "X" button on the left to repeat the current question. For example, if you're on question 4 and click the "X" button, it will repeat question 4, not from the beginning.</Text>
+                    <Text className="text-gray-200 font-geistRegular text-sm mb-2">- To start speaking, click the mic button in the center. Click it again to stop the recording.</Text>
+                    <Text className="text-gray-200 font-geistRegular text-sm mb-2">- Click the "Next" button on the right to move to the next question. At the last question, click the button to end the mock interview.</Text>
+                    <Text className="text-gray-200 font-geistRegular text-sm mb-2">- Click the "X" button on the left to repeat the current question. For example, if you're on question 4 and click the "X" button, it will repeat question 4, not from the beginning.</Text>
                   </View>
                 </View>
-                <Text className="text-gray-800 font-geistSemiBold text-base mb-3">
+                <Text className="text-gray-200 font-geistSemiBold text-sm mb-3">
                   Good Luck!
                 </Text>
               </ScrollView>
@@ -131,9 +130,9 @@ export default function App() {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
-                className="border border-black py-3 rounded-md mt-4"
+                className="border border-white py-3 rounded-md mt-4"
               >
-                <Text className="text-black text-center font-geistBold">Close!</Text>
+                <Text className="text-white text-center font-geistBold">Close!</Text>
               </TouchableOpacity>
             </View>
           </View>
