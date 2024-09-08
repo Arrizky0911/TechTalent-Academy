@@ -19,7 +19,6 @@ import { getQuestions, getTranscript } from "../../lib/AIConfig";
 import Loading from "../../components/Loading";
 import { Audio } from "expo-av";
 import { images } from "../../constants";
-import { ScrollView } from "react-native-gesture-handler";
 
 const MockTest = () => {
   const { input } = useLocalSearchParams();
@@ -32,6 +31,7 @@ const MockTest = () => {
   const [isTranscripting, setIsTranscripting] = useState(false);
   const [permissionResponse, requestPermission] = Audio.usePermissions();
   const [recording, setRecording] = useState();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const startRecording = async () => {
     console.log("Run start recording");
@@ -94,6 +94,15 @@ const MockTest = () => {
     console.log(answers?.length);
   };
 
+  const handleBackPress = () => {
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmExit = () => {
+    setShowConfirmModal(false);
+    router.back();
+  };
+
   return (
     <ImageBackground
       source={require("./bgmock.png")} // Ensure the path is correct to your bgmock.png
@@ -105,7 +114,7 @@ const MockTest = () => {
       )}
       <KeyboardAvoidingView className="bg-[#111315] h-full w-full flex pt-16">
         <View className="flex-row justify-between ">
-          <TouchableOpacity className="ml-6" onPress={() => router.back()}>
+          <TouchableOpacity className="ml-6" onPress={handleBackPress}>
             <AntDesign name="arrowleft" size={24} color="white" />
           </TouchableOpacity>
           <View className="flex-1 mr-8">
@@ -208,7 +217,7 @@ const MockTest = () => {
             </TouchableOpacity>
           </View>
         )}
-      </KeyboardAvoidingView>
+      </SafeAreaView>
     </ImageBackground>
   );
 };
