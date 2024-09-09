@@ -112,7 +112,7 @@ const MockTest = () => {
       {(isLoading || isTranscripting) && (
         <Loading additionStyle="absolute h-full w-full z-[1000] bg-black" />
       )}
-      <KeyboardAvoidingView className="bg-[#111315] h-full w-full flex pt-16">
+      <SafeAreaView className="bg-[#111315] h-full w-full flex pt-16">
         <View className="flex-row justify-between ">
           <TouchableOpacity className="ml-6" onPress={handleBackPress}>
             <AntDesign name="arrowleft" size={24} color="white" />

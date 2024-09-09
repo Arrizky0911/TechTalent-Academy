@@ -18,7 +18,7 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
 import { getResponse } from "../../lib/AIConfig";
-import WebView from "react-native-webview";
+import Markdown from "react-native-markdown-display";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -40,15 +40,19 @@ const Chatbot = () => {
     }
   }, []);
 
-  const markdownParser = (text) => {
-    const toHTML = text
-      .replace(/^### (.*$)/gim, '<h3>$1</h3>') // h3 tag
-      .replace(/^## (.*$)/gim, '<h2>$1</h2>') // h2 tag
-      .replace(/^# (.*$)/gim, '<h1>$1</h1>') // h1 tag
-      .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>') // bold text
-      .replace(/\*(.*)\*/gim, '<i>$1</i>'); // italic text
-    return toHTML.trim(); // using trim method to remove whitespace
-  }
+  // const markdownParser = (text) => {
+  //   const toHTML = text
+  //     .replace(/^### (.*$)/gim, `${(<Text>$1</Text>)}`) // h3 tag
+  //     .replace(/^## (.*$)/gim, `${(<Text>$1</Text>)}`) // h2 tag
+  //     .replace(/^# (.*$)/gim, `${(<Text>$1</Text>)}`) // h1 tag
+  //     .replace(/\*\*(.*)\*\*/gim, `${(<Text>$1</Text>)}`) // bold text
+  //     .replace(/\*(.*)\*/gim, `${(<Text>$1</Text>)}`); // italic text
+  //   const newHtml = toHTML.trim(); 
+  //   return (
+  //     <Text>{JSON.parse(newHtml)}</Text>
+  //   )
+  //   // using trim method to remove whitespace
+  // }
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -70,6 +74,9 @@ const Chatbot = () => {
 
     try {
       const response = await getResponse(updatedChat);
+
+      // let markdownResponse = markdownParser(response);
+      // console.log(JSON.stringify(markdownResponse));
 
       let updatedChatWithBot = [
         ...updatedChat,
@@ -103,11 +110,11 @@ const Chatbot = () => {
     >
       <View className="h-full relative">
         <BgImage />
-        <View className="mx-5 mt-5 flex-row items-center justify-between">
+        <View className="mx-6 mt-3">
           <TouchableOpacity onPress={() => router.back()}>
             <Image
               source={icons.arrowLeft}
-              className="w-7 h-7 mt-10"
+              className="h-6 w-6 mt-10"
               resizeMethod="contain"
               tintColor="white"
             />
@@ -118,12 +125,12 @@ const Chatbot = () => {
 
         {chat.length < 1 ? (
           <>
-            <UserDisplay user={user} />
-            <View className="absolute -bottom-1 w-full h-[695px] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5">
+            <View className="absolute -bottom-1 w-full h-[80%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5">
               <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
               <View>
-                <View className="mt-[60px]">
+                <View className="mt-[15%]">
                   <Text className="text-white text-center text-xl font-geistMedium">
+
                     {greeting}, {user.username} 👋
                   </Text>
                   <Text className="text-white text-center text-xl font-geistMedium">
@@ -131,46 +138,46 @@ const Chatbot = () => {
                   </Text>
                 </View>
 
-                <View className="mx-5 mt-[60px] w-full items-center">
-                  <View className="flex-row w-full justify-center gap-x-4">
+                <View className="flex flex-col mx-5 mt-[10%] w-full items-center">
+                  <View className="flex flex-row w-full justify-center gap-x-4">
                     <TouchableOpacity
-                      className="w-[44%] h-[100%] rounded-xl bg-[#353535]"
-                      onPress={() => handlePromptClick("What this bot can do?")}
+                      className="w-[45%] h-[100%] rounded-xl bg-[#353535]"
+                      onPress={() => handlePromptClick("Who is Alan Turing?")}
                     >
                       <Image
                         source={icons.questionCircle}
-                        className="w-6 h-6"
+                        className="w-6 h-6 my-[15%] ml-[15%]"
                         resizeMethod="contain"
                         tintColor="white"
                       />
                       <Text className="text-white text-sm mx-[15%] mb-[20%]">
-                        What this bot can do?
+                        Who is Alan Turing?
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      className="size-4 w-[44%] h-[100%] rounded-xl bg-[#353535]"
-                      onPress={() => handlePromptClick("How to use this bot?")}
+                      className="w-[45%] h-[100%] rounded-xl bg-[#353535]"
+                      onPress={() => handlePromptClick("How to make my first website?")}
                     >
                       <Image
                         source={icons.cursor}
-                        className="w-6 h-6"
+                        className="w-6 h-6 my-[15%] ml-[15%]"
                         resizeMethod="contain"
                         tintColor="white"
                       />
                       <Text className="text-white text-sm mx-[15%] mb-[20%]">
-                        How to use this bot?
+                        How to make my first website?
                       </Text>
                     </TouchableOpacity>
                   </View>
                   <TouchableOpacity
-                    className="w-[350px] h-[147px] rounded-xl bg-[#353535] px-5 py-8 justify-between mt-4"
+                    className="w-[100%] h-[38%] -bottom-6 rounded-xl bg-[#353535]"
                     onPress={() =>
                       handlePromptClick(
-                        "Make a roadmap to become a fullstack web developer"
+                        "Maka roadmap to become a fullstack web developer"
                       )
                     }
                   >
-                    <View className="relative">
+                    <View className="relative m-3">
                       <Image
                         source={icons.starThin}
                         tintColor="white"
@@ -184,13 +191,10 @@ const Chatbot = () => {
                         resizeMethod="contain"
                       />
                     </View>
-                    <Text className="text-white font-geistRegular text-sm">
+                    <Text className="text-white text-sm mx-[9%] mb-[20%]">
                       Make a roadmap to become a fullstack web developer
                     </Text>
                   </TouchableOpacity>
-                  <Text className="text-xs text-white text-center font-geistRegular mt-10">
-                    This bot can make mistakes
-                  </Text>
                 </View>
               </View>
             </View>
@@ -220,20 +224,21 @@ const Chatbot = () => {
                   shadowRadius: 4,
                   elevation: 2,
                 }}
+                className="w-auto"
               >
-                <Text
+                  <Text
                   style={{
                     color: message.role === "user" ? "#fff" : "#333",
                     fontSize: 16,
                   }}
                   className="font-geistRegular"
-                >
-                  <WebView
-                    originWhitelist={['*']}
-                    source={{ html: message.parts[0].text }}
                   >
-                  </WebView>
-                </Text>
+                    <Markdown
+                    style={{maxWidth: "75%"}}
+                    >
+                      {message.parts[0].text}
+                    </Markdown>
+                  </Text>
               </View>
             ))}
 

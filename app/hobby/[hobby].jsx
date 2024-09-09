@@ -176,7 +176,7 @@ const RoadmapResponse = () => {
 
       {/* Done Button */}
       <TouchableOpacity
-        onPress={() => router.push(`aiFeature`)}
+        onPress={() => router.back()}
         className="bg-blue-500 py-3 px-6 mb-4 mx-6 absolute bottom-0 left-0 right-0 rounded-md"
         style={{ opacity: modalVisible ? 0.5 : 1 }}
       >

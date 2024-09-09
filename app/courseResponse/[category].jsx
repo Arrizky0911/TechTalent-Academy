@@ -68,7 +68,7 @@ const CourseResponse = () => {
           placeholder="Search"
           value={category}
           placeholderTextColor="#6B7280"
-          className="flex-1 bg-[#1e1e1e] py-3.5 px-12 h-[43px] rounded border border-[#6e6e6e] text-white font-geistRegular text-xs"
+          className="flex-1 bg-[#1e1e1e] py-3.5 px-4 h-[43px] border-white/40 border-[1px] rounded-xl text-white font-geistRegular text-xs"
         />
       </View>
       {/* <ScrollView horizontal className="flex flex-row mb-4">  
