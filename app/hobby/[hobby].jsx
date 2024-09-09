@@ -233,18 +233,13 @@ const RoadmapResponse = () => {
       </Modal>
 
       {/* Done Button */}
-      <Animated.View
-        entering={FadeInUp.delay(800).springify()}
-        className="absolute bottom-0 left-0 right-0 mb-4 mx-6"
+      <TouchableOpacity
+        onPress={() => router.push(`aiFeature`)}
+        className="bg-blue-500 py-3 px-6 mb-4 mx-6 absolute bottom-0 left-0 right-0 rounded-md"
+        style={{ opacity: modalVisible ? 0.5 : 1 }}
       >
-        <TouchableOpacity
-          onPress={() => router.push(`aiFeature`)}
-          className="bg-blue-500 py-3 px-6 rounded-md"
-          style={{ opacity: modalVisible ? 0.5 : 1 }}
-        >
-          <Text className="text-white text-center font-geistSemiBold">Done</Text>
-        </TouchableOpacity>
-      </Animated.View>
+        <Text className="text-white text-center font-geistSemiBold">Done</Text>
+      </TouchableOpacity>
     </View>
   );
 };

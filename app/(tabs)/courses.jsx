@@ -36,7 +36,7 @@ const Courses = () => {
         </Text>
 
         <TextInput
-          className="bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border border-[#6e6e6e] rounded mb-4 w-full"
+          className="bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] rounded-xl mb-4 w-full"
           placeholder="Input here"
           placeholderTextColor="gray"
           value={searchInput}
@@ -49,7 +49,7 @@ const Courses = () => {
               return (
                 <TouchableOpacity
                   onPress={() =>
-                    router.push(`/courseResponse/${category.category_name}`)
+                    setSearchInput(category.category_name)
                   }
                   key={category.$id}
                   className="w-[45%] border-[1px] border-[#6e6e6e] rounded-xl py-2"

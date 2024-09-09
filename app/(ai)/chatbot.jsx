@@ -18,7 +18,7 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
 import { getResponse } from "../../lib/AIConfig";
-import WebView from "react-native-webview";
+import Markdown from "react-native-markdown-display";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -40,16 +40,6 @@ const Chatbot = () => {
     }
   }, []);
 
-  const markdownParser = (text) => {
-    const toHTML = text
-      .replace(/^### (.*$)/gim, '<h3>$1</h3>') // h3 tag
-      .replace(/^## (.*$)/gim, '<h2>$1</h2>') // h2 tag
-      .replace(/^# (.*$)/gim, '<h1>$1</h1>') // h1 tag
-      .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>') // bold text
-      .replace(/\*(.*)\*/gim, '<i>$1</i>'); // italic text
-    return toHTML.trim(); // using trim method to remove whitespace
-  }
-
   const sendMessage = async () => {
     if (!userInput.trim()) return;
     Keyboard.dismiss();
@@ -70,6 +60,9 @@ const Chatbot = () => {
 
     try {
       const response = await getResponse(updatedChat);
+
+      // let markdownResponse = markdownParser(response);
+      // console.log(JSON.stringify(markdownResponse));
 
       let updatedChatWithBot = [
         ...updatedChat,
@@ -104,28 +97,28 @@ const Chatbot = () => {
       <View className="h-full relative">
         <BgImage />
         <SafeAreaView className="mx-5 mt-5 ">
-          <View className='flex-row items-center justify-between '>
-
-          <TouchableOpacity onPress={() => router.back()}>
-            <Image
-              source={icons.arrowLeft}
-              className="w-7 h-7 mt-10"
-              resizeMethod="contain"
-              tintColor="white"
-            />
-          </TouchableOpacity>
-          <Text className="text-white text-center text-xl font-geistMedium mt-10">Guidance</Text>
-          <View className="w-7 h-7"></View> 
+          <View className="flex-row items-center justify-between ">
+            <TouchableOpacity onPress={() => router.back()}>
+              <Image
+                source={icons.arrowLeft}
+                className="h-6 w-6 mt-10"
+                resizeMethod="contain"
+                tintColor="white"
+              />
+            </TouchableOpacity>
+            <Text className="text-white text-center text-xl font-geistMedium mt-10">
+              Guidance
+            </Text>
+            <View className="w-7 h-7"></View>
           </View>
         </SafeAreaView>
 
         {chat.length < 1 ? (
           <>
-            <UserDisplay user={user} />
-            <View className="absolute -bottom-1 w-full h-[695px] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5">
+            <View className="absolute -bottom-1 w-full h-[80%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5">
               <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
               <View>
-                <View className="mt-[60px]">
+                <View className="mt-[15%]">
                   <Text className="text-white text-center text-xl font-geistMedium">
                     {greeting}, {user.username} 👋
                   </Text>
@@ -161,7 +154,7 @@ const Chatbot = () => {
                         tintColor="white"
                       />
                       <Text className="text-white text-sm">
-                        How to use this bot?
+                        How to make my first website?
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -169,7 +162,7 @@ const Chatbot = () => {
                     className="w-full  aspect-[16/7] rounded-xl bg-[#353535] p-4 flex justify-between"
                     onPress={() =>
                       handlePromptClick(
-                        "Make a roadmap to become a fullstack web developer"
+                        "Maka roadmap to become a fullstack web developer"
                       )
                     }
                   >
@@ -191,9 +184,6 @@ const Chatbot = () => {
                       Make a roadmap to become a fullstack web developer
                     </Text>
                   </TouchableOpacity>
-                  <Text className="text-xs text-white text-center font-geistRegular mt-10">
-                    This bot can make mistakes
-                  </Text>
                 </View>
               </View>
             </View>
@@ -223,6 +213,7 @@ const Chatbot = () => {
                   shadowRadius: 4,
                   elevation: 2,
                 }}
+                className="w-auto"
               >
                 <Text
                   style={{
@@ -231,7 +222,9 @@ const Chatbot = () => {
                   }}
                   className="font-geistRegular"
                 >
-                  {message.parts[0].text}
+                  <Markdown style={{ maxWidth: "75%" }}>
+                    {message.parts[0].text}
+                  </Markdown>
                 </Text>
               </View>
             ))}
