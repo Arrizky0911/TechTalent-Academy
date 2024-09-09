@@ -40,7 +40,6 @@ const Chatbot = () => {
     }
   }, []);
 
-
   const sendMessage = async () => {
     if (!userInput.trim()) return;
     Keyboard.dismiss();
@@ -98,17 +97,19 @@ const Chatbot = () => {
       <View className="h-full relative">
         <BgImage />
         <SafeAreaView className="mx-5 mt-5 ">
-          <View className='flex-row items-center justify-between '>
-          <TouchableOpacity onPress={() => router.back()}>
-            <Image
-              source={icons.arrowLeft}
-              className="h-6 w-6 mt-10"
-              resizeMethod="contain"
-              tintColor="white"
-            />
-          </TouchableOpacity>
-          <Text className="text-white text-center text-xl font-geistMedium mt-10">Guidance</Text>
-          <View className="w-7 h-7"></View> 
+          <View className="flex-row items-center justify-between ">
+            <TouchableOpacity onPress={() => router.back()}>
+              <Image
+                source={icons.arrowLeft}
+                className="h-6 w-6 mt-10"
+                resizeMethod="contain"
+                tintColor="white"
+              />
+            </TouchableOpacity>
+            <Text className="text-white text-center text-xl font-geistMedium mt-10">
+              Guidance
+            </Text>
+            <View className="w-7 h-7"></View>
           </View>
         </SafeAreaView>
 
@@ -119,14 +120,12 @@ const Chatbot = () => {
               <View>
                 <View className="mt-[15%]">
                   <Text className="text-white text-center text-xl font-geistMedium">
-
                     {greeting}, {user.username} 👋
                   </Text>
                   <Text className="text-white text-center text-xl font-geistMedium">
                     What can I do for you?
                   </Text>
                 </View>
-
 
                 <View className="w-full mt-8 px-4">
                   <View className="flex-row justify-between mb-4">
@@ -160,7 +159,6 @@ const Chatbot = () => {
                     </TouchableOpacity>
                   </View>
                   <TouchableOpacity
-
                     className="w-full  aspect-[16/7] rounded-xl bg-[#353535] p-4 flex justify-between"
                     onPress={() =>
                       handlePromptClick(
@@ -216,7 +214,7 @@ const Chatbot = () => {
                   elevation: 2,
                 }}
               >
-                  <Text
+                <Text
                   style={{
                     color: message.role === "user" ? "#fff" : "#333",
                     fontSize: 16,
