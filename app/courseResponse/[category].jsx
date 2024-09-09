@@ -56,6 +56,12 @@ const CourseResponse = () => {
     }
   };
 
+  const handleSearch = () => {
+    if (search.trim()) {
+      router.push(`/courseResponse/${search}`);
+    }
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-[#111315] p-4">
       <View className="flex-row items-center space-x-2 mb-4">
@@ -73,7 +79,7 @@ const CourseResponse = () => {
           placeholder={"Search"}
           value={search}
           handleChange={e => setSearch(e)}
-          handleSubmit={() => onRefresh()}
+          handleSubmit={() => handleSearch()}
           textStyles={"py-3.5 px-3 h-[43px]"}
           outerClass={"w-[95%]"}
         >
