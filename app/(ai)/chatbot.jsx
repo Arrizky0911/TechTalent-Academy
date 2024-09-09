@@ -271,7 +271,7 @@ const Chatbot = () => {
           handleChange={(e) => setUserInput(e)}
           value={userInput}
           handleSubmit={sendMessage}
-          buttonDisable={isLoading}
+          buttonDisable={isLoading || (userInput ? false : true)}
           editable={!isLoading}
         />
       </View>
