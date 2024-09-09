@@ -130,7 +130,7 @@ const Chatbot = () => {
                 <View className="w-full mt-8 px-4">
                   <View className="flex-row justify-between mb-4">
                     <TouchableOpacity
-                      className="w-[48%] aspect-[4/3] rounded-xl bg-[#353535] p-4 justify-between"
+                      className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
                       onPress={() => handlePromptClick("What this bot can do?")}
                     >
                       <Image
@@ -144,8 +144,8 @@ const Chatbot = () => {
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      className="w-[48%] aspect-[4/3] rounded-xl bg-[#353535] p-4 justify-between"
-                      onPress={() => handlePromptClick("How to use this bot?")}
+                      className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
+                      onPress={() => handlePromptClick("How to make my first website?")}
                     >
                       <Image
                         source={icons.cursor}
@@ -159,7 +159,7 @@ const Chatbot = () => {
                     </TouchableOpacity>
                   </View>
                   <TouchableOpacity
-                    className="w-full  aspect-[16/7] rounded-xl bg-[#353535] p-4 flex justify-between"
+                    className="w-full h-auto aspect-[22/11] rounded-xl bg-[#353535] p-4 flex justify-between"
                     onPress={() =>
                       handlePromptClick(
                         "Maka roadmap to become a fullstack web developer"
