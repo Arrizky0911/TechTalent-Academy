@@ -141,133 +141,131 @@ const MockTest = () => {
 
   return (
     <ImageBackground
-      source={require("./bgmock.png")} // Ensure the path is correct to your bgmock.png
+      source={require("./bgmock.png")}
       style={{ flex: 1 }}
       resizeMode="cover"
     >
       {(isLoading || isTranscripting) && (
-        <Loading additionStyle="absolute h-full w-full z-[1000] bg-black" />
+        <Loading additionStyle="absolute h-full w-full z-[1000] bg-black/70" />
       )}
-      <SafeAreaView className="bg-[#111315] h-full w-full flex pt-16">
-        <View className="flex-row justify-between ">
-          <TouchableOpacity className="ml-6" onPress={handleBackPress}>
-            <AntDesign name="arrowleft" size={24} color="white" />
-          </TouchableOpacity>
-          <View className="flex-1 mr-8">
-            <Text className="text-white text-center text-xl font-geistBold mb-10">
+      <SafeAreaView className="bg-[#111315] h-full flex-1 pt-16">
+        <View className="px-6">
+          <View className="flex-row justify-between items-center mb-6">
+            <TouchableOpacity onPress={handleBackPress}>
+              <AntDesign name="arrowleft" size={24} color="white" />
+            </TouchableOpacity>
+            <Text className="text-white text-xl font-geistBold">
               Mock Interview
             </Text>
+            <View style={{ width: 24 }} ></View>
           </View>
+          <Text className="text-white text-center font-geistSemiBold text-base mb-8">
+            {input} Job Interview
+          </Text>
         </View>
-        <Text className="text-white text-center font-geistSemiBold text-base mt-3">
-          {input} Job Interview
-        </Text>
-        <View className="flex flex-row h-1/2 justify-center items-center mr-16 ml-3">
+
+        <View className="flex-1 px-6">
           {index == questions?.length ? (
-            <>
-              <View className="flex-1 justify-center w-full h-auto self-center items-center mt-10">
-                <Image
-                  className=" h-[200px] rounded-lg"
-                  resizeMode="contain"
-                  source={images.done}
-                />
-                <Text className=" text-white text-center mt-6 px-6 font-geistRegular">
-                  Your answer has been saved, click submit to see your grade.
-                </Text>
-              </View>
-            </>
+            <View className="flex-1 justify-center items-center">
+              <Image
+                className="h-[200px] w-[200px] mb-6"
+                resizeMode="contain"
+                source={images.done}
+              />
+              <Text className="text-white text-center px-6 font-geistRegular">
+                Your answer has been saved, click submit to see your grade.
+              </Text>
+            </View>
           ) : (
-            <>
-              <View className="flex-row items-start mb-4 mx-4">
+            <View className="flex-1">
+              <View className="flex-row items-start mb-6">
                 <Image
                   source={images.logo}
                   className="w-10 h-10 rounded-full border-2 border-white"
                 />
-                <View className="flex-1 ml-4 bg-[#242627] p-3 rounded-b-xl rounded-tr-xl flex flex-col justify-between">
-                  <Text className="text-white font-geistRegular text-xs">
+                <View className="flex-1 ml-4 bg-[#242627] p-4 rounded-b-xl rounded-tr-xl">
+                  <Text className="text-white font-geistRegular text-sm mb-4">
                     {questions?.[index]}
                   </Text>
-                  <View className="mt-4 border-t rounded-full w-full border-gray-500"></View>
-                  <Text className="text-gray-400 font-geistMedium text-[10px] mt-2 text-right">
+                  <View className="border-t border-gray-500 my-2" />
+                  <Text className="text-gray-400 font-geistMedium text-xs text-right">
                     {index + 1} of {questions?.length}
                   </Text>
                 </View>
               </View>
-            </>
+
+              {answers?.[index] && (
+                <View className="-top-20 ml-10 mr-4 bg-[#3F454D] p-4 rounded-t-2xl rounded-bl-2xl 
+          flex flex-col justify-between shadow-lg max-w-[80%] self-end">
+                  <Text className="text-white font-geistRegular text-xs leading-3 mb-4">
+                    {answers?.[index]}
+                  </Text>
+                  <View className="border-t border-gray-600 my-2" ></View>
+                  <Text className="text-gray-500 font-geistRegular text-xs text-right">
+                    {index + 1} of {questions?.length}
+                  </Text>
+                </View>
+              )}
+            </View>
           )}
         </View>
 
-        {answers?.[index] ? (
-          <View className="-top-20 ml-10 mr-4 bg-[#3F454D] p-4 rounded-t-2xl rounded-bl-2xl flex flex-col justify-between shadow-lg max-w-[80%] self-end">
-            <Text className="text-white font-geistRegular text-sm leading-5">
-              {answers?.[index]}
-            </Text>
-            <View className="mt-4 border-t rounded-full w-full border-gray-600"></View>
-            <Text className="text-gray-500 font-geistMedium text-[10px] mt-2 text-right">
-              {index + 1} of {questions?.length}
-            </Text>
-          </View>
-        ) : (
-          <></>
-        )}
-
-        {/* Control Buttons */}
-        <View className="flex-1"></View>
-        {index == questions?.length ? (
-          <View className="justify-center items-center w-full mb-10">
+        <View className="px-6 mb-10">
+          {index == questions?.length ? (
             <TouchableOpacity
-              onPress={() => handleSubmit()}
-              className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-[85%] mx-auto"
+              onPress={handleSubmit}
+              className="bg-blue-500 py-4 rounded-md w-full"
             >
               <Text className="text-white text-center font-geistSemiBold">
                 Submit Interview
               </Text>
             </TouchableOpacity>
-          </View>
-        ) : answers?.[index] ? (
-          <View className="flex-row justify-center w-full mb-10">
-            <TouchableOpacity
-              onPress={() => refreshCurrentAnswer()}
-              className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full "
-            >
-              <FontAwesome name="times" size={24} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              disabled
-              className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full mx-16"
-            >
-              <FontAwesome name="microphone" size={24} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setIndex((i) => i + 1)}
-              className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full "
-            >
-              <FontAwesome name="play" size={24} color="white" />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View className="flex-row justify-center w-full mb-10">
-            <AnimatedTouchableOpacity
-              onPress={() => (recording ? stopRecording() : startRecording())}
-              onPressIn={handlePressIn}
-              onPressOut={handlePressOut}
-              style={[animatedStyle]}
-              className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full mx-16"
-            >
-              <FontAwesome
-                name="microphone"
-                size={24}
-                color={recording ? "red" : "white"}
-              />
-            </AnimatedTouchableOpacity>
-            {recording && (
-              <View className="absolute top-[-30] left-0 right-0 flex items-center">
-                <WaveAnimation isRecording={recording} />
-              </View>
-            )}
-          </View>
-        )}
+          ) : answers?.[index] ? (
+            <View className="flex-row justify-between">
+              <TouchableOpacity
+                onPress={refreshCurrentAnswer}
+                className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full"
+              >
+                <FontAwesome name="times" size={24} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                disabled
+                className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full"
+              >
+                <FontAwesome name="microphone" size={24} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setIndex((i) => i + 1)}
+                className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full"
+              >
+                <FontAwesome name="play" size={24} color="white" />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View className="items-center">
+              <AnimatedTouchableOpacity
+                onPress={() => (recording ? stopRecording() : startRecording())}
+                onPressIn={handlePressIn}
+                onPressOut={handlePressOut}
+                style={[animatedStyle]}
+                className="bg-[#1e1e1e] p-6 border border-white/20 rounded-full"
+              >
+                <FontAwesome
+                  name="microphone"
+                  size={32}
+                  color={recording ? "red" : "white"}
+                />
+              </AnimatedTouchableOpacity>
+              {recording && (
+                <View className="absolute top-[-40]">
+                  <WaveAnimation isRecording={recording} />
+                </View>
+              )}
+            </View>
+          )}
+        </View>
       </SafeAreaView>
+
       <Modal
         animationType="fade"
         transparent={true}
