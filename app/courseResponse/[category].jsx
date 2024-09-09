@@ -16,9 +16,11 @@ import { Link, router, useLocalSearchParams } from "expo-router";
 import useFetchData from "../../lib/useFetchData";
 import { getAllCategories, searchCategories } from "../../lib/appwriteConfig";
 import { images } from "../../constants";
+import BotTextFields from "../../components/BotTextFields";
 
 const CourseResponse = () => {
   const { category } = useLocalSearchParams();
+  const [search, setSearch] = useState("")
   const { data: categories } = useFetchData(getAllCategories);
   const { data, refetch } = useFetchData(() => searchCategories(category));
   const datass = data.map((item) => item.courses)[0];
@@ -29,6 +31,7 @@ const CourseResponse = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setSearch(category);
     const fetchData = async () => {
       setIsLoading(true);
       try {
@@ -56,7 +59,9 @@ const CourseResponse = () => {
   return (
     <SafeAreaView className="flex-1 bg-[#111315] p-4">
       <View className="flex-row items-center space-x-2 mb-4">
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity 
+          className="mr-3"
+          onPress={() => router.back()}>
           <Image
             source={icons.arrowLeft}
             className="h-4 w-4 rounded-full"
@@ -64,12 +69,15 @@ const CourseResponse = () => {
             tintColor="white"
           />
         </TouchableOpacity>
-        <TextInput
-          placeholder="Search"
-          value={category}
-          placeholderTextColor="#6B7280"
-          className="flex-1 bg-[#1e1e1e] py-3.5 px-4 h-[43px] border-white/40 border-[1px] rounded-xl text-white font-geistRegular text-xs"
-        />
+        <BotTextFields
+          placeholder={"Search"}
+          value={search}
+          handleChange={e => setSearch(e)}
+          handleSubmit={() => onRefresh()}
+          textStyles={"py-3.5 px-3 h-[43px]"}
+          outerClass={"w-[95%]"}
+        >
+        </BotTextFields>
       </View>
       {/* <ScrollView horizontal className="flex flex-row mb-4">  
         {['Gaming', 'Gaming', 'Gaming', 'Gaming'].map((category, index) => (
@@ -89,7 +97,9 @@ const CourseResponse = () => {
           className="overflow-visible"
           data={categories}
           renderItem={({ item }) => (
-            <TouchableOpacity className="py-[6.5px] px-7 mb-4 mr-2 rounded-xl border border-[#6e6e6e] items-center justify-center">
+            <TouchableOpacity 
+              onPress={() => setSearch(item.category_name)}
+              className="py-[6.5px] px-7 mb-4 mr-2 rounded-xl border border-[#6e6e6e] items-center justify-center">
               <Text className="text-white text-xs font-geistRegular capitalize">
                 {item.category_name}
               </Text>

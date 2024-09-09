@@ -269,7 +269,7 @@ const MockTest = () => {
             )}
           </View>
         )}
-      </KeyboardAvoidingView>
+      </SafeAreaView>
       <Modal
         animationType="fade"
         transparent={true}
