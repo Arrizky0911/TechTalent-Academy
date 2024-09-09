@@ -19,6 +19,7 @@ import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
 import { getResponse } from "../../lib/AIConfig";
 import Markdown, {MarkdownIt} from "react-native-markdown-display";
+import { chatAI } from "../../lib/chatAI";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -43,7 +44,6 @@ const Chatbot = () => {
   const sendMessage = async () => {
     if (!userInput.trim()) return;
     Keyboard.dismiss();
-    console.log("Ini chat awal", chat);
     let updatedChat = [
       ...chat,
       {
@@ -53,13 +53,10 @@ const Chatbot = () => {
     ];
 
     setChat(updatedChat);
-
-    console.log("Ini updatedChat", updatedChat);
-
     setIsLoading(true);
 
     try {
-      const response = await getResponse(updatedChat);
+      const response = await chatAI(updatedChat, userInput);
 
       // let markdownResponse = markdownParser(response);
       // console.log(JSON.stringify(markdownResponse));
@@ -77,11 +74,12 @@ const Chatbot = () => {
       setUserInput("");
       setChat(updatedChatWithBot);
 
-      console.log("Ini chat akhir", chat);
     } catch (error) {
       console.error(error);
+
     } finally {
       setIsLoading(false);
+
     }
   };
 
@@ -132,7 +130,7 @@ const Chatbot = () => {
                   <View className="flex-row justify-between mb-4">
                     <TouchableOpacity
                       className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
-                      onPress={() => handlePromptClick("What this bot can do?")}
+                      onPress={() => handlePromptClick("Who are you?")}
                     >
                       <Image
                         source={icons.questionCircle}
@@ -141,7 +139,7 @@ const Chatbot = () => {
                         tintColor="white"
                       />
                       <Text className="text-white text-sm">
-                        What this bot can do?
+                        Who are you?
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
