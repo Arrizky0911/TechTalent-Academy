@@ -15,7 +15,7 @@ import React, { useState, useCallback } from "react";
 import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import useFetchData from "../../lib/useFetchData";
-import { getQuestions, getTranscript } from "../../lib/AIConfig";
+import { getQuestions, getTranscript } from "../../lib/interviewAI";
 import Loading from "../../components/Loading";
 import WaveAnimation from "../../components/WaveAnimation";
 import { Audio } from "expo-av";
