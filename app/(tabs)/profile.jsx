@@ -38,6 +38,7 @@ const Profile = () => {
     setIsLoading(true);
     try {
       const currentUser = await getCurrentUser();
+      console.log(user?.avatar);
       setUser(currentUser);
     } catch (error) {
       console.log(error);
@@ -101,15 +102,14 @@ const Profile = () => {
         : { username: form.username, profession: form.profession };
 
       const response = await updateUser(user.$id, asset, user.$permissions);
-      console.log(response)
       const currentUser = await getCurrentUser();
       setUser(currentUser);
     } catch (error) {
       if (error.message === "AppwriteException: Network request failed") {
-        Alert.alert("")
+        Alert.alert("");
       }
 
-      console.log(error.message, typeof error.message)
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

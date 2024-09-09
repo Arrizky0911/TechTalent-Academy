@@ -17,7 +17,7 @@ import { useLocalSearchParams } from "expo-router";
 import useFetchData from "../../lib/useFetchData";
 import { getQuestions, getTranscript } from "../../lib/AIConfig";
 import Loading from "../../components/Loading";
-import WaveAnimation from '../../components/WaveAnimation'
+import WaveAnimation from "../../components/WaveAnimation";
 import { Audio } from "expo-av";
 import { images } from "../../constants";
 import Animated, {
@@ -31,7 +31,8 @@ import Animated, {
 import { Alert, Modal } from "react-native";
 import { mix } from "react-native-redash";
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 const MockTest = () => {
   const { input } = useLocalSearchParams();
@@ -121,10 +122,7 @@ const MockTest = () => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [
-        { scale: scale.value },
-        { rotate: `${rotation.value}deg` },
-      ],
+      transform: [{ scale: scale.value }, { rotate: `${rotation.value}deg` }],
     };
   });
 
@@ -256,10 +254,10 @@ const MockTest = () => {
               style={[animatedStyle]}
               className="bg-[#1e1e1e] p-4 border border-white/20 rounded-full mx-16"
             >
-              <FontAwesome 
-                name="microphone" 
-                size={24} 
-                color={recording ? "red" : "white"} 
+              <FontAwesome
+                name="microphone"
+                size={24}
+                color={recording ? "red" : "white"}
               />
             </AnimatedTouchableOpacity>
             {recording && (
@@ -269,7 +267,7 @@ const MockTest = () => {
             )}
           </View>
         )}
-      </KeyboardAvoidingView>
+      </SafeAreaView>
       <Modal
         animationType="fade"
         transparent={true}
@@ -282,7 +280,8 @@ const MockTest = () => {
               Exit Interview?
             </Text>
             <Text className="text-gray-300 text-sm font-geistRegular mb-6 text-center">
-              Your interview progress will be lost. Are you sure you want to leave?
+              Your interview progress will be lost. Are you sure you want to
+              leave?
             </Text>
             <View className="flex-row justify-between">
               <TouchableOpacity
