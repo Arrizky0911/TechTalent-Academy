@@ -18,7 +18,7 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
 import { getResponse } from "../../lib/AIConfig";
-import Markdown from "react-native-markdown-display";
+import Markdown, {MarkdownIt} from "react-native-markdown-display";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -136,7 +136,7 @@ const Chatbot = () => {
                     >
                       <Image
                         source={icons.questionCircle}
-                        className="w-6 h-6"
+                        className="w-6 h-6 my-[15%] ml-[5%]"
                         resizeMethod="contain"
                         tintColor="white"
                       />
@@ -150,7 +150,7 @@ const Chatbot = () => {
                     >
                       <Image
                         source={icons.cursor}
-                        className="w-6 h-6"
+                        className="w-6 h-6 my-[15%] ml-[5%]"
                         resizeMethod="contain"
                         tintColor="white"
                       />
@@ -207,26 +207,34 @@ const Chatbot = () => {
                     message.role === "user" ? "#2a86ff" : "#f0f0f0",
                   padding: 12,
                   marginVertical: 8,
-                  borderRadius: 16,
                   maxWidth: "75%",
+                  borderRadius: 16,
                   shadowColor: "#000",
                   shadowOpacity: 0.1,
                   shadowRadius: 4,
                   elevation: 2,
                 }}
-                className="w-auto"
               >
                 <Text
                   style={{
                     color: message.role === "user" ? "#fff" : "#333",
                     fontSize: 16,
+                    flexDirection: "row"
                   }}
-                  className="font-geistRegular"
-                >
-                  <Markdown style={{ maxWidth: "75%" }}>
-                    {message.parts[0].text}
-                  </Markdown>
-                </Text>
+                  className="font-geistRegular text-wrap break-words mx-2"
+                  >
+                    <Markdown
+                      style={{maxWidth: "75%", flex: 1, flexWrap: "wrap"}}
+                      markdownit={
+                        MarkdownIt({
+                          typographer: true,
+                          breaks: true
+                        }).disable(['blockquote', 'list', 'code'])
+                      }
+                    >
+                      {message.parts[0].text}
+                    </Markdown>
+                  </Text>
               </View>
             ))}
 
