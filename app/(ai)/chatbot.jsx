@@ -115,6 +115,7 @@ const Chatbot = () => {
 
         {chat.length < 1 ? (
           <>
+            <UserDisplay user={user} />
             <View className="absolute -bottom-1 w-full h-[80%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5">
               <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
               <View>
