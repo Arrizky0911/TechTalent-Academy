@@ -32,6 +32,7 @@ const Home = () => {
 
   const { data: labels, refetch: refetchLabels } = useFetchData(getUserLabels);
   const adminLabel = labels.filter((label) => label.toLowerCase() === "admin");
+  console.log(adminLabel);
   console.log(adminLabel > 1);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -68,44 +69,57 @@ const Home = () => {
   return (
     <SafeAreaView className="bg-frame flex-1">
       <View className="h-[170px] w-full bg-black rounded-b-[20px] px-10 pt-6">
-        <View className="flex-row justify-between items-center  top-10">
-          <View className="flex-row space-x-3 items-center">
-            <View className="justify-center">
-              <Text className="text-white/70 text-[12px]">Hello👋</Text>
-              <Text className="text-white capitalize font-geistMedium text-md">
-                {user.username}
-              </Text>
-            </View>
-          </View>
-          <View className="flex-row items-center space-x-5">
-            <Image
-              source={{ uri: user?.avatar }}
-              className="w-[35px] h-[35px] rounded-full"
-              resizeMode="cover"
-            />
-
-            {adminLabel?.length >= 1 && (
-              <TouchableOpacity onPress={() => router.push("/createCourse")}>
+        <View className="flex-row justify-between items-center top-10">
+          {adminLabel?.length >= 1 ? (
+            <>
+              <View className="flex-row space-x-3 items-center">
                 <Image
-                  source={icons.addCircle}
-                  className="w-[20px] h-[20px]"
-                  tintColor="#fff"
-                  resizeMode="contain"
+                  source={{ uri: user?.avatar }}
+                  className="w-[35px] h-[35px] rounded-full"
+                  resizeMode="cover"
                 />
-              </TouchableOpacity>
-            )}
-            {adminLabel.length >= 1 && (
-              <TouchableOpacity
-                className="border-[1px] border-white py-0.5 px-2 rounded-xl"
-                onPress={() => router.push("/createCategory")}
-              >
-                <Text className="text-white">Add category</Text>
-              </TouchableOpacity>
-            )}
-          </View>
+                <View className="justify-center">
+                  <Text className="text-white/70 text-[12px]">Hello👋</Text>
+                  <Text className="text-white capitalize font-geistMedium text-md">
+                    {user.username}
+                  </Text>
+                </View>
+              </View>
+              <View className="flex-row items-center space-x-3">
+                <TouchableOpacity onPress={() => router.push("/createCourse")}>
+                  <Image
+                    source={icons.addCircle}
+                    className="w-[20px] h-[20px]"
+                    tintColor="#fff"
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="border-[1px] border-white py-0.5 px-2 rounded-xl"
+                  onPress={() => router.push("/createCategory")}
+                >
+                  <Text className="text-white">Add category</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          ) : (
+            <>
+              <View className="justify-center">
+                <Text className="text-white/70 text-[12px]">Hello👋</Text>
+                <Text className="text-white capitalize font-geistMedium text-md">
+                  {user.username}
+                </Text>
+              </View>
+              <Image
+                source={{ uri: user?.avatar }}
+                className="w-[35px] h-[35px] rounded-full"
+                resizeMode="cover"
+              />
+            </>
+          )}
         </View>
         <View>
-          <Text className="text-white text-start top-16 text-xs  font-geistMedium">
+          <Text className="text-white text-start top-16 text-xs font-geistMedium">
             {currentDate}
           </Text>
         </View>

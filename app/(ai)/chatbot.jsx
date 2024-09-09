@@ -40,19 +40,6 @@ const Chatbot = () => {
     }
   }, []);
 
-  // const markdownParser = (text) => {
-  //   const toHTML = text
-  //     .replace(/^### (.*$)/gim, `${(<Text>$1</Text>)}`) // h3 tag
-  //     .replace(/^## (.*$)/gim, `${(<Text>$1</Text>)}`) // h2 tag
-  //     .replace(/^# (.*$)/gim, `${(<Text>$1</Text>)}`) // h1 tag
-  //     .replace(/\*\*(.*)\*\*/gim, `${(<Text>$1</Text>)}`) // bold text
-  //     .replace(/\*(.*)\*/gim, `${(<Text>$1</Text>)}`); // italic text
-  //   const newHtml = toHTML.trim(); 
-  //   return (
-  //     <Text>{JSON.parse(newHtml)}</Text>
-  //   )
-  //   // using trim method to remove whitespace
-  // }
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -110,7 +97,8 @@ const Chatbot = () => {
     >
       <View className="h-full relative">
         <BgImage />
-        <View className="mx-6 mt-3">
+        <SafeAreaView className="mx-5 mt-5 ">
+          <View className='flex-row items-center justify-between '>
           <TouchableOpacity onPress={() => router.back()}>
             <Image
               source={icons.arrowLeft}
@@ -119,9 +107,10 @@ const Chatbot = () => {
               tintColor="white"
             />
           </TouchableOpacity>
-          <Text className="text-white text-center text-xl font-geistMedium my-5">Guidance</Text>
+          <Text className="text-white text-center text-xl font-geistMedium mt-10">Guidance</Text>
           <View className="w-7 h-7"></View> 
-        </View>
+          </View>
+        </SafeAreaView>
 
         {chat.length < 1 ? (
           <>
@@ -138,11 +127,12 @@ const Chatbot = () => {
                   </Text>
                 </View>
 
-                <View className="flex flex-col mx-5 mt-[10%] w-full items-center">
-                  <View className="flex flex-row w-full justify-center gap-x-4">
+
+                <View className="w-full mt-8 px-4">
+                  <View className="flex-row justify-between mb-4">
                     <TouchableOpacity
-                      className="w-[45%] h-[100%] rounded-xl bg-[#353535]"
-                      onPress={() => handlePromptClick("Who is Alan Turing?")}
+                      className="w-[48%] aspect-[4/3] rounded-xl bg-[#353535] p-4 justify-between"
+                      onPress={() => handlePromptClick("What this bot can do?")}
                     >
                       <Image
                         source={icons.questionCircle}
@@ -150,13 +140,13 @@ const Chatbot = () => {
                         resizeMethod="contain"
                         tintColor="white"
                       />
-                      <Text className="text-white text-sm mx-[15%] mb-[20%]">
-                        Who is Alan Turing?
+                      <Text className="text-white text-sm">
+                        What this bot can do?
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      className="w-[45%] h-[100%] rounded-xl bg-[#353535]"
-                      onPress={() => handlePromptClick("How to make my first website?")}
+                      className="w-[48%] aspect-[4/3] rounded-xl bg-[#353535] p-4 justify-between"
+                      onPress={() => handlePromptClick("How to use this bot?")}
                     >
                       <Image
                         source={icons.cursor}
@@ -170,18 +160,19 @@ const Chatbot = () => {
                     </TouchableOpacity>
                   </View>
                   <TouchableOpacity
-                    className="w-[100%] h-[38%] -bottom-6 rounded-xl bg-[#353535]"
+
+                    className="w-full  aspect-[16/7] rounded-xl bg-[#353535] p-4 flex justify-between"
                     onPress={() =>
                       handlePromptClick(
                         "Maka roadmap to become a fullstack web developer"
                       )
                     }
                   >
-                    <View className="relative m-3">
+                    <View className="h-14 relative">
                       <Image
                         source={icons.starThin}
                         tintColor="white"
-                        className="w-6 h-6"
+                        className="w-6 h-6 absolute"
                         resizeMethod="contain"
                       />
                       <Image
@@ -191,7 +182,7 @@ const Chatbot = () => {
                         resizeMethod="contain"
                       />
                     </View>
-                    <Text className="text-white text-sm mx-[9%] mb-[20%]">
+                    <Text className="text-white font-geistRegular text-sm flex-1 mt-2">
                       Make a roadmap to become a fullstack web developer
                     </Text>
                   </TouchableOpacity>
