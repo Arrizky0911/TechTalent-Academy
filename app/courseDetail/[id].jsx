@@ -39,6 +39,45 @@ const CourseDetail = () => {
   const [chatbotX, setChatbotX] = useState(0);
   const translateX = useRef(new Animated.Value(0)).current;
 
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(0.95)).current;
+  const slideAnim = useRef(new Animated.Value(20)).current;
+  const titleSlideAnim = useRef(new Animated.Value(50)).current;
+  const descSlideAnim = useRef(new Animated.Value(50)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        friction: 8,
+        tension: 40,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      Animated.timing(titleSlideAnim, {
+        toValue: 0,
+        duration: 600,
+        delay: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(descSlideAnim, {
+        toValue: 0,
+        duration: 400,
+        delay: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
   useEffect(() => {
     const targetTeanslateX = activeTab === "overview" ? overviewX : chatbotX;
     Animated.spring(translateX, {
@@ -73,7 +112,13 @@ const CourseDetail = () => {
         <AntDesign name="arrowleft" size={24} color="#fff" />
       </TouchableOpacity>
 
-      <View className="h-[220px] w-full relative items-center justify-center">
+      <Animated.View 
+        style={{ 
+          opacity: fadeAnim, 
+          transform: [{ scale: scaleAnim }] 
+        }} 
+        className="h-[220px] w-full relative items-center justify-center"
+      >
         {isPlay ? (
           <View className="w-full h-full bg-black relative items-center justify-center">
             <VideoAV
@@ -128,17 +173,32 @@ const CourseDetail = () => {
             )}
           </>
         )}
-      </View>
-      <View
-        style={{}}
-        className=" py-6 bg-[#111315] flex-1 border-t-[1px] border-t-black/30"
+      </Animated.View>
+      <Animated.View
+        style={{
+          opacity: fadeAnim,
+          transform: [{ translateY: slideAnim }],
+        }}
+        className="py-6 bg-[#111315] flex-1 border-t-[1px] border-t-black/30"
       >
-        <Text className="text-white text-xl font-geistBold mx-8">
+        <Animated.Text 
+          style={{ 
+            opacity: fadeAnim,
+            transform: [{ translateY: titleSlideAnim }]
+          }}
+          className="text-white text-xl font-geistBold mx-8"
+        >
           {course.title}
-        </Text>
-        <Text className="text-[#737373] text-xs font-geistMedium mt-4 mx-8">
+        </Animated.Text>
+        <Animated.Text 
+          style={{ 
+            opacity: fadeAnim,
+            transform: [{ translateY: descSlideAnim }]
+          }}
+          className="text-[#737373] text-xs font-geistMedium mt-4 mx-8"
+        >
           {course.description}
-        </Text>
+        </Animated.Text>
         <View className="mt-16 mb-4">
           <View className="flex-row w-full">
             <TouchableOpacity
@@ -196,13 +256,25 @@ const CourseDetail = () => {
           }}
         >
           {activeTab === "overview" ? (
-            <View className="items-start h-full px-6">
+            <Animated.View 
+              style={{ 
+                opacity: fadeAnim,
+                transform: [{ translateY: descSlideAnim }]
+              }}
+              className="items-start h-full px-6"
+            >
               <Text className="font-geistRegular text-white text-sm leading-4">
                 {course.summary}
               </Text>
-            </View>
+            </Animated.View>
           ) : (
-            <View className="flex-row gap-10 justify-center items-center ">
+            <Animated.View 
+              style={{ 
+                opacity: fadeAnim,
+                transform: [{ translateY: descSlideAnim }]
+              }}
+              className="flex-row gap-10 justify-center items-center"
+            >
               <View className="w-20 h-20 p-2 rounded-[100px] justify-center items-center">
                 <Image
                   source={images.logo}
@@ -222,10 +294,10 @@ const CourseDetail = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </Animated.View>
           )}
         </ScrollView>
-      </View>
+      </Animated.View>
     </SafeAreaView>
   );
 };

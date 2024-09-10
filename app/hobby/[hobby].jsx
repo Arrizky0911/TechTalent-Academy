@@ -35,7 +35,6 @@ const RoadmapResponse = () => {
   const [jobs, setJobs] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Tambahkan animasi untuk header
   const headerOpacity = useSharedValue(0);
   const headerTranslateY = useSharedValue(-50);
 

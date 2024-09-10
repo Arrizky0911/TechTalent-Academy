@@ -1,8 +1,9 @@
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { View, Text, TouchableOpacity, SafeAreaView, Modal, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView, Modal, TextInput, Animated } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Reanimated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
 
 export default function App() {
   const [selectedJob, setSelectedJob] = useState(null); // state to track selected job
@@ -21,10 +22,20 @@ export default function App() {
     "Another Job",
   ];
 
+  const fadeAnim = new Animated.Value(0);
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView className="bg-[#30353C] w-full h-full absolute pt-14">
-        <View className="flex-row justify-between">
+        <Animated.View style={{ opacity: fadeAnim }} className="flex-row justify-between">
           <TouchableOpacity className="ml-6" onPress={() => router.back()}>
             <AntDesign name="arrowleft" size={24} color="white" />
           </TouchableOpacity>
@@ -33,15 +44,15 @@ export default function App() {
               Mock Interview
             </Text>
           </View>
-        </View>
-        <View className="flex-1 w-full h-full bg-[#111315] relative rounded-t-3xl">
+        </Animated.View>
+        <Reanimated.View entering={FadeInUp.delay(300).duration(1000)} className="flex-1 w-full h-full bg-[#111315] relative rounded-t-3xl">
           <Text className="text-white font-geistBold text-center text-lg mt-10">
             What kind of job are you interested in?
           </Text>
           <Text className="text-gray-400 font-geistRegular text-center text-xs m-2">
             Select your dream job role and let's kickstart a tailored interview simulation just for you!
           </Text>
-          <View className="flex-wrap flex-row mt-2 w-full px-5 justify-between">
+          <Reanimated.View entering={FadeIn.delay(600).duration(1000)} className="flex-wrap flex-row mt-2 w-full px-5 justify-between">
             {jobs.map((job, index) => (
               <TouchableOpacity
                 key={index}
@@ -71,8 +82,8 @@ export default function App() {
             ) : (
               <></>
             )}
-          </View>
-          <View className="flex-1 justify-end items-center pb-5 mx-5">
+          </Reanimated.View>
+          <Reanimated.View entering={FadeInUp.delay(1200).duration(1000)} className="flex-1 justify-end items-center pb-5 mx-5">
             <TouchableOpacity
               onPress={() => setModalVisible(true)}
               className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
@@ -80,8 +91,8 @@ export default function App() {
             >
               <Text className="text-white text-center font-geistSemiBold">Next</Text>
             </TouchableOpacity>
-          </View>
-        </View>
+          </Reanimated.View>
+        </Reanimated.View>
 
         <Modal
           transparent={true}
@@ -89,8 +100,8 @@ export default function App() {
           animationType="slide"
           onRequestClose={() => setModalVisible(false)}
         >
-          <View className="flex-1 justify-center items-center bg-black bg-opacity-50">
-            <View className="bg-[#111315] rounded-lg p-6 w-11/12 max-h-3/4">
+          <Reanimated.View entering={FadeIn.duration(300)} className="flex-1 justify-center items-center bg-black bg-opacity-50">
+            <Reanimated.View entering={FadeInUp.duration(500)} className="bg-[#111315] rounded-lg p-6 w-11/12 max-h-3/4">
               <Text className="text-lg text-white font-geistBold text-center mb-4">
                 Must be read before!
               </Text>
@@ -134,8 +145,8 @@ export default function App() {
               >
                 <Text className="text-white text-center font-geistBold">Close!</Text>
               </TouchableOpacity>
-            </View>
-          </View>
+            </Reanimated.View>
+          </Reanimated.View>
         </Modal>
       </SafeAreaView>
     </GestureHandlerRootView>

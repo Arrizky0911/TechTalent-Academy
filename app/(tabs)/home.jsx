@@ -132,7 +132,7 @@ const Home = () => {
         }
       >
         <View className="pt-4">
-          {categories.map((category, index) => {
+          {categories?.map((category, index) => {
             if (category.courses.length > 1) {
               return (
                 <View className="mt-4" key={index}>

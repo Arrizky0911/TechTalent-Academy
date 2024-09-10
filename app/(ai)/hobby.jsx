@@ -1,8 +1,9 @@
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "../../constants";
+import Animated, { FadeInDown, FadeInUp, FadeIn } from 'react-native-reanimated';
 
 const Hobby = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -19,54 +20,52 @@ const Hobby = () => {
     "Hiking"
   ]
 
-
   return (
     <SafeAreaView className="flex-1 bg-[#111315]  p-4">
-      <View className="mx-2 mt-3">
-          <TouchableOpacity onPress={() => router.back()}>
-            <Image
-              source={icons.arrowLeft}
-              className="h-6 w-6 mt-10"
-              resizeMethod="contain"
-              tintColor="white"
-            />
-          </TouchableOpacity>
-      </View>
+      <Animated.View entering={FadeIn.delay(200).duration(500)} className="mx-2 mt-3">
+        <TouchableOpacity onPress={() => router.back()}>
+          <Image
+            source={icons.arrowLeft}
+            className="h-6 w-6 mt-10"
+            resizeMethod="contain"
+            tintColor="white"
+          />
+        </TouchableOpacity>
+      </Animated.View>
       <View className="flex-1 items-center justify-center">
-        <Text className="text-white text-2xl font-geistBold mb-4">
+        <Animated.Text entering={FadeInDown.delay(300).duration(500)} className="text-white text-2xl font-geistBold mb-4">
           Hobby/Interest
-        </Text>
-        <Text className="text-gray-400 mb-8 text-xs text-center font-geistRegular">
+        </Animated.Text>
+        <Animated.Text entering={FadeInDown.delay(400).duration(500)} className="text-gray-400 mb-8 text-xs text-center font-geistRegular">
           Input what you interested in, so we can know what position is suitable
           for you
-        </Text>
+        </Animated.Text>
 
-        <TextInput
-          className="bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] h-10 rounded-xl mb-4 w-full"
-          placeholder="Input here"
-          placeholderTextColor="gray"
-          value={searchInput}
-          onChangeText={setSearchInput}
-        />
-        <View className="w-full mx-2 flex-wrap flex-row gap-2 max-h-[200px] justify-between">
-          {hobbies.map((hobbie, key) => {
-            return (
+        <Animated.View entering={FadeInUp.delay(500).duration(500)} className="w-full">
+          <TextInput
+            className="bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] h-10 rounded-xl mb-4 w-full"
+            placeholder="Input here"
+            placeholderTextColor="gray"
+            value={searchInput}
+            onChangeText={setSearchInput}
+          />
+        </Animated.View>
+        <Animated.View entering={FadeInUp.delay(600).duration(500)} className="w-full flex-row flex-wrap justify-between gap-y-2">
+          {hobbies.map((hobby, key) => (
+            <Animated.View key={key} entering={FadeInUp.delay(700 + key * 100).duration(500)} className="w-[48%]">
               <TouchableOpacity
-                onPress={() =>
-                  setSearchInput(hobbie)
-                }
-                key={key}
-                className="w-[45%] border-[1px] border-[#6e6e6e] rounded-xl py-2"
+                onPress={() => setSearchInput(hobby)}
+                className="border-[1px] border-[#6e6e6e] rounded-xl py-2 px-2"
               >
                 <Text className="text-[#d9d9d9] text-xs font-geistRegular text-center">
-                  {hobbie}
+                  {hobby}
                 </Text>
               </TouchableOpacity>
-            );
-          })}
-        </View>
+            </Animated.View>
+          ))}
+        </Animated.View>
       </View>
-      <View className="bottom-[0.1%] left-0 right-0">
+      <Animated.View entering={FadeInUp.delay(800).duration(500)} className="bottom-[0.1%] left-0 right-0">
         <TouchableOpacity
           onPress={handleSearch}
           className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
@@ -78,7 +77,7 @@ const Hobby = () => {
             Search
           </Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     </SafeAreaView>
   );
 };
