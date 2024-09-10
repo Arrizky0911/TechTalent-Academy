@@ -94,6 +94,8 @@ const MockTest = () => {
   const handleSubmit = () => {
     const formattedQuestions = questions.map((string) => string + "#$%");
     const formattedAnswers = answers.map((string) => string + "#$%");
+    formattedQuestions[index] = formattedQuestions[index].concat(",");
+    formattedAnswers[index] = formattedAnswers[index].concat(",");
     let result = {
       questions: formattedQuestions,
       answers: formattedAnswers,
