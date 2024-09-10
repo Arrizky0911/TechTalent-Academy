@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/TechTalentAcademy.png",
         "backgroundColor": "#ffffff",
         "package": "com.triumphants.aic"
       },

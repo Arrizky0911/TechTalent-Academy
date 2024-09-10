@@ -5,7 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useLocalSearchParams } from 'expo-router';
 import useFetchData from '../../lib/useFetchData';
-import { getFeedbacks } from '../../lib/AIConfig';
+import { getFeedbacks } from '../../lib/interviewAI';
 import Loading from '../../components/Loading';
 
 const MockFeedback = () => {

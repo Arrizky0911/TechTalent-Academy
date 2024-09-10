@@ -19,7 +19,7 @@ import Animated, {
   FadeInUp,
 } from "react-native-reanimated";
 import { router, useLocalSearchParams } from "expo-router";
-import { searchHobby } from "../../lib/AIConfig";
+import { searchHobby } from "../../lib/hobbyAI";
 import useFetchData from "../../lib/useFetchData";
 import Loading from "../../components/Loading";
 import { icons } from "../../constants";

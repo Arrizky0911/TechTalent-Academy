@@ -18,12 +18,7 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
 import { getResponse } from "../../lib/AIConfig";
-import Markdown from "react-native-markdown-display";
-import Animated, { 
-  FadeIn, 
-  SlideInDown,
-  ZoomIn,
-} from 'react-native-reanimated';
+import Markdown, {MarkdownIt} from "react-native-markdown-display";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -49,7 +44,6 @@ const Chatbot = () => {
   const sendMessage = async () => {
     if (!userInput.trim()) return;
     Keyboard.dismiss();
-    console.log("Ini chat awal", chat);
     let updatedChat = [
       ...chat,
       {
@@ -59,13 +53,10 @@ const Chatbot = () => {
     ];
 
     setChat(updatedChat);
-
-    console.log("Ini updatedChat", updatedChat);
-
     setIsLoading(true);
 
     try {
-      const response = await getResponse(updatedChat);
+      const response = await chatAI(updatedChat, userInput);
 
       // let markdownResponse = markdownParser(response);
       // console.log(JSON.stringify(markdownResponse));
@@ -78,16 +69,15 @@ const Chatbot = () => {
         },
       ];
 
-      console.log("Ini updated chat with bot", updatedChatWithBot);
-
       setUserInput("");
       setChat(updatedChatWithBot);
 
-      console.log("Ini chat akhir", chat);
     } catch (error) {
       console.error(error);
+
     } finally {
       setIsLoading(false);
+
     }
   };
 
@@ -146,8 +136,8 @@ const Chatbot = () => {
                 <View className="w-full mt-8">
                   <Animated.View entering={FadeIn.delay(900).duration(300)} className="flex-row justify-between mb-4">
                     <TouchableOpacity
-                      className="w-[48%] aspect-[4/3] rounded-xl bg-[#353535] p-4 justify-between"
-                      onPress={() => handlePromptClick("What this bot can do?")}
+                      className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
+                      onPress={() => handlePromptClick("Who are you?")}
                     >
                       <Image
                         source={icons.questionCircle}
@@ -156,12 +146,12 @@ const Chatbot = () => {
                         tintColor="white"
                       />
                       <Text className="text-white text-sm">
-                        What this bot can do?
+                        Who are you?
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      className="w-[48%] aspect-[4/3] rounded-xl bg-[#353535] p-4 justify-between"
-                      onPress={() => handlePromptClick("How to use this bot?")}
+                      className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
+                      onPress={() => handlePromptClick("How to make my first website?")}
                     >
                       <Image
                         source={icons.cursor}
@@ -173,31 +163,33 @@ const Chatbot = () => {
                         How to make my first website?
                       </Text>
                     </TouchableOpacity>
-                  </Animated.View>
-                  <Animated.View entering={FadeIn.delay(1100).duration(300)}>
-                    <TouchableOpacity
-                      className="w-full aspect-[16/7] rounded-xl bg-[#353535] p-4 flex justify-between"
-                      onPress={() => handlePromptClick("Make a roadmap to become a fullstack web developer")}
-                    >
-                      <View className="h-14 relative">
-                        <Image
-                          source={icons.starThin}
-                          tintColor="white"
-                          className="w-6 h-6 absolute"
-                          resizeMethod="contain"
-                        />
-                        <Image
-                          source={icons.starThick}
-                          tintColor="white"
-                          className="w-3 h-3 absolute left-3.5 top-3.5"
-                          resizeMethod="contain"
-                        />
-                      </View>
-                      <Text className="text-white font-geistRegular text-sm flex-1 mt-2">
-                        Make a roadmap to become a fullstack web developer
-                      </Text>
-                    </TouchableOpacity>
-                  </Animated.View>
+                  </View>
+                  <TouchableOpacity
+                    className="w-full  aspect-[16/7] rounded-xl bg-[#353535] p-4 flex justify-between"
+                    onPress={() =>
+                      handlePromptClick(
+                        "Maka roadmap to become a fullstack web developer"
+                      )
+                    }
+                  >
+                    <View className="h-14 relative">
+                      <Image
+                        source={icons.starThin}
+                        tintColor="white"
+                        className="w-6 h-6 absolute"
+                        resizeMethod="contain"
+                      />
+                      <Image
+                        source={icons.starThick}
+                        tintColor="white"
+                        className="w-3 h-3 absolute left-3.5 top-3.5"
+                        resizeMethod="contain"
+                      />
+                    </View>
+                    <Text className="text-white font-geistRegular text-sm flex-1 mt-2">
+                      Make a roadmap to become a fullstack web developer
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </Animated.View>
             </Animated.View>
@@ -237,13 +229,21 @@ const Chatbot = () => {
                     color: message.role === "user" ? "#fff" : "#333",
                     fontSize: 16,
                   }}
-                  className="font-geistRegular"
-                >
-                  <Markdown style={{ maxWidth: "75%" }}>
-                    {message.parts[0].text}
-                  </Markdown>
-                </Text>
-              </Animated.View>
+                  className="font-geistRegular text-wrap break-words mx-2"
+                  >
+                    <Markdown
+                      style={{maxWidth: "75%", flex: 1, flexWrap: "wrap"}}
+                      markdownit={
+                        MarkdownIt({
+                          typographer: true,
+                          breaks: true
+                        }).disable(['blockquote', 'list', 'code'])
+                      }
+                    >
+                      {message.parts[0].text}
+                    </Markdown>
+                  </Text>
+              </View>
             ))}
 
             {isLoading && (
