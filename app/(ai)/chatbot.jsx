@@ -69,8 +69,6 @@ const Chatbot = () => {
         },
       ];
 
-      console.log("Ini updated chat with bot", updatedChatWithBot);
-
       setUserInput("");
       setChat(updatedChatWithBot);
 
@@ -219,19 +217,9 @@ const Chatbot = () => {
                     fontSize: 16,
                     flexDirection: "row"
                   }}
-                  className="font-geistRegular text-wrap break-words mx-2"
+                  className="font-geistRegular break-words mx-2 prose prose-sm  prose-h1:font-bold prose-h1:text-xl prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl prose-headings:underline"
                   >
-                    <Markdown
-                      style={{maxWidth: "75%", flex: 1, flexWrap: "wrap"}}
-                      markdownit={
-                        MarkdownIt({
-                          typographer: true,
-                          breaks: true
-                        }).disable(['blockquote', 'list', 'code'])
-                      }
-                    >
                       {message.parts[0].text}
-                    </Markdown>
                   </Text>
               </View>
             ))}
