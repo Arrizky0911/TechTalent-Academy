@@ -8,9 +8,9 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/Logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true,
@@ -19,8 +19,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/TechTalentAcademy.png",
-        "backgroundColor": "#ffffff",
+        "foregroundImage": "./assets/images/Logo.png",
+        "backgroundColor": "#000000",
         "package": "com.triumphants.aic"
       },
       "package": "com.arrizkyaditha.a.aictriumphants"

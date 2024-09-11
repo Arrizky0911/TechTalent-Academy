@@ -17,8 +17,10 @@ import UserDisplay from "../../components/UserDisplay";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
-import { getResponse } from "../../lib/AIConfig";
-import Markdown, {MarkdownIt} from "react-native-markdown-display";
+import { chatAI } from "../../lib/chatAI";
+import { FadeIn, SlideInDown } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
+import Markdown from "react-native-markdown-display";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -71,13 +73,10 @@ const Chatbot = () => {
 
       setUserInput("");
       setChat(updatedChatWithBot);
-
     } catch (error) {
       console.error(error);
-
     } finally {
       setIsLoading(false);
-
     }
   };
 
@@ -90,10 +89,16 @@ const Chatbot = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      <Animated.View entering={FadeIn.duration(300)} className="h-full relative">
+      <Animated.View
+        entering={FadeIn.duration(300)}
+        className="h-full relative"
+      >
         <BgImage />
-        <Animated.View entering={FadeIn.delay(100).duration(300)} className="mx-5 mt-5">
-          <SafeAreaView>
+        <Animated.View
+          entering={FadeIn.delay(100).duration(300)}
+          className="mx-5 mt-5"
+        >
+          <View>
             <View className="flex-row items-center justify-between">
               <Animated.View entering={FadeIn.delay(200).duration(300)}>
                 <TouchableOpacity onPress={() => router.back()}>
@@ -105,25 +110,34 @@ const Chatbot = () => {
                   />
                 </TouchableOpacity>
               </Animated.View>
-              <Animated.Text entering={FadeIn.delay(300).duration(300)} className="text-white text-center text-xl font-geistMedium mt-10">
+              <Animated.Text
+                entering={FadeIn.delay(300).duration(300)}
+                className="text-white text-center text-xl font-geistMedium mt-10"
+              >
                 Guidance
               </Animated.Text>
               <View className="w-7 h-7"></View>
             </View>
-          </SafeAreaView>
+          </View>
         </Animated.View>
 
         {chat.length < 1 ? (
           <>
-            <Animated.View entering={FadeIn.delay(400).duration(300)} className="-mt-[12%] ">
+            <Animated.View
+              entering={FadeIn.delay(400).duration(300)}
+              className="-mt-[12%] "
+            >
               <UserDisplay user={user} />
             </Animated.View>
-            <Animated.View 
-              entering={SlideInDown.delay(500).duration(500)} 
+            <Animated.View
+              entering={SlideInDown.delay(500).duration(500)}
               className="absolute bottom-0 w-full h-[75%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5"
             >
               <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
-              <Animated.View entering={FadeIn.delay(700).duration(300)} className="w-full mt-10">
+              <Animated.View
+                entering={FadeIn.delay(700).duration(300)}
+                className="w-full mt-10"
+              >
                 <View className="mt-[10%]">
                   <Text className="text-white text-center text-xl font-geistMedium">
                     {greeting}, {user.username} 👋
@@ -134,7 +148,10 @@ const Chatbot = () => {
                 </View>
 
                 <View className="w-full mt-8">
-                  <Animated.View entering={FadeIn.delay(900).duration(300)} className="flex-row justify-between mb-4">
+                  <Animated.View
+                    entering={FadeIn.delay(900).duration(300)}
+                    className="flex-row justify-between mb-4"
+                  >
                     <TouchableOpacity
                       className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
                       onPress={() => handlePromptClick("Who are you?")}
@@ -145,13 +162,13 @@ const Chatbot = () => {
                         resizeMethod="contain"
                         tintColor="white"
                       />
-                      <Text className="text-white text-sm">
-                        Who are you?
-                      </Text>
+                      <Text className="text-white text-sm">Who are you?</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
-                      onPress={() => handlePromptClick("How to make my first website?")}
+                      onPress={() =>
+                        handlePromptClick("How to make my first website?")
+                      }
                     >
                       <Image
                         source={icons.cursor}
@@ -163,7 +180,7 @@ const Chatbot = () => {
                         How to make my first website?
                       </Text>
                     </TouchableOpacity>
-                  </View>
+                  </Animated.View>
                   <TouchableOpacity
                     className="w-full  aspect-[16/7] rounded-xl bg-[#353535] p-4 flex justify-between"
                     onPress={() =>
@@ -202,7 +219,9 @@ const Chatbot = () => {
               paddingHorizontal: 10,
               paddingBottom: 100,
             }}
-            onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
+            onContentSizeChange={() =>
+              scrollViewRef.current?.scrollToEnd({ animated: true })
+            }
           >
             {chat?.map((message, index) => (
               <Animated.View
@@ -230,20 +249,16 @@ const Chatbot = () => {
                     fontSize: 16,
                   }}
                   className="font-geistRegular text-wrap break-words mx-2"
-                  >
-                    <Markdown
-                      style={{maxWidth: "75%", flex: 1, flexWrap: "wrap"}}
-                      markdownit={
-                        MarkdownIt({
-                          typographer: true,
-                          breaks: true
-                        }).disable(['blockquote', 'list', 'code'])
-                      }
-                    >
+                >
+                  {message.role === "user" ? (
+                    message.parts[0].text
+                  ) : (
+                    <Markdown mergeStyle={true}>
                       {message.parts[0].text}
                     </Markdown>
-                  </Text>
-              </View>
+                  )}
+                </Text>
+              </Animated.View>
             ))}
 
             {isLoading && (
@@ -275,8 +290,8 @@ const Chatbot = () => {
             )}
           </ScrollView>
         )}
-        <Animated.View 
-          entering={FadeIn.delay(1300).duration(300)} 
+        <Animated.View
+          entering={FadeIn.delay(1300).duration(300)}
           className="absolute bottom-5 left-0 right-0 px-3"
         >
           <BotTextFields

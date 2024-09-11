@@ -32,9 +32,19 @@ const Home = () => {
 
   const { data: labels, refetch: refetchLabels } = useFetchData(getUserLabels);
   const adminLabel = labels.filter((label) => label.toLowerCase() === "admin");
-  console.log(adminLabel);
-  console.log(adminLabel > 1);
+
   const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    const options = {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    };
+    const today = new Date().toLocaleDateString("en-US", options);
+    setCurrentDate(today);
+  }, []);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -51,23 +61,12 @@ const Home = () => {
     }
   };
 
-  if (!user) {
+  if (isLoading) {
     return <Loading />;
   }
 
-  useEffect(() => {
-    const options = {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    };
-    const today = new Date().toLocaleDateString("en-US", options);
-    setCurrentDate(today);
-  }, []);
-
   return (
-    <SafeAreaView className="bg-frame flex-1">
+    <View className="bg-frame flex-1">
       <View className="h-[170px] w-full bg-black rounded-b-[20px] px-10 pt-6">
         <View className="flex-row justify-between items-center top-10">
           {adminLabel?.length >= 1 ? (
@@ -126,7 +125,7 @@ const Home = () => {
       </View>
       <ScrollView
         className="flex-1"
-        contentContainerStyle={{ paddingBottom: 90 }}
+        contentContainerStyle={{ paddingBottom: 110 }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -147,7 +146,7 @@ const Home = () => {
           })}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

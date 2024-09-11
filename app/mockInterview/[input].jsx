@@ -15,7 +15,8 @@ import React, { useState, useCallback } from "react";
 import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import useFetchData from "../../lib/useFetchData";
-import { getQuestions, getTranscript } from "../../lib/interviewAI";
+import { getQuestions } from "../../lib/interviewAI";
+import { getTranscript } from "../../lib/AIConfig";
 import Loading from "../../components/Loading";
 import WaveAnimation from "../../components/WaveAnimation";
 import { Audio } from "expo-av";
@@ -94,8 +95,8 @@ const MockTest = () => {
   const handleSubmit = () => {
     const formattedQuestions = questions.map((string) => string + "#$%");
     const formattedAnswers = answers.map((string) => string + "#$%");
-    formattedQuestions[index] = formattedQuestions[index].concat(",");
-    formattedAnswers[index] = formattedAnswers[index].concat(",");
+    formattedQuestions[index - 1] = formattedQuestions[index - 1]?.concat(",");
+    formattedAnswers[index - 1] = formattedAnswers[index - 1]?.concat(",");
     let result = {
       questions: formattedQuestions,
       answers: formattedAnswers,
@@ -148,7 +149,7 @@ const MockTest = () => {
       resizeMode="cover"
     >
       {(isLoading || isTranscripting) && (
-        <Loading additionStyle="absolute h-full w-full z-[1000] bg-black/70" />
+        <Loading additionStyle="absolute h-full w-full z-[1000] bg-black/90" />
       )}
       <SafeAreaView className="bg-[#111315] h-full flex-1 pt-16">
         <View className="px-6">
@@ -159,7 +160,7 @@ const MockTest = () => {
             <Text className="text-white text-xl font-geistBold">
               Mock Interview
             </Text>
-            <View style={{ width: 24 }} ></View>
+            <View style={{ width: 24 }}></View>
           </View>
           <Text className="text-white text-center font-geistSemiBold text-base mb-8">
             {input} Job Interview
@@ -179,11 +180,11 @@ const MockTest = () => {
               </Text>
             </View>
           ) : (
-            <View className="flex-1">
+            <View className="flex-1 justify-center">
               <View className="flex-row items-start mb-6">
                 <Image
                   source={images.logo}
-                  className="w-10 h-10 rounded-full border-2 border-white"
+                  className="w-10 h-10 rounded-full"
                 />
                 <View className="flex-1 ml-4 bg-[#242627] p-4 rounded-b-xl rounded-tr-xl">
                   <Text className="text-white font-geistRegular text-sm mb-4">
@@ -197,12 +198,14 @@ const MockTest = () => {
               </View>
 
               {answers?.[index] && (
-                <View className="-top-20 ml-10 mr-4 bg-[#3F454D] p-4 rounded-t-2xl rounded-bl-2xl 
-          flex flex-col justify-between shadow-lg max-w-[80%] self-end">
+                <View
+                  className="ml-10 mr-4 bg-[#3F454D] p-4 rounded-t-2xl rounded-bl-2xl 
+          flex flex-col justify-between shadow-lg max-w-[80%] self-end"
+                >
                   <Text className="text-white font-geistRegular text-xs leading-3 mb-4">
                     {answers?.[index]}
                   </Text>
-                  <View className="border-t border-gray-600 my-2" ></View>
+                  <View className="border-t border-gray-600 my-2"></View>
                   <Text className="text-gray-500 font-geistRegular text-xs text-right">
                     {index + 1} of {questions?.length}
                   </Text>

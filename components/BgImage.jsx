@@ -6,7 +6,7 @@ const BgImage = () => {
   return (
     <Image
       source={images.authBg}
-      className="min-h-[98vh] w-full absolute top-0 bottom-0 bg-black"
+      className="min-h-[98vh] h-full w-full absolute top-0 bottom-0 bg-black"
     />
   );
 };
