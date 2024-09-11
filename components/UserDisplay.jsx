@@ -2,13 +2,13 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import { icons } from "../constants";
 
-const UserDisplay = ({ user}) => {
+const UserDisplay = ({ user }) => {
   return (
     <View className="absolute w-full top-[100px] px-5">
       <View className="flex-row items-center justify-between">
         <View className="flex-1 mr-3">
           <Text className="text-white text-base font-geistMedium mb-1">
-            {user.username}
+            {user?.username}
           </Text>
           {user?.profession ? (
             <Text className="text-white/80 text-xs font-geistRegular">
