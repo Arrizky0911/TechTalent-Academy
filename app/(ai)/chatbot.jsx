@@ -21,11 +21,15 @@ import { chatAI } from "../../lib/chatAI";
 import { FadeIn, SlideInDown } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import Markdown from "react-native-markdown-display";
+import { addChatHistory, loadChatHistory, updateChatHistory } from "../../lib/AstraDBConfig";
+import * as uuid from "uuid";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
   const [chat, setChat] = useState([]);
   const [userInput, setUserInput] = useState("");
+  const [sessionID, setSessionID] = useState("");
+  const [isNewChat, setIsNewChat] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [greeting, setGreeting] = useState("");
   const scrollViewRef = useRef(null);
@@ -42,6 +46,18 @@ const Chatbot = () => {
       setGreeting("Good Night");
     }
   }, []);
+
+  const loadHistory = async () => {
+    try {
+      let history = await loadChatHistory(sessionID);
+      setChat(history);
+
+    } catch (error) {
+      console.error(error);
+
+    }
+
+  }
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -72,7 +88,20 @@ const Chatbot = () => {
       ];
 
       setUserInput("");
+      if(isNewChat) {
+        // let id =
+        // add sessionIDuserID relation table
+        // setSessionID(id)
+        await addChatHistory( sessionID , updatedChatWithBot);
+        setIsNewChat(false);
+
+      } else {
+        await updateChatHistory("thethe", updateChatHistory);
+
+      }
+
       setChat(updatedChatWithBot);
+
     } catch (error) {
       console.error(error);
     } finally {

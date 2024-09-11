@@ -16,7 +16,6 @@ import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import useFetchData from "../../lib/useFetchData";
 import { getQuestions } from "../../lib/interviewAI";
-import { getTranscript } from "../../lib/AIConfig";
 import Loading from "../../components/Loading";
 import WaveAnimation from "../../components/WaveAnimation";
 import { Audio } from "expo-av";
@@ -31,6 +30,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Alert, Modal } from "react-native";
 import { mix } from "react-native-redash";
+import { getTranscript } from "../../lib/GoogleAIConfig";
 
 const AnimatedTouchableOpacity =
   Animated.createAnimatedComponent(TouchableOpacity);
@@ -100,6 +100,8 @@ const MockTest = () => {
     let result = {
       questions: formattedQuestions,
       answers: formattedAnswers,
+      feedbacks: {},
+      isNew: false,
     };
     console.log("redirecting");
     router.push({ pathname: `mockFeedback/${input}`, params: result });
