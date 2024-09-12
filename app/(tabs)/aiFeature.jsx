@@ -18,15 +18,16 @@ const AiFeature = () => {
   return (
     <SafeAreaView className="h-full relative">
       <BgImage />
-      <UserDisplay user={user} />
+      <UserDisplay user={user} margin="10%" />
       <View className="absolute bottom-0 w-full h-[78%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 ">
         <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
-        <Text className="text-center text-white font-geistMedium mt-[60px]">
+        <Text className="text-center text-white font-geistMedium mt-[60px] mx-4 text-base">
           Ai Powered Tools that Will Help you in Your Career Development
         </Text>
-        <View className="flex-row justify-center mt-[20%] gap-x-5">
+        <View className="flex-row justify-center mt-[7%] gap-x-5 mb-5">
+          <View className="h-[86%] w-[40%]">
           <TouchableOpacity
-            className="h-[76%] w-[40%] bg-[#353535] rounded-xl px-3 py-6 justify-between"
+            className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between"
             onPress={() => router.push("/mockLanding")}
           >
             {/* AI LOGO and title */}
@@ -37,16 +38,19 @@ const AiFeature = () => {
                   <Image
                     source={icons.starThin}
                     tintColor="white"
-                    className="w-6 h-6"
+                    className="w-4 h-4"
                     resizeMethod="contain"
                   />
                   <Image
                     source={icons.starThick}
                     tintColor="white"
-                    className="w-3 h-3 absolute left-3.5 top-3.5"
+                    className="w-2 h-2 absolute left-3.5 top-3.5"
                     resizeMethod="contain"
                   />
                 </View>
+                <Text className="font-geistSemiBold text-sm text-white ml-2 mr-1">
+                  Judgement
+                </Text>
                 <View>
                   <Image
                     source={icons.arrowUpRight}
@@ -57,16 +61,40 @@ const AiFeature = () => {
                 </View>
               </View>
 
-              <Text className="font-geistSemiBold text-lg text-white m-1">
-                Judgement
-              </Text>
             </View>
-            <Text className="text-white text-xs font-geistRegular m-2">
+            <Text className="text-white text-xs font-geistRegular mx-1 mb-3">
               AI tools for mock interviews with job-specific questions and
               feedback.
             </Text>
           </TouchableOpacity>
-          <View className="h-[80%] w-[40%]">
+            
+            <TouchableOpacity
+              className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between mt-4"
+              onPress={() => router.push("/chatbot")}
+            >
+              <View className="flex-row items-center justify-between">
+                <Image
+                  source={icons.cursor}
+                  tintColor="white"
+                  className="w-5 h-5 mr-2"
+                  resizeMethod="contain"
+                />
+                <Text className="text-white font-geistSemiBold mr-1">Counsellor</Text>
+                <Image
+                  source={icons.arrowUpRight}
+                  tintColor="white"
+                  className="w-5 h-5"
+                  resizeMethod="contain"
+                />
+              </View>
+              <View className="mt-4">
+                <Text className="text-white text-xs font-geistRegular mx-1 mb-3">
+                  AI chatbot that will help you in your career development
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View className="h-[86%] w-[40%]">
             <TouchableOpacity
               className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between"
               onPress={() => router.push("hobby")}
@@ -87,7 +115,7 @@ const AiFeature = () => {
                 />
               </View>
               <View>
-                <Text className="text-white text-xs font-geistRegular m-1">
+                <Text className="text-white text-xs font-geistRegular mx-1 mb-3">
                   AI powered tools to find the roadmap of careers from your
                   hobby/interest
                 </Text>
@@ -101,10 +129,10 @@ const AiFeature = () => {
                 <Image
                   source={icons.cursor}
                   tintColor="white"
-                  className="w-5 h-5 mr-5"
+                  className="w-5 h-5 mr-2"
                   resizeMethod="contain"
                 />
-                <Text className="text-white font-geistSemiBold">Guidance</Text>
+                <Text className="text-white font-geistSemiBold mr-2">Guidance</Text>
                 <Image
                   source={icons.arrowUpRight}
                   tintColor="white"
@@ -113,7 +141,7 @@ const AiFeature = () => {
                 />
               </View>
               <View className="mt-4">
-                <Text className="text-white text-xs font-geistRegular m-1">
+                <Text className="text-white text-xs font-geistRegular mx-1 mb-3">
                   AI chatbot that will help you in your career development
                 </Text>
               </View>

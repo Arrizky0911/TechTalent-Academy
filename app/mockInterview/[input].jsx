@@ -8,10 +8,10 @@ import {
   PermissionsAndroid,
   KeyboardAvoidingView,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient"; // pastikan Anda sudah menginstal expo-linear-gradient
-import { FontAwesome } from "@expo/vector-icons"; // pastikan Anda sudah menginstal @expo/vector-icons
+import { LinearGradient } from "expo-linear-gradient"; 
+import { FontAwesome } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import useFetchData from "../../lib/useFetchData";
@@ -46,6 +46,7 @@ const MockTest = () => {
   const [isTranscripting, setIsTranscripting] = useState(false);
   const [permissionResponse, requestPermission] = Audio.usePermissions();
   const [recording, setRecording] = useState();
+  const [isSpeech, setIsSepeech] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const startRecording = async () => {

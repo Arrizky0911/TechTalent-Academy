@@ -2,7 +2,7 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import { icons } from "../constants";
 
-const UserDisplay = ({ user }) => {
+const UserDisplay = ({ user}) => {
   return (
     <View className="absolute w-full top-[100px] px-5">
       <View className="flex-row items-center justify-between">

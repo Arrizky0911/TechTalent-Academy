@@ -69,7 +69,7 @@ const History = () => {
 
   return (
     <View className="bg-frame h-full relative pt-10">
-      <View className="top-3 h-[65px] w-full bg-frame border-b-[0.5px] border-b-white/60 justify-end  py-3 px-5 z-90">
+      <View className="top-3 h-[65px] w-full bg-frame border-b-[0.5px] border-b-white/60 justify-end  py-3 px-5 z-90 mb-2">
         <Text className="text-white font-geistBold text-2xl text-center">
           History
         </Text>

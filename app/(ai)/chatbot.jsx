@@ -22,7 +22,6 @@ import { FadeIn, SlideInDown } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import Markdown from "react-native-markdown-display";
 import { addChatHistory, loadChatHistory, updateChatHistory } from "../../lib/AstraDBConfig";
-import * as uuid from "uuid";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -156,18 +155,18 @@ const Chatbot = () => {
               entering={FadeIn.delay(400).duration(300)}
               className="-mt-[12%] "
             >
-              <UserDisplay user={user} />
+              <UserDisplay user={user}/>
             </Animated.View>
             <Animated.View
               entering={SlideInDown.delay(500).duration(500)}
-              className="absolute bottom-0 w-full h-[75%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5"
+              className="absolute bottom-0 w-full h-[72%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5"
             >
               <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
               <Animated.View
                 entering={FadeIn.delay(700).duration(300)}
                 className="w-full mt-10"
               >
-                <View className="mt-[10%]">
+                <View className="mt-[6%]">
                   <Text className="text-white text-center text-xl font-geistMedium">
                     {greeting}, {user.username} 👋
                   </Text>

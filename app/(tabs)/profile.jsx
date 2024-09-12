@@ -115,13 +115,13 @@ const Profile = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView className="h-full relative">
+      <SafeAreaView className="h-[101%] relative">
         {isLoading && (
           <Loading additionStyle="absolute h-full w-full z-[1000] bg-black/70" />
         )}
         <BgImage />
         <View className="bg-frame absolute bottom-0 w-full h-[680px] rounded-t-3xl border-[1px] border-gray items-center">
-          <View className="bg-[#2c2c2c] w-[365px] h-[85px] rounded-3xl absolute -top-10 px-5 flex-row items-center space-x-4">
+          <View className="bg-[#2c2c2c] w-[82%] h-[12%] rounded-3xl absolute -top-10 px-5 flex-row items-center space-x-4">
             <TouchableOpacity
               className="w-[50px] h-[50px] rounded-full ml-1"
               onPress={openPicker}
@@ -159,8 +159,8 @@ const Profile = () => {
           </View>
           {/* FORMS */}
 
-          <View className="mt-[60px] px-6 w-full">
-            <Text className="text-center text-white font-geistMedium mb-10">
+          <View className="mt-[12%] px-6 w-full">
+            <Text className="text-center text-white font-geistMedium mb-10 mt-2">
               Created on {formatDate(user?.$createdAt)}
             </Text>
             <View className="w-full mb-5">
@@ -201,7 +201,7 @@ const Profile = () => {
                 editable={false}
               />
             </View>
-            <Text className="text-center text-white font-geistMedium mt-5">
+            <Text className="text-center text-white font-geistMedium mt-1">
               Last modified on {formatDate(user?.$updatedAt)}
             </Text>
             <ButtonTemplate
@@ -211,7 +211,7 @@ const Profile = () => {
             />
             <ButtonTemplate
               text="Sign Out"
-              containerStyles="mt-3 py-3.5 bg-gray"
+              containerStyles="mt-2 py-3.5 bg-gray mb-3"
               handlePress={logout}
             />
           </View>
