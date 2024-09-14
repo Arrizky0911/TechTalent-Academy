@@ -12,16 +12,14 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import { router } from "expo-router";
+import Animated, { FadeIn, SlideInDown } from "react-native-reanimated";
 import BgImage from "../../components/BgImage";
 import UserDisplay from "../../components/UserDisplay";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
-import { chatAI } from "../../lib/chatAI";
-import { FadeIn, SlideInDown } from "react-native-reanimated";
-import Animated from "react-native-reanimated";
-import Markdown from "react-native-markdown-display";
-import { addChatHistory, loadChatHistory, updateChatHistory } from "../../lib/AstraDBConfig";
+import { getResponse } from "../../lib/AIConfig";
+import Markdown, {MarkdownIt} from "react-native-markdown-display";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -73,10 +71,7 @@ const Chatbot = () => {
     setIsLoading(true);
 
     try {
-      const response = await chatAI(updatedChat, userInput);
-
-      // let markdownResponse = markdownParser(response);
-      // console.log(JSON.stringify(markdownResponse));
+      const response = await getResponse(updatedChat, userInput);
 
       let updatedChatWithBot = [
         ...updatedChat,
@@ -100,7 +95,6 @@ const Chatbot = () => {
       }
 
       setChat(updatedChatWithBot);
-
     } catch (error) {
       console.error(error);
     } finally {
@@ -122,11 +116,8 @@ const Chatbot = () => {
         className="h-full relative"
       >
         <BgImage />
-        <Animated.View
-          entering={FadeIn.delay(100).duration(300)}
-          className="mx-5 mt-5"
-        >
-          <View>
+        <Animated.View entering={FadeIn.delay(100).duration(300)} className="mx-5 mt-5">
+          <SafeAreaView>
             <View className="flex-row items-center justify-between">
               <Animated.View entering={FadeIn.delay(200).duration(300)}>
                 <TouchableOpacity onPress={() => router.back()}>
@@ -138,10 +129,7 @@ const Chatbot = () => {
                   />
                 </TouchableOpacity>
               </Animated.View>
-              <Animated.Text
-                entering={FadeIn.delay(300).duration(300)}
-                className="text-white text-center text-xl font-geistMedium mt-10"
-              >
+              <Animated.Text entering={FadeIn.delay(300).duration(300)} className="text-white text-center text-xl font-geistMedium mt-10">
                 Guidance
               </Animated.Text>
               <View className="w-7 h-7"></View>
@@ -151,22 +139,16 @@ const Chatbot = () => {
 
         {chat.length < 1 ? (
           <>
-            <Animated.View
-              entering={FadeIn.delay(400).duration(300)}
-              className="-mt-[12%] "
-            >
-              <UserDisplay user={user}/>
+            <Animated.View entering={FadeIn.delay(400).duration(300)} className="-mt-[12%] ">
+              <UserDisplay user={user} />
             </Animated.View>
             <Animated.View
               entering={SlideInDown.delay(500).duration(500)}
               className="absolute bottom-0 w-full h-[72%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5"
             >
               <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
-              <Animated.View
-                entering={FadeIn.delay(700).duration(300)}
-                className="w-full mt-10"
-              >
-                <View className="mt-[6%]">
+              <Animated.View entering={FadeIn.delay(700).duration(300)} className="w-full mt-10">
+                <View className="mt-[10%]">
                   <Text className="text-white text-center text-xl font-geistMedium">
                     {greeting}, {user.username} 👋
                   </Text>
@@ -181,8 +163,8 @@ const Chatbot = () => {
                     className="flex-row justify-between mb-4"
                   >
                     <TouchableOpacity
-                      className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
-                      onPress={() => handlePromptClick("Who are you?")}
+                      className="w-[48%] aspect-square rounded-2xl bg-[#353535] p-4 justify-between"
+                      onPress={() => handlePromptClick("What this bot can do?")}
                     >
                       <Image
                         source={icons.questionCircle}
@@ -190,13 +172,13 @@ const Chatbot = () => {
                         resizeMethod="contain"
                         tintColor="white"
                       />
-                      <Text className="text-white text-sm">Who are you?</Text>
+                      <Text className="text-white text-sm">
+                        Who are you?
+                      </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
-                      onPress={() =>
-                        handlePromptClick("How to make my first website?")
-                      }
+                      onPress={() => handlePromptClick("How to make my first website?")}
                     >
                       <Image
                         source={icons.cursor}
@@ -205,15 +187,15 @@ const Chatbot = () => {
                         tintColor="white"
                       />
                       <Text className="text-white text-sm">
-                        How to make my first website?
+                        How to use this bot?
                       </Text>
                     </TouchableOpacity>
                   </Animated.View>
                   <TouchableOpacity
-                    className="w-full  aspect-[16/7] rounded-xl bg-[#353535] p-4 flex justify-between"
+                    className="w-full aspect-[16/7] rounded-2xl bg-[#353535] p-4 flex justify-between"
                     onPress={() =>
                       handlePromptClick(
-                        "Maka roadmap to become a fullstack web developer"
+                        "Make a roadmap to become a fullstack web developer"
                       )
                     }
                   >
@@ -234,6 +216,13 @@ const Chatbot = () => {
                     <Text className="text-white font-geistRegular text-sm flex-1 mt-2">
                       Make a roadmap to become a fullstack web developer
                     </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => router.push('/chatbothistory')}
+                    className="w-full mt-4 py-3 rounded-2xl  hover:bg-[#4A4A4A] flex-row items-center justify-between px-4"
+                  >
+                    <Text className="text-white font-geistRegular">See History here</Text>
+                    <ChevronRightIcon size={20} color="white" />
                   </TouchableOpacity>
                 </View>
               </Animated.View>
@@ -277,16 +266,20 @@ const Chatbot = () => {
                     fontSize: 16,
                   }}
                   className="font-geistRegular text-wrap break-words mx-2"
-                >
-                  {message.role === "user" ? (
-                    message.parts[0].text
-                  ) : (
-                    <Markdown mergeStyle={true}>
+                  >
+                    <Markdown
+                      style={{maxWidth: "75%", flex: 1, flexWrap: "wrap"}}
+                      markdownit={
+                        MarkdownIt({
+                          typographer: true,
+                          breaks: true
+                        }).disable(['blockquote', 'list', 'code'])
+                      }
+                    >
                       {message.parts[0].text}
                     </Markdown>
-                  )}
-                </Text>
-              </Animated.View>
+                  </Text>
+              </View>
             ))}
 
             {isLoading && (
