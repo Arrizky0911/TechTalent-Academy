@@ -18,8 +18,9 @@ import UserDisplay from "../../components/UserDisplay";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import BotTextFields from "../../components/BotTextFields";
-import { getResponse } from "../../lib/AIConfig";
+import { getResponse } from "../../lib/GoogleAIConfig";
 import Markdown, {MarkdownIt} from "react-native-markdown-display";
+import { ChevronRightIcon } from "react-native-heroicons/outline";
 
 const Chatbot = () => {
   const { user } = useGlobalContext();
@@ -48,12 +49,9 @@ const Chatbot = () => {
     try {
       let history = await loadChatHistory(sessionID);
       setChat(history);
-
     } catch (error) {
       console.error(error);
-
     }
-
   }
 
   const sendMessage = async () => {
@@ -134,7 +132,7 @@ const Chatbot = () => {
               </Animated.Text>
               <View className="w-7 h-7"></View>
             </View>
-          </View>
+          </SafeAreaView>
         </Animated.View>
 
         {chat.length < 1 ? (
@@ -144,11 +142,11 @@ const Chatbot = () => {
             </Animated.View>
             <Animated.View
               entering={SlideInDown.delay(500).duration(500)}
-              className="absolute bottom-0 w-full h-[72%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5"
+              className="absolute bottom-0 w-full h-[75%] bg-[#111315] rounded-t-3xl items-center border-[1px] border-white/10 px-5"
             >
               <View className="rounded-full w-10 h-1.5 bg-white/70 absolute top-3"></View>
-              <Animated.View entering={FadeIn.delay(700).duration(300)} className="w-full mt-10">
-                <View className="mt-[10%]">
+              <Animated.View entering={FadeIn.delay(700).duration(300)} className="w-full mt-4">
+                <View className="mt-8">
                   <Text className="text-white text-center text-xl font-geistMedium">
                     {greeting}, {user.username} 👋
                   </Text>
@@ -164,7 +162,7 @@ const Chatbot = () => {
                   >
                     <TouchableOpacity
                       className="w-[48%] aspect-square rounded-2xl bg-[#353535] p-4 justify-between"
-                      onPress={() => handlePromptClick("What this bot can do?")}
+                      onPress={() => handlePromptClick("Who are you?")}
                     >
                       <Image
                         source={icons.questionCircle}
@@ -172,13 +170,13 @@ const Chatbot = () => {
                         resizeMethod="contain"
                         tintColor="white"
                       />
-                      <Text className="text-white text-sm">
+                      <Text className="text-white text-sm font-geistRegular">
                         Who are you?
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      className="w-[48%] aspect-[9/8] rounded-xl bg-[#353535] p-4 justify-between"
-                      onPress={() => handlePromptClick("How to make my first website?")}
+                      className="w-[48%] aspect-square rounded-2xl bg-[#353535] p-4 justify-between"
+                      onPress={() => handlePromptClick("How to use this bot?")}
                     >
                       <Image
                         source={icons.cursor}
@@ -186,7 +184,7 @@ const Chatbot = () => {
                         resizeMethod="contain"
                         tintColor="white"
                       />
-                      <Text className="text-white text-sm">
+                      <Text className="text-white text-sm font-geistRegular">
                         How to use this bot?
                       </Text>
                     </TouchableOpacity>
@@ -219,7 +217,7 @@ const Chatbot = () => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => router.push('/chatbothistory')}
-                    className="w-full mt-4 py-3 rounded-2xl  hover:bg-[#4A4A4A] flex-row items-center justify-between px-4"
+                    className="w-full mt-4 py-3 rounded-2xl bg-[#353535] hover:bg-[#4A4A4A] flex-row items-center justify-between px-4"
                   >
                     <Text className="text-white font-geistRegular">See History here</Text>
                     <ChevronRightIcon size={20} color="white" />
@@ -266,20 +264,20 @@ const Chatbot = () => {
                     fontSize: 16,
                   }}
                   className="font-geistRegular text-wrap break-words mx-2"
+                >
+                  <Markdown
+                    style={{maxWidth: "75%", flex: 1, flexWrap: "wrap"}}
+                    markdownit={
+                      MarkdownIt({
+                        typographer: true,
+                        breaks: true
+                      }).disable(['blockquote', 'list', 'code'])
+                    }
                   >
-                    <Markdown
-                      style={{maxWidth: "75%", flex: 1, flexWrap: "wrap"}}
-                      markdownit={
-                        MarkdownIt({
-                          typographer: true,
-                          breaks: true
-                        }).disable(['blockquote', 'list', 'code'])
-                      }
-                    >
-                      {message.parts[0].text}
-                    </Markdown>
-                  </Text>
-              </View>
+                    {message.parts[0].text}
+                  </Markdown>
+                </Text>
+              </Animated.View>
             ))}
 
             {isLoading && (
