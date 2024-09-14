@@ -47,6 +47,7 @@
     "react-native-appwrite": "^0.4.0",
     "react-native-dropdown-select-list": "^2.0.5",
     "react-native-element-dropdown": "^2.12.1",
+    "react-native-feather": "^1.1.2",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-heroicons": "^4.0.0",
     "react-native-markdown-display": "^7.0.2",

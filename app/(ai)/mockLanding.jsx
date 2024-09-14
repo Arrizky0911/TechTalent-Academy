@@ -4,6 +4,7 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import { View, Text, TouchableOpacity, SafeAreaView, Modal, TextInput, Animated } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Reanimated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { ChevronRightIcon } from "react-native-heroicons/outline";
 
 export default function App() {
   const [selectedJob, setSelectedJob] = useState(null); // state to track selected job
@@ -69,19 +70,29 @@ export default function App() {
                   {job}
                 </Text>
               </TouchableOpacity>
+              
             ))}
+            
             {selectedJob === "Another Job" ? (
               <TextInput
-                className="mt-5 bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] w-full h-10 rounded-xl mb-4 w-full"
+                className="mt-5 bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] w-full h-10 rounded-xl mb-4 "
                 placeholder="Input here"
                 placeholderTextColor="gray"
                 value={anotherJob}
                 onChangeText={() => setJob()}
               />
+              
 
             ) : (
               <></>
             )}
+            <TouchableOpacity
+                    onPress={() => router.push('/interviewhistory')}
+                    className="w-full mt-4 py-3 rounded-2xl  hover:bg-[#4A4A4A] flex-row items-center justify-between px-2"
+                  >
+                    <Text className="text-white font-geistRegular">See History here</Text>
+                    <ChevronRightIcon size={20} color="white" />
+                  </TouchableOpacity>
           </Reanimated.View>
           <Reanimated.View entering={FadeInUp.delay(1200).duration(1000)} className="flex-1 justify-end items-center pb-5 mx-5">
             <TouchableOpacity
