@@ -19,11 +19,11 @@ import Animated, {
   FadeInUp,
 } from "react-native-reanimated";
 import { router, useLocalSearchParams } from "expo-router";
-import { searchHobby } from "../../lib/hobbyAI";
-import useFetchData from "../../lib/useFetchData";
-import Loading from "../../components/Loading";
-import { icons } from "../../constants";
-import { images } from "../../constants";
+import { searchHobby } from "../../../lib/hobbyAI";
+import useFetchData from "../../../lib/useFetchData";
+import Loading from "../../../components/Loading";
+import { icons } from "../../../constants";
+import { images } from "../../../constants";
 
 const RoadmapResponse = () => {
   const { hobby } = useLocalSearchParams();

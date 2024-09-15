@@ -28,7 +28,7 @@ const AiFeature = () => {
           <View className="h-[86%] w-[40%]">
           <TouchableOpacity
             className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between"
-            onPress={() => router.push("/mockLanding")}
+            onPress={() => router.push("main/mockLanding")}
           >
             {/* AI LOGO and title */}
             <View className="space-y-3">
@@ -97,7 +97,7 @@ const AiFeature = () => {
           <View className="h-[86%] w-[40%]">
             <TouchableOpacity
               className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between"
-              onPress={() => router.push("hobby")}
+              onPress={() => router.push("/main/hobby")}
             >
               <View className="flex-row items-center justify-between">
                 <Image
@@ -123,7 +123,7 @@ const AiFeature = () => {
             </TouchableOpacity>
             <TouchableOpacity
               className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between mt-4"
-              onPress={() => router.push("/chatbot")}
+              onPress={() => router.push("/chatbot/noSession")}
             >
               <View className="flex-row items-center justify-between">
                 <Image

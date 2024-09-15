@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { icons } from "../../constants";
+import { icons } from "../../../constants";
 import Animated, { FadeInDown, FadeInUp, FadeIn } from 'react-native-reanimated';
 
 const Hobby = () => {

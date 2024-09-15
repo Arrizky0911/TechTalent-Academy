@@ -1,14 +1,14 @@
 import { router } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { View, Text, TouchableOpacity, SafeAreaView, Modal, TextInput, Animated } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView, Modal, TextInput, Animated, KeyboardAvoidingView, Platform } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Reanimated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { ChevronRightIcon } from "react-native-heroicons/outline";
 
 export default function App() {
   const [selectedJob, setSelectedJob] = useState(null); // state to track selected job
-  const [anotherJob, setJob] = useState("");
+  const [anotherJob, setJob] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   const jobs = [
@@ -35,7 +35,12 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView className="bg-[#30353C] w-full h-full absolute pt-14">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+
+      <View className="bg-[#30353C] w-full h-full absolute pt-14">
         <Animated.View style={{ opacity: fadeAnim }} className="flex-row justify-between">
           <TouchableOpacity className="ml-6" onPress={() => router.back()}>
             <AntDesign name="arrowleft" size={24} color="white" />
@@ -56,17 +61,17 @@ export default function App() {
           <Reanimated.View entering={FadeIn.delay(600).duration(1000)} className="flex-wrap flex-row mt-2 w-full px-5 justify-between">
             {jobs.map((job, index) => (
               <TouchableOpacity
-                key={index}
-                onPress={() => setSelectedJob(job)}
-                className={`${
-                  selectedJob === job ? "bg-[#eeeeeb]" : "bg-[#353535] text-white"
-                } py-7 px-4 rounded-xl m-1 mt-2.5 w-[30%] items-center justify-center`}
+              key={index}
+              onPress={() => setSelectedJob(job)}
+              className={`${
+                selectedJob === job ? "bg-[#eeeeeb]" : "bg-[#353535] text-white"
+              } py-7 px-4 rounded-xl m-1 mt-2.5 w-[30%] items-center justify-center`}
               >
                 <Text
                   className={`${
                     selectedJob === job ? "text-[#353535]" : "text-white"
                   } font-geistRegular text-center text-xs`}
-                >
+                  >
                   {job}
                 </Text>
               </TouchableOpacity>
@@ -75,21 +80,21 @@ export default function App() {
             
             {selectedJob === "Another Job" ? (
               <TextInput
-                className="mt-5 bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] w-full h-10 rounded-xl mb-4 "
-                placeholder="Input here"
-                placeholderTextColor="gray"
-                value={anotherJob}
-                onChangeText={() => setJob()}
+              className="mt-5 bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] w-full h-10 rounded-xl mb-4 "
+              placeholder="Input here"
+              placeholderTextColor="gray"
+              value={anotherJob}
+              onChangeText={(e) => setJob(e)}
               />
               
-
+              
             ) : (
               <></>
             )}
             <TouchableOpacity
-                    onPress={() => router.push('/interviewhistory')}
+                    onPress={() => router.push('history/interviewhistory')}
                     className="w-full mt-4 py-3 rounded-2xl  hover:bg-[#4A4A4A] flex-row items-center justify-between px-2"
-                  >
+                    >
                     <Text className="text-white font-geistRegular">See History here</Text>
                     <ChevronRightIcon size={20} color="white" />
                   </TouchableOpacity>
@@ -99,18 +104,19 @@ export default function App() {
               onPress={() => setModalVisible(true)}
               className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
               disabled={selectedJob && (selectedJob !== "Another Job" || !(anotherJob == "")) ? false : true}
-            >
+              >
               <Text className="text-white text-center font-geistSemiBold">Next</Text>
             </TouchableOpacity>
           </Reanimated.View>
         </Reanimated.View>
+        
 
         <Modal
           transparent={true}
           visible={modalVisible}
           animationType="slide"
           onRequestClose={() => setModalVisible(false)}
-        >
+          >
           <Reanimated.View entering={FadeIn.duration(300)} className="flex-1 justify-center items-center bg-black bg-opacity-50">
             <Reanimated.View entering={FadeInUp.duration(500)} className="bg-[#111315] rounded-lg p-6 w-11/12 max-h-3/4">
               <Text className="text-lg text-white font-geistBold text-center mb-4">
@@ -144,7 +150,7 @@ export default function App() {
                 onPress={() => {
                   setModalVisible(false);
                   setJob("");
-                  router.push(`mockInterview/${selectedJob == "Another Job" ? anotherJob : selectedJob}`);
+                  router.push(`mockInterview/${selectedJob === "Another Job" ? anotherJob : selectedJob}`);
                 }}
                 className="bg-blue-500 py-3 rounded-md mt-4"
               >
@@ -153,13 +159,14 @@ export default function App() {
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
                 className="border border-white py-3 rounded-md mt-4"
-              >
+                >
                 <Text className="text-white text-center font-geistBold">Close!</Text>
               </TouchableOpacity>
             </Reanimated.View>
           </Reanimated.View>
         </Modal>
-      </SafeAreaView>
+      </View>
+      </KeyboardAvoidingView>
     </GestureHandlerRootView>
   );
 }

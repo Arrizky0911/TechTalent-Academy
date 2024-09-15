@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState } from "react";
+import React, { useRef, useMemo, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,16 +11,37 @@ import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router, useLocalSearchParams } from "expo-router";
-import useFetchData from "../../lib/useFetchData";
-import { getFeedbacks } from "../../lib/interviewAI";
-import Loading from "../../components/Loading";
+import { getFeedbacks } from "../../../lib/interviewAI";
+import Loading from "../../../components/Loading";
+import { useGlobalContext } from "../../../context/GlobalProvider";
+import { loadInterviewResult } from "../../../lib/AstraDBConfig";
 
 const MockFeedback = () => {
   const bottomSheetRef = useRef(null);
+  const {user} = useGlobalContext();
   const result = useLocalSearchParams();
-  const { data: feedbacks, isLoading } = useFetchData(() =>
-    getFeedbacks(result.questions.split("#$%,"), result.answers.split("#$%,"))
-  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState([]);
+
+  const fetchInterviewResult = async (result) => {
+    setIsLoading(true);
+    try {
+      if (result.isNew) {
+        setResults(await getFeedbacks(result.questions.split("#$%,"), result.answers.split("#$%,"), user.$id, result.interviewResult));
+      } else {
+        setResults(await loadInterviewResult(result.id))
+      }
+    } catch (error) {
+      console.error(error);
+
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchInterviewResult(result);
+  }, []);
 
   // Define snap points as memoized value to prevent re-renders
   const snapPoints = useMemo(() => ["35%", "90%"], []);
@@ -32,7 +53,7 @@ const MockFeedback = () => {
           <Text className="text-white font-geistSemiBold">Details</Text>
         </View>
         <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-          {feedbacks?.[0]?.feedbacks.map(
+          {results?.[0]?.feedbacks.map(
             ({ question, answer, feedback }, index) => (
               <View key={index}>
                 {/* Question */}
@@ -42,7 +63,7 @@ const MockFeedback = () => {
                   </Text>
                   <View className="mt-4 border-t rounded-full w-full border-gray-500"></View>
                   <Text className="text-gray-400 font-geistMedium text-[10px] mt-2 text-right">
-                    {index + 1} of {feedbacks?.[0]?.feedbacks.length}
+                    {index + 1} of {results?.[0]?.feedbacks.length}
                   </Text>
                 </View>
                 {/* Answer */}
@@ -96,12 +117,12 @@ const MockFeedback = () => {
           <View className="flex-1 items-center w-full pt-24 gap-7">
             <View className="rounded-full w-48 h-48 border border-[#9CA3AF] bg-[#6B7280]/30 items-center justify-center">
               <Ionicons
-                name={feedbacks?.[0]?.icons?.name}
+                name={results?.[0]?.icons?.name}
                 size={96}
-                color={feedbacks?.[0]?.icons?.color}
+                color={results?.[0]?.icons?.color}
               />
               <Text className="text-white font-geistSemiBold text-base mt-2">
-                {feedbacks?.[0]?.grade}
+                {results?.[0]?.grade}
               </Text>
             </View>
           </View>
