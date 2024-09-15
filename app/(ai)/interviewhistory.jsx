@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
 import { router } from 'expo-router';
 import { ArrowLeftIcon, EllipsisVerticalIcon } from 'react-native-heroicons/outline';
 import Animated, { FadeIn } from 'react-native-reanimated';
+
+// context interview history
+const InterviewHistoryContext = createContext();
 
 const interviewData = [
   { id: '1', title: 'AI Researcher Interview', result: 'Terrible' },
@@ -10,12 +13,28 @@ const interviewData = [
   { id: '3', title: 'Backend Developer Interview', result: 'Need Improvement' },
 ];
 
+export const useInterviewHistory = () => useContext(InterviewHistoryContext);
+
+export const InterviewHistoryProvider = ({ children }) => {
+  const [interviewHistory, setInterviewHistory] = useState(interviewData);
+
+  return (
+    <InterviewHistoryContext.Provider value={{ interviewHistory, setInterviewHistory }}>
+      {children}
+    </InterviewHistoryContext.Provider>
+  );
+};
+
 const getResultColor = (result) => {
-  switch (result) {
-    case 'Good': return 'text-green-500';
-    case 'Terrible': return 'text-red-500';
-    case 'Need Improvement': return 'text-yellow-500';
-    default: return 'text-gray-400';
+  switch (result.toLowerCase()) {
+    case 'good':
+      return 'text-green-500';
+    case 'need improvement':
+      return 'text-yellow-500';
+    case 'terrible':
+      return 'text-red-500';
+    default:
+      return 'text-gray-400';
   }
 };
 
@@ -37,17 +56,19 @@ const InterviewHistoryItem = ({ title, result }) => (
 );
 
 const InterviewHistory = () => {
+  const { interviewHistory } = useInterviewHistory();
+
   return (
     <SafeAreaView className="flex-1 bg-[#111315]">
       <View className="px-4 mt-16 pb-4 flex-row items-center mb-6">
-        <TouchableOpacity onPress={() => router.back()} className="left-4">
+        <TouchableOpacity onPress={() => router.back()} className="left-4 z-10">
           <ArrowLeftIcon size={20} color="white" />
         </TouchableOpacity>
         <Text className="text-white text-xl font-geistBold flex-1 text-center">Interview History</Text>
       </View>
       
       <FlatList
-        data={interviewData}
+        data={interviewHistory}
         renderItem={({ item }) => <InterviewHistoryItem title={item.title} result={item.result} />}
         keyExtractor={item => item.id}
         contentContainerStyle={{ paddingHorizontal: 16 }}

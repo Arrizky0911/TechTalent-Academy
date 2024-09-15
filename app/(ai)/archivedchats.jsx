@@ -79,6 +79,9 @@ const ArchivedChats = () => {
           <View style={{ width: 24 }} ></View> 
         </View>
         <ScrollView className="flex-1 px-4">
+          <Text className="text-gray-400 text-xs font-geistRegular mb-4 text-center">
+            Archive your most important conversations here.
+          </Text>
           <DateHeader title="2023" />
           {archivedItems.slice(0, 2).map(renderArchivedItem)}
           <DateHeader title="2022" />
