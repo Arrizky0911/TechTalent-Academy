@@ -14,6 +14,8 @@ import {
   TouchableOpacity,
   Alert,
   FlatList,
+  ScrollView,
+  RefreshControl,
 } from "react-native";
 import { getCurrentUser, signOut, updateUser } from "../../lib/appwriteConfig";
 import { Redirect, router, useFocusEffect } from "expo-router";
@@ -21,10 +23,10 @@ import BgImage from "../../components/BgImage";
 import Loading from "../../components/Loading";
 import * as ImagePicker from "expo-image-picker";
 import { ID } from "react-native-appwrite";
-
 const Profile = () => {
   const { user, setUser, setIsLoggedIn, isLoading, setIsLoading } =
     useGlobalContext();
+  const [refreshing, setRefreshing] = useState(false);
 
   const { formatDate } = allFormat;
 
@@ -33,19 +35,6 @@ const Profile = () => {
     username: user?.username,
     profession: user?.profession,
   });
-
-  const fetchUserData = async () => {
-    setIsLoading(true);
-    try {
-      const currentUser = await getCurrentUser();
-      console.log(user?.avatar);
-      setUser(currentUser);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const openPicker = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -109,13 +98,26 @@ const Profile = () => {
     }
   };
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+
+    try {
+      const data = await getCurrentUser();
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   if (!user) return <Redirect href="/sign-in" />;
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView className="h-[101%] relative">
+      <View className="h-[101%] relative">
         {isLoading && (
           <Loading additionStyle="absolute h-full w-full z-[1000] bg-black/70" />
         )}
@@ -157,12 +159,16 @@ const Profile = () => {
               )}
             </View>
           </View>
-          {/* FORMS */}
-
-          <View className="mt-[12%] px-6 w-full">
-            <Text className="text-center text-white font-geistMedium mb-10 mt-2">
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            className="mt-[12%] px-6 w-full"
+          >
+            <Text className="text-center text-white font-geistMedium mb-5 mt-2">
               Created on {formatDate(user?.$createdAt)}
             </Text>
+
             <View className="w-full mb-5">
               <Text className="text-[#f0efef] mb-2 font-geistRegular">
                 Username
@@ -176,6 +182,7 @@ const Profile = () => {
                 editable={true}
               />
             </View>
+
             <View className="w-full mb-5">
               <Text className="text-[#f0efef] mb-2 font-geistRegular">
                 Profession
@@ -189,12 +196,13 @@ const Profile = () => {
                 editable={true}
               />
             </View>
+
             <View className="w-full mb-5">
               <Text className="text-[#f0efef] mb-2 font-geistRegular">
                 Email
               </Text>
               <TextFields
-                placeholder="Username"
+                placeholder="Email"
                 value={user?.email}
                 textInputClass="text-gray-400"
                 containerClass="h-12 border-[#f0efef]"
@@ -214,9 +222,9 @@ const Profile = () => {
               containerStyles="mt-2 py-3.5 bg-gray mb-3"
               handlePress={logout}
             />
-          </View>
+          </ScrollView>
         </View>
-      </SafeAreaView>
+      </View>
     </KeyboardAvoidingView>
   );
 };
