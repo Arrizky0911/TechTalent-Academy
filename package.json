@@ -45,6 +45,7 @@
     "react-dom": "18.2.0",
     "react-native": "^0.74.5",
     "react-native-appwrite": "^0.4.0",
+    "react-native-dotenv": "^3.4.11",
     "react-native-dropdown-select-list": "^2.0.5",
     "react-native-element-dropdown": "^2.12.1",
     "react-native-feather": "^1.1.2",

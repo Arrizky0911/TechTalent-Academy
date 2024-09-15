@@ -27,7 +27,11 @@ const CourseDetail = () => {
   const videoElement = useRef(null);
 
   const { id } = useLocalSearchParams();
-  const { data: course, isLoading } = useFetchData(() => getCourseById(id));
+  const {
+    data: course,
+    isLoading,
+    setIsLoading,
+  } = useFetchData(() => getCourseById(id));
   const { user, setUser } = useGlobalContext();
 
   const [isPlay, setIsPlay] = useState(false);
@@ -112,11 +116,11 @@ const CourseDetail = () => {
         <AntDesign name="arrowleft" size={24} color="#fff" />
       </TouchableOpacity>
 
-      <Animated.View 
-        style={{ 
-          opacity: fadeAnim, 
-          transform: [{ scale: scaleAnim }] 
-        }} 
+      <Animated.View
+        style={{
+          opacity: fadeAnim,
+          transform: [{ scale: scaleAnim }],
+        }}
         className="h-[220px] w-full relative items-center justify-center"
       >
         {isPlay ? (
@@ -138,10 +142,19 @@ const CourseDetail = () => {
               }}
             />
             <TouchableOpacity
-              className="absolute z-[100] bottom-3 right-3"
-              onPress={() => {
-                videoElement.current.presentFullscreenPlayer();
+              className={`absolute z-[100] bottom-3 right-3 ${
+                isLoading ? "opacity-50" : ""
+              }`}
+              onPress={async () => {
+                setIsLoading(true);
+                try {
+                  await videoElement.current.presentFullscreenPlayer();
+                } catch (error) {
+                } finally {
+                  setIsLoading(false);
+                }
               }}
+              disabled={isLoading}
             >
               <Image
                 source={icons.fullScreen}
@@ -181,19 +194,19 @@ const CourseDetail = () => {
         }}
         className="py-6 bg-[#111315] flex-1 border-t-[1px] border-t-black/30"
       >
-        <Animated.Text 
-          style={{ 
+        <Animated.Text
+          style={{
             opacity: fadeAnim,
-            transform: [{ translateY: titleSlideAnim }]
+            transform: [{ translateY: titleSlideAnim }],
           }}
           className="text-white text-xl font-geistBold mx-8"
         >
           {course.title}
         </Animated.Text>
-        <Animated.Text 
-          style={{ 
+        <Animated.Text
+          style={{
             opacity: fadeAnim,
-            transform: [{ translateY: descSlideAnim }]
+            transform: [{ translateY: descSlideAnim }],
           }}
           className="text-[#737373] text-xs font-geistMedium mt-4 mx-8"
         >
@@ -256,10 +269,10 @@ const CourseDetail = () => {
           }}
         >
           {activeTab === "overview" ? (
-            <Animated.View 
-              style={{ 
+            <Animated.View
+              style={{
                 opacity: fadeAnim,
-                transform: [{ translateY: descSlideAnim }]
+                transform: [{ translateY: descSlideAnim }],
               }}
               className="items-start h-full px-6"
             >
@@ -268,10 +281,10 @@ const CourseDetail = () => {
               </Text>
             </Animated.View>
           ) : (
-            <Animated.View 
-              style={{ 
+            <Animated.View
+              style={{
                 opacity: fadeAnim,
-                transform: [{ translateY: descSlideAnim }]
+                transform: [{ translateY: descSlideAnim }],
               }}
               className="flex-row gap-10 justify-center items-center"
             >
