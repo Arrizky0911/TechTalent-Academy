@@ -38,6 +38,11 @@ const CategoryList = () => {
 
   const handleCreateCategory = async () => {
     Keyboard.dismiss();
+
+    if (name.trim() === "") {
+      setName("");
+      return Alert.alert("Don't leave it empty Nigga");
+    }
     setIsLoading(true);
     try {
       const newCategory = await createCategories(name);
