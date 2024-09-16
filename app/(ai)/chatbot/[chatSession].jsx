@@ -150,7 +150,18 @@ const Chatbot = () => {
                 entering={FadeIn.delay(200).duration(300)}
                 className="items-start"
               >
-                <TouchableOpacity onPress={() => router.push("aiFeature")}>
+                <TouchableOpacity onPress={() => {
+                  if (chatSession === "noSession") {
+                    setChat([]);
+                    setIsChatting(false);
+                    setIsNewChat(true);
+                    if  (chat?.length < 1) {
+                      router.push("aiFeature");
+                    }
+                  } else {
+                    router.back();
+                  }
+                  }}>
                   <Image
                     source={icons.arrowLeft}
                     className="h-6 w-6 mt-10 mb-6"
@@ -193,7 +204,7 @@ const Chatbot = () => {
           <>
             <Animated.View
               entering={FadeIn.delay(400).duration(300)}
-              className="-mt-[12%] "
+              className="-top-16"
             >
               <UserDisplay user={user} />
             </Animated.View>
@@ -233,7 +244,7 @@ const Chatbot = () => {
                         className="w-[48%] rounded-2xl bg-[#353535] p-4 justify-between"
                         onPress={() =>
                           handlePromptClick(
-                            " Who are your ability and function?"
+                            "Who are you, and what's your ability and function?"
                           )
                         }
                       >
@@ -244,7 +255,7 @@ const Chatbot = () => {
                           tintColor="white"
                         />
                         <Text className="text-white text-sm font-geistRegular m-2">
-                          Who are your ability and function?
+                          Who are you, and what's your ability and function?
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity

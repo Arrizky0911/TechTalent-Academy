@@ -152,7 +152,7 @@ const Profile = () => {
                     className="w-[18px] h-[18px]"
                     tintColor="red"
                   />
-                  <Text className="text-white/80 font-geistRegular">
+                  <Text className="text-white font-geistRegular text-xs">
                     You haven't input your profession
                   </Text>
                 </View>

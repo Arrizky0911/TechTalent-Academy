@@ -62,7 +62,8 @@
     "react-native-web": "~0.19.10",
     "react-native-webview": "13.8.6",
     "uuid": "^10.0.0",
-    "expo-crypto": "~13.0.2"
+    "expo-crypto": "~13.0.2",
+    "expo-dev-client": "~4.0.26"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -4,11 +4,11 @@
     "slug": "aic-triumphants",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/app-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/Logo.png",
+      "image": "./assets/images/TechTalentAcademy.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
@@ -19,8 +19,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/Logo.png",
-        "backgroundColor": "#000000",
+        "foregroundImage": "./assets/images/Android-icon-v2.png",
+        "resizeMode": "contain",
         "package": "com.triumphants.aic"
       },
       "package": "com.arrizkyaditha.a.aictriumphants"
