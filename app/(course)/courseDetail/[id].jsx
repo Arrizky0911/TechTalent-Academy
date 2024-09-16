@@ -10,18 +10,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import useFetchData from "../../lib/useFetchData";
+import useFetchData from "../../../lib/useFetchData";
 import {
   getCourseById,
   getCurrentUser,
   updateHistory,
-} from "../../lib/appwriteConfig";
-import icons from "../../constants/icons";
+} from "../../../lib/appwriteConfig";
+import icons from "../../../constants/icons";
 import { Video as VideoAV, ResizeMode } from "expo-av";
 
-import { useGlobalContext } from "../../context/GlobalProvider";
+import { useGlobalContext } from "../../../context/GlobalProvider";
 import { StatusBar } from "expo-status-bar";
-import { images } from "../../constants";
+import { images } from "../../../constants";
 
 const CourseDetail = () => {
   const videoElement = useRef(null);
@@ -299,7 +299,7 @@ const CourseDetail = () => {
                   Any question u wanna ask?
                 </Text>
                 <TouchableOpacity
-                  onPress={() => router.push("../../(ai)/chatbot")}
+                  onPress={() => router.push("../../(ai)/chatbot/noSession")}
                   className="bg-[#2a86ff] rounded-lg px-10 py-2 mt-4"
                 >
                   <Text className="text-white font-geistSemiBold text-xs">

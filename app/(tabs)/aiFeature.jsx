@@ -27,7 +27,7 @@ const AiFeature = () => {
         <View className="flex-row justify-center mt-[7%] gap-x-5 mb-5">
           <View className="h-[86%] w-[40%]">
           <TouchableOpacity
-            className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between"
+            className="w-full h-[92.5%] bg-[#353535] rounded-2xl p-4 justify-between"
             onPress={() => router.push("main/mockLanding")}
           >
             {/* AI LOGO and title */}
@@ -38,19 +38,16 @@ const AiFeature = () => {
                   <Image
                     source={icons.starThin}
                     tintColor="white"
-                    className="w-4 h-4"
+                    className="w-6 h-6"
                     resizeMethod="contain"
                   />
                   <Image
                     source={icons.starThick}
                     tintColor="white"
-                    className="w-2 h-2 absolute left-3.5 top-3.5"
+                    className="w-4 h-4 absolute left-3.5 top-3.5"
                     resizeMethod="contain"
                   />
                 </View>
-                <Text className="font-geistSemiBold text-sm text-white ml-2 mr-1">
-                  Judgement
-                </Text>
                 <View>
                   <Image
                     source={icons.arrowUpRight}
@@ -60,6 +57,9 @@ const AiFeature = () => {
                   />
                 </View>
               </View>
+                <Text className="font-geistSemiBold text-base text-white ml-2 mr-1">
+                  Judgement
+                </Text>
 
             </View>
             <Text className="text-white text-xs font-geistRegular mx-1 mb-3">
@@ -67,32 +67,6 @@ const AiFeature = () => {
               feedback.
             </Text>
           </TouchableOpacity>
-            
-            <TouchableOpacity
-              className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between mt-4"
-              onPress={() => router.push("/chatbot")}
-            >
-              <View className="flex-row items-center justify-between">
-                <Image
-                  source={icons.cursor}
-                  tintColor="white"
-                  className="w-5 h-5 mr-2"
-                  resizeMethod="contain"
-                />
-                <Text className="text-white font-geistSemiBold mr-1">Counsellor</Text>
-                <Image
-                  source={icons.arrowUpRight}
-                  tintColor="white"
-                  className="w-5 h-5"
-                  resizeMethod="contain"
-                />
-              </View>
-              <View className="mt-4">
-                <Text className="text-white text-xs font-geistRegular mx-1 mb-3">
-                  AI chatbot that will help you in your career development
-                </Text>
-              </View>
-            </TouchableOpacity>
           </View>
           <View className="h-[86%] w-[40%]">
             <TouchableOpacity
@@ -106,7 +80,7 @@ const AiFeature = () => {
                   className="w-5 h-5"
                   resizeMethod="contain"
                 />
-                <Text className="text-white font-geistSemiBold">Apostle</Text>
+                <Text className="text-white text-base font-geistSemiBold">Apostle</Text>
                 <Image
                   source={icons.arrowUpRight}
                   tintColor="white"
@@ -132,7 +106,7 @@ const AiFeature = () => {
                   className="w-5 h-5 mr-2"
                   resizeMethod="contain"
                 />
-                <Text className="text-white font-geistSemiBold mr-2">Guidance</Text>
+                <Text className="text-white text-base font-geistSemiBold mr-2">Guidance</Text>
                 <Image
                   source={icons.arrowUpRight}
                   tintColor="white"

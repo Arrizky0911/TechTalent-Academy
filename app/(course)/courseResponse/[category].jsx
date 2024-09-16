@@ -11,12 +11,12 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { icons } from "../../constants";
+import { icons } from "../../../constants";
 import { Link, router, useLocalSearchParams } from "expo-router";
-import useFetchData from "../../lib/useFetchData";
-import { getAllCategories, searchCategories } from "../../lib/appwriteConfig";
-import { images } from "../../constants";
-import BotTextFields from "../../components/BotTextFields";
+import useFetchData from "../../../lib/useFetchData";
+import { getAllCategories, searchCategories } from "../../../lib/appwriteConfig";
+import { images } from "../../../constants";
+import BotTextFields from "../../../components/BotTextFields";
 
 const CourseResponse = () => {
   const { category } = useLocalSearchParams();

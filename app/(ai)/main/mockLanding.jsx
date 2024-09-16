@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import { View, Text, TouchableOpacity, SafeAreaView, Modal, TextInput, Animated, KeyboardAvoidingView, Platform } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -10,6 +10,7 @@ export default function App() {
   const [selectedJob, setSelectedJob] = useState(null); // state to track selected job
   const [anotherJob, setJob] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const scrollViewRef = useRef(null);
 
   const jobs = [
     "Front End Developer",
@@ -58,47 +59,55 @@ export default function App() {
           <Text className="text-gray-400 font-geistRegular text-center text-xs m-2">
             Select your dream job role and let's kickstart a tailored interview simulation just for you!
           </Text>
-          <Reanimated.View entering={FadeIn.delay(600).duration(1000)} className="flex-wrap flex-row mt-2 w-full px-5 justify-between">
-            {jobs.map((job, index) => (
-              <TouchableOpacity
-              key={index}
-              onPress={() => setSelectedJob(job)}
-              className={`${
-                selectedJob === job ? "bg-[#eeeeeb]" : "bg-[#353535] text-white"
-              } py-7 px-4 rounded-xl m-1 mt-2.5 w-[30%] items-center justify-center`}
-              >
-                <Text
-                  className={`${
-                    selectedJob === job ? "text-[#353535]" : "text-white"
-                  } font-geistRegular text-center text-xs`}
-                  >
-                  {job}
-                </Text>
-              </TouchableOpacity>
-              
-            ))}
-            
-            {selectedJob === "Another Job" ? (
-              <TextInput
-              className="mt-5 bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] w-full h-10 rounded-xl mb-4 "
-              placeholder="Input here"
-              placeholderTextColor="gray"
-              value={anotherJob}
-              onChangeText={(e) => setJob(e)}
-              />
-              
-              
-            ) : (
-              <></>
-            )}
-            <TouchableOpacity
-                    onPress={() => router.push('history/interviewhistory')}
-                    className="w-full mt-4 py-3 rounded-2xl  hover:bg-[#4A4A4A] flex-row items-center justify-between px-2"
+          <ScrollView
+            ref={scrollViewRef}
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              paddingHorizontal: 10,
+              paddingBottom: 100,
+            }}>
+            <Reanimated.View entering={FadeIn.delay(600).duration(1000)} className="flex-wrap flex-row mt-2 w-full px-5 justify-between">
+              {jobs.map((job, index) => (
+                <TouchableOpacity
+                key={index}
+                onPress={() => setSelectedJob(job)}
+                className={`${
+                  selectedJob === job ? "bg-[#eeeeeb]" : "bg-[#353535] text-white"
+                } py-7 px-4 rounded-xl m-1 mt-2.5 w-[30%] items-center justify-center`}
+                >
+                  <Text
+                    className={`${
+                      selectedJob === job ? "text-[#353535]" : "text-white"
+                    } font-geistRegular text-center text-xs`}
                     >
-                    <Text className="text-white font-geistRegular">See History here</Text>
-                    <ChevronRightIcon size={20} color="white" />
-                  </TouchableOpacity>
-          </Reanimated.View>
+                    {job}
+                  </Text>
+                </TouchableOpacity>
+                
+              ))}
+              
+              {selectedJob === "Another Job" ? (
+                <TextInput
+                className="mt-5 bg-[#1e1e1e] text-white font-geistRegular p-2 pl-4 border-white/40 border-[1px] w-full h-10 rounded-xl mb-4 "
+                placeholder="Input here"
+                placeholderTextColor="gray"
+                value={anotherJob}
+                onChangeText={(e) => setJob(e)}
+                />
+                
+                
+              ) : (
+                <></>
+              )}
+              <TouchableOpacity
+                      onPress={() => router.push('history/interviewhistory')}
+                      className="w-full mt-4 py-3 rounded-2xl  hover:bg-[#4A4A4A] flex-row items-center justify-between px-2"
+                      >
+                      <Text className="text-white font-geistRegular">See History here</Text>
+                      <ChevronRightIcon size={20} color="white" />
+                    </TouchableOpacity>
+            </Reanimated.View>
+          </ScrollView>
           <Reanimated.View entering={FadeInUp.delay(1200).duration(1000)} className="flex-1 justify-end items-center pb-5 mx-5">
             <TouchableOpacity
               onPress={() => setModalVisible(true)}

@@ -117,13 +117,13 @@ const Profile = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <View className="h-[101%] relative">
+      <View className="h-[101%] pt-2 relative">
         {isLoading && (
           <Loading additionStyle="absolute h-full w-full z-[1000] bg-black/70" />
         )}
         <BgImage />
         <View className="bg-frame absolute bottom-0 w-full h-[680px] rounded-t-3xl border-[1px] border-gray items-center">
-          <View className="bg-[#2c2c2c] w-[82%] h-[12%] rounded-3xl absolute -top-10 px-5 flex-row items-center space-x-4">
+          <View className="bg-[#2c2c2c] w-[82%] h-[12%] rounded-3xl absolute -top-10 px-5 flex-row items-center space-x-4 mt-3">
             <TouchableOpacity
               className="w-[50px] h-[50px] rounded-full ml-1"
               onPress={openPicker}
@@ -165,7 +165,7 @@ const Profile = () => {
             }
             className="mt-[12%] px-6 w-full"
           >
-            <Text className="text-center text-white font-geistMedium mb-5 mt-2">
+            <Text className="text-center text-white font-geistMedium mb-5 mt-6">
               Created on {formatDate(user?.$createdAt)}
             </Text>
 

@@ -38,14 +38,6 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(ai)" options={{ headerShown: false }} />
         <Stack.Screen name="(admin)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="courseResponse/[category]"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="courseDetail/[id]"
-          options={{ headerShown: false }}
-        />
       </Stack>
     </GlobalProvider>
   );
