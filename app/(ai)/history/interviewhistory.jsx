@@ -8,12 +8,6 @@ import { deleteInterviewResult, loadAllInterviews } from '../../../lib/AstraDBCo
 import Loading from '../../../components/Loading';
 import { useGlobalContext } from '../../../context/GlobalProvider';
 
-const interviewData = [
-  { id: '1', title: 'AI Researcher', grade: 'Terrible' },
-  { id: '2', title: 'UI UX Developer', grade: 'Good' },
-  { id: '3', title: 'Backend Developer', grade: 'Need Improvement' },
-];
-
 const getResultColor = (result) => {
   switch (result) {
     case 'Good': return 'text-green-500';
@@ -86,7 +80,7 @@ const InterviewHistory = () => {
         let parameter = {
           questions: {},
           answers: {},
-          isNew: false,
+          isNew: "history",
           session: selectedItemIndex
         }
         router.push({ pathname: `mockFeedback/${selectedItemJob}`, params: parameter });
@@ -94,16 +88,15 @@ const InterviewHistory = () => {
 
       } else if (option === "Delete") {
         await deleteInterviewResult(selectedItemIndex);
-        Alert.alert("You have been delete the message");
         refetch();
       }
     } catch (error) {
       console.error(error);
       throw new error;
-
+      
     } finally {
-      setSelectedItemJob(null);
       setSelectedItemIndex(null);
+      setSelectedItemJob(null);
       setIsLoad(false);
     }
   };
@@ -123,7 +116,7 @@ const InterviewHistory = () => {
       <FlatList
         data={interviewHistorySessions}
         renderItem={({ item }) => <InterviewHistoryItem title={item.jobTitle} result={item.grade} id={item._id} />}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id}
         contentContainerStyle={{ paddingHorizontal: 16 }}
       />
       <OptionDropdown

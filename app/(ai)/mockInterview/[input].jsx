@@ -104,7 +104,7 @@ const MockTest = () => {
     let result = {
       questions: formattedQuestions,
       answers: formattedAnswers,
-      isNew: true,
+      isNew: "new",
       session: undefined,
     };
     console.log("redirecting");

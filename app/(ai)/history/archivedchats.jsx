@@ -66,8 +66,7 @@ const ArchivedChats = () => {
         refetch();
         
       } else if (option === "Delete") {
-        console.log(`Selected option: ${option} for item ${selectedItemIndex}`);
-        Alert.alert("Message history has been deleted");
+        await deleteMessage(selectedItemIndex);
         refetch();
         
       }

@@ -26,10 +26,11 @@ const MockFeedback = () => {
   const fetchInterviewResult = async (result) => {
     setIsLoading(true);
     try {
-      if (result.isNew) {
+      console.log(result.isNew);
+      if (result.isNew === "new") {
         setResults(await getFeedbacks(result.questions.split("#$%,"), result.answers.split("#$%,"), user.$id, result.interviewResult));
       } else {
-        setResults(await loadInterviewResult(result.id))
+        setResults(await loadInterviewResult(result.session))
       }
     } catch (error) {
       console.error(error);

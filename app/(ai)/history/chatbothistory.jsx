@@ -6,7 +6,7 @@ import {icons} from "../../../constants";
 import BgImage from "../../../components/BgImage";
 import { useGlobalContext } from "../../../context/GlobalProvider";
 import useFetchData from "../../../lib/useFetchData";
-import { loadUserSessions, setArchiveChatHistory } from "../../../lib/AstraDBConfig";
+import { deleteMessage, loadUserSessions, setArchiveChatHistory } from "../../../lib/AstraDBConfig";
 import Loading from "../../../components/Loading";
 
 let header = undefined;
@@ -72,7 +72,9 @@ const ChatHistory = () => {
         refetch();
 
       } else if (option === "Delete") {
-        console.log(`Selected option: ${option} for item ${selectedItemIndex}`);
+        await deleteMessage(selectedItemIndex);
+        refetch();
+        
       }
     } catch (error) {
       console.error(error);
