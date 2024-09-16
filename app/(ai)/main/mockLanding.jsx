@@ -42,8 +42,8 @@ export default function App() {
       >
 
       <View className="bg-[#30353C] w-full h-full absolute pt-14">
-        <Animated.View style={{ opacity: fadeAnim }} className="flex-row justify-between">
-          <TouchableOpacity className="ml-6" onPress={() => router.back()}>
+        <Animated.View style={{ opacity: fadeAnim }} className="flex-row">
+          <TouchableOpacity className="ml-6" onPress={() => router.push("aiFeature")}>
             <AntDesign name="arrowleft" size={24} color="white" />
           </TouchableOpacity>
           <View className="flex-1 mr-10">
@@ -56,12 +56,12 @@ export default function App() {
           <Text className="text-white font-geistBold text-center text-lg mt-10">
             What kind of job are you interested in?
           </Text>
-          <Text className="text-gray-400 font-geistRegular text-center text-xs m-2">
+          <Text className="text-gray-400 font-geistRegular text-center text-xs mt-2 mb-4">
             Select your dream job role and let's kickstart a tailored interview simulation just for you!
           </Text>
           <ScrollView
             ref={scrollViewRef}
-            style={{ flex: 1 }}
+            style={{ flex: 1, height: "auto"}}
             contentContainerStyle={{
               paddingHorizontal: 10,
               paddingBottom: 100,
@@ -108,7 +108,7 @@ export default function App() {
                     </TouchableOpacity>
             </Reanimated.View>
           </ScrollView>
-          <Reanimated.View entering={FadeInUp.delay(1200).duration(1000)} className="flex-1 justify-end items-center pb-5 mx-5">
+          <Reanimated.View entering={FadeInUp.delay(1200).duration(1000)} className="justify-end items-center pb-5 mx-5">
             <TouchableOpacity
               onPress={() => setModalVisible(true)}
               className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"

@@ -24,8 +24,7 @@ import {
   import { addChatHistory, loadChatHistory, updateChatHistory } from "../../../lib/AstraDBConfig";
   import Loading from "../../../components/Loading"
   import { randomUUID } from "expo-crypto";
-import AiFeature from "../../(tabs)/aiFeature";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+  import { ClockIcon } from "react-native-heroicons/outline";
   
   const Chatbot = () => {
     const { user } = useGlobalContext();
@@ -36,6 +35,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
     const [isLoadChat, setIsLoadChat] = useState(false);
     const [isLoadResponse, setIsLoadResponse] = useState(false);
     const [isNewChat, setIsNewChat] = useState(true);
+    const [isChatting, setIsChatting] = useState(false);
     const [greeting, setGreeting] = useState("");
     const scrollViewRef = useRef(null);
 
@@ -77,6 +77,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
   
     const sendMessage = async () => {
       if (!userInput.trim()) return;
+      setIsChatting(true);
       Keyboard.dismiss();
       let updatedChat = [
         ...chat,
@@ -140,25 +141,53 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
           <Animated.View entering={FadeIn.delay(100).duration(300)} className="mx-5 mt-5">
             <View>
               <View className="flex-row items-center justify-between">
-                <Animated.View entering={FadeIn.delay(200).duration(300)}>
-                  <TouchableOpacity onPress={() => router.push("aiFeature")}>
+                <Animated.View entering={FadeIn.delay(200).duration(300)} className="items-start">
+                  <TouchableOpacity onPress={() => {
+                    if (isChatting) {
+                      setChat([]);
+                      setIsChatting(false);
+                      setIsNewChat(true);
+                    } else {
+                      if (chatSession === "noSession") {
+                        router.push("aiFeature")
+                      } else {
+                        router.back();
+                      }
+                    }}}>
                     <Image
                       source={icons.arrowLeft}
-                      className="h-6 w-6 mt-10"
+                      className="h-6 w-6 mt-10 mb-6"
                       resizeMethod="contain"
                       tintColor="white"
                       />
                   </TouchableOpacity>
                 </Animated.View>
-                <Animated.Text entering={FadeIn.delay(300).duration(300)} className="text-white text-center text-xl font-geistMedium mt-10">
+                <Animated.Text entering={FadeIn.delay(300).duration(300)} className="text-white text-center text-xl font-geistMedium mt-10 mb-6 mx-10">
                   Guidance
                 </Animated.Text>
-                <View className="w-7 h-7"></View>
+                <Animated.View entering={FadeIn.delay(200).duration(300)}>
+                  {(isNewChat && !isChatting) || (chatSession !== "noSession") ? (
+                    <TouchableOpacity
+                      className="items-end mt-4 opacity-0"
+                      disabled={true}
+                      >
+                        <ClockIcon size={24} color="white"/>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity onPress={() => {
+                      router.push('history/chatbothistory')}}
+                      className="items-end mt-4"
+                      >
+                        <ClockIcon size={24} color="white"/>
+                    </TouchableOpacity>
+
+                  )}
+                </Animated.View>
               </View>
             </View>
           </Animated.View>
   
-          {isNewChat ? (
+          {isNewChat && !isChatting ? (
             <>
               <Animated.View entering={FadeIn.delay(400).duration(300)} className="-mt-[12%] ">
                 <UserDisplay user={user} />
@@ -260,7 +289,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
           ) : (
             <ScrollView
             ref={scrollViewRef}
-            style={{ flex: 1 }}
+            style={{ flex: 1, marginTop: 6 }}
             contentContainerStyle={{
               paddingHorizontal: 10,
               paddingBottom: 100,
@@ -296,7 +325,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
                     }}
                     className="font-geistRegular text-wrap break-words mx-2"
                     >
-                      {message.role === "user" || Platform.os !== "ios" ? 
+                      {message.role === "user" || Platform.OS !== "ios" ? 
                         message.parts[0].text
                         : (
                           <Markdown

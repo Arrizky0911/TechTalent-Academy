@@ -97,7 +97,9 @@ const ChatHistory = () => {
             <DateHeader title={item.lastUpdate} />
         }
          
-        <View className="mb-4">
+        <TouchableOpacity 
+          onPress={() => router.push(`/chatbot/${item._id}`)}
+          className="mb-4">
           <View className="flex-row justify-between items-center border border-[#3F454D] rounded-2xl p-4">
             <Text className="text-white font-geistRegular flex-1 mr-2">{item.header}</Text>
             <TouchableOpacity onPress={() => {
@@ -107,7 +109,7 @@ const ChatHistory = () => {
               <EllipsisVerticalIcon size={24} color="white" />
             </TouchableOpacity>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }

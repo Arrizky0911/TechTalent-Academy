@@ -143,15 +143,25 @@ const MockFeedback = () => {
           >
             {renderContent()}
             <View className=" justify-end items-center pb-5 mx-5">
-              {/* Next Button */}
-              <TouchableOpacity
-                onPress={() => router.push("aiFeature")}
-                className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
-              >
-                <Text className="text-white text-center font-geistSemiBold">
-                  Done
-                </Text>
-              </TouchableOpacity>
+              {result.isNew === "new" ? (
+                <TouchableOpacity
+                  onPress={() => router.push("aiFeature")}
+                  className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
+                >
+                  <Text className="text-white text-center font-geistSemiBold">
+                    Done
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => router.push('history/interviewhistory')}
+                  className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
+                >
+                  <Text className="text-white text-center font-geistSemiBold">
+                    Back
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           </BottomSheet>
         </View>

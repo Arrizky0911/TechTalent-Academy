@@ -10,9 +10,9 @@ import { useGlobalContext } from '../../../context/GlobalProvider';
 
 const getResultColor = (result) => {
   switch (result) {
-    case 'Good': return 'text-green-500';
+    case 'Very good': return 'text-green-500';
     case 'Terrible': return 'text-red-500';
-    case 'Need Improvement': return 'text-yellow-500';
+    case 'Need an improvement': return 'text-yellow-500';
     default: return 'text-gray-400';
   }
 };
@@ -57,19 +57,34 @@ const InterviewHistory = () => {
       entering={FadeIn.duration(300)}
       className="border border-[#3F454D] rounded-2xl p-4 mb-3"
     >
-      <View className="flex-row justify-between items-center">
+      <TouchableOpacity
+      onPress={() => {
+        let parameter = {
+          questions: {},
+          answers: {},
+          isNew: "history",
+          session: id
+        }
+        router.push({ pathname: `mockFeedback/${title}`, params: parameter });
+      }}
+      className="z-10">
+
+      <View 
+        className="flex-row justify-between items-center">
         <Text className="text-white font-geistMedium text-base">{title} Interview</Text>
         <TouchableOpacity
           onPress={() => {
             setSelectedItemIndex(id);
             setSelectedItemJob(title);
-          }}>
+          }}
+          className="z-12">
           <EllipsisVerticalIcon size={20} color="white" />
         </TouchableOpacity>
       </View>
       <Text className="text-gray-400 font-geistRegular text-xs mt-2">Your results: 
           <Text className={`${getResultColor(result)} text-xs mt-1`}> {result}</Text>        
       </Text>
+      </TouchableOpacity>
     </Animated.View>
   );
 
@@ -107,7 +122,7 @@ const InterviewHistory = () => {
             <Loading additionStyle="absolute h-full w-full z-[1000] bg-black" />
         )}
       <View className="px-4 mt-16 pb-4 flex-row items-center mb-6">
-        <TouchableOpacity onPress={() => router.back()} className="left-4">
+        <TouchableOpacity onPress={() => router.push("main/mockLanding")} className="left-4 z-10">
           <ArrowLeftIcon size={20} color="white" />
         </TouchableOpacity>
         <Text className="text-white text-xl font-geistBold flex-1 text-center">Interview History</Text>
