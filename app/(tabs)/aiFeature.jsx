@@ -24,10 +24,10 @@ const AiFeature = () => {
         <Text className="text-center text-white font-geistMedium mt-[60px] mx-4 text-base">
           Ai Powered Tools that Will Help you in Your Career Development
         </Text>
-        <View className="flex-row justify-center mt-[7%] gap-x-5 mb-5">
-          <View className="h-[86%] w-[40%]">
+        <View className="flex-row justify-center mt-[7%] gap-x-5 mb-5 justify-between">
+          <View className="h-auto w-[40%]">
           <TouchableOpacity
-            className="w-full h-[92.5%] bg-[#353535] rounded-2xl p-4 justify-between"
+            className="w-full h-[76%] bg-[#353535] rounded-2xl p-4 flex justify-between"
             onPress={() => router.push("main/mockLanding")}
           >
             {/* AI LOGO and title */}
@@ -68,9 +68,9 @@ const AiFeature = () => {
             </Text>
           </TouchableOpacity>
           </View>
-          <View className="h-[86%] w-[40%]">
+          <View className="h-auto w-[40%]">
             <TouchableOpacity
-              className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between"
+              className="w-full h-[38%] bg-[#353535] rounded-2xl p-4 justify-between"
               onPress={() => router.push("/main/hobby")}
             >
               <View className="flex-row items-center justify-between">
@@ -96,7 +96,7 @@ const AiFeature = () => {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              className="w-full h-[45%] bg-[#353535] rounded-2xl p-4 justify-between mt-4"
+              className="w-full h-[35%] bg-[#353535] rounded-2xl p-4 justify-between mt-4"
               onPress={() => router.push("/chatbot/noSession")}
             >
               <View className="flex-row items-center justify-between">
