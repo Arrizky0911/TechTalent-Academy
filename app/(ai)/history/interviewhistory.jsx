@@ -117,7 +117,7 @@ const InterviewHistory = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#111315]">
+    <View className="flex-1 bg-[#111315]">
       {(isLoading || isLoad) && (
             <Loading additionStyle="absolute h-full w-full z-[1000] bg-black" />
         )}
@@ -128,18 +128,42 @@ const InterviewHistory = () => {
         <Text className="text-white text-xl font-geistBold flex-1 text-center">Interview History</Text>
       </View>
       
-      <FlatList
-        data={interviewHistorySessions}
-        renderItem={({ item }) => <InterviewHistoryItem title={item.jobTitle} result={item.grade} id={item._id} />}
-        keyExtractor={item => item._id}
-        contentContainerStyle={{ paddingHorizontal: 16 }}
-      />
+      <SafeAreaView className="flex-1 mt-10">
+        <View className="flex-row justify-between items-center px-4 py-2">
+          <TouchableOpacity onPress={() => router.back()}>
+            <ArrowLeftIcon size={24} color="white" />
+          </TouchableOpacity>
+          <Text className="text-white text-lg font-geistMedium">Chat History</Text>
+          <TouchableOpacity onPress={() => router.push("/history/archivedchats")}>
+            <ArchiveBoxIcon size={24} color="white" />
+          </TouchableOpacity>
+        </View>
+        <View className="flex-1 justify-center items-center px-4">
+          {interviewHistorySessions.length > 0 ? (
+            <ScrollView className="flex-1 w-full">
+              {interviewHistorySessions.map(renderHistoryItem)}
+            </ScrollView>
+          ) : (
+            <View className="items-center">
+              <Image
+                source={images.chatHistoryEmpty}
+                style={{ width: 150, height: 150 }}
+                resizeMode="contain"
+              />
+              <Text className="text-gray-400 text-center mt-4 font-geistRegular">
+                No chat history yet. Start a conversation to see your history here!
+              </Text>
+            </View>
+          )}
+        </View>
+      </SafeAreaView>
       <OptionDropdown
         visible={selectedItemIndex !== null}
         onClose={() => setSelectedItemIndex(null)}
         onOptionSelect={handleOptionSelect}
+        isArchived={isSessionArchived}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

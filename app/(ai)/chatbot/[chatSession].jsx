@@ -337,30 +337,37 @@ import {
                 }}
                 className="w-auto"
                 >
+                  {message.role === "user" ? (
                   <Text
                     style={{
-                      color: message.role === "user" ? "#fff" : "#333",
+                      color: "#fff",
                       fontSize: 16,
                     }}
                     className="font-geistRegular text-wrap break-words mx-2"
-                    >
-                      {message.role === "user" || Platform.OS !== "ios" ? 
-                        message.parts[0].text
-                        : (
-                          <Markdown
-                          style={{maxWidth: "75%", flex: 1, flexWrap: "wrap"}}
-                          markdownit={
-                            MarkdownIt({
-                              typographer: true,
-                              breaks: true
-                            }).disable(['blockquote', 'list', 'code'])
-                          }
-                          >
-                          {message.parts[0].text}
-                        </Markdown>
-  
-                      )}
-                    </Text>
+                  >
+                    {message.parts[0].text}
+                  </Text>
+                ) : (
+                  <Markdown
+                    style={{
+                      body: {
+                        color: "#fff",
+                        fontSize: 16,
+                        fontFamily: "Geist-Regular",
+                      },
+                      paragraph: { marginBottom: 10 },
+                      list: { marginBottom: 10 },
+                      listItem: { marginBottom: 5 },
+                      text: { flexShrink: 1, flexWrap: "wrap" },
+                    }}
+                    markdownit={MarkdownIt({
+                      typographer: true,
+                      breaks: true,
+                    }).enable(["list"])}
+                  >
+                    {message.parts[0].text}
+                  </Markdown>
+                )}
                 </Animated.View>
               ))}
   

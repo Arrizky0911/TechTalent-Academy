@@ -131,9 +131,24 @@ const ChatHistory = () => {
             <ArchiveBoxIcon size={24} color="white" />
           </TouchableOpacity>
         </View>
-        <ScrollView className="flex-1 px-4">
-          {userHistorySessions.map(renderHistoryItem)}
-        </ScrollView>
+        <View className="flex-1 justify-center items-center px-4">
+          {userHistorySessions.length > 0 ? (
+            <ScrollView className="flex-1 w-full">
+              {userHistorySessions.map(renderHistoryItem)}
+            </ScrollView>
+          ) : (
+            <View className="items-center">
+              <Image
+                source={images.chatHistoryEmpty}
+                style={{ width: 150, height: 150 }}
+                resizeMode="contain"
+              />
+              <Text className="text-gray-400 text-center mt-4 font-geistRegular">
+                No chat history yet. Start a conversation to see your history here!
+              </Text>
+            </View>
+          )}
+        </View>
       </SafeAreaView>
       <OptionDropdown
         visible={selectedItemIndex !== null}

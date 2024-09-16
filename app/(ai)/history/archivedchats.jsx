@@ -117,9 +117,24 @@ const ArchivedChats = () => {
           <Text className="text-white text-lg font-geistMedium">Archived Chats</Text>
           <View style={{ width: 24 }} ></View> 
         </View>
-        <ScrollView className="flex-1 px-4">
-          {archivedHistorySessions.map(renderArchivedItem)}
-        </ScrollView>
+        <View className="flex-1 justify-center items-center px-4">
+          {archivedHistorySessions.length > 0 ? (
+            <ScrollView className="flex-1 w-full">
+              {archivedHistorySessions.map(renderArchivedItem)}
+            </ScrollView>
+          ) : (
+            <View className="items-center">
+              <Image
+                source={images.archivedEmpty}
+                style={{ width: 150, height: 150 }}
+                resizeMode="contain"
+              />
+              <Text className="text-gray-400 text-center mt-4 font-geistRegular">
+                No chat archived yet. Start a conversation to archive your chat history here!
+              </Text>
+            </View>
+          )}
+        </View>
       </SafeAreaView>
       <OptionDropdown
         visible={selectedItemIndex != null}
