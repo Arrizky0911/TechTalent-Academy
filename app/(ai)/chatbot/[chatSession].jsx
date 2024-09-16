@@ -262,8 +262,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
             ref={scrollViewRef}
             style={{ flex: 1 }}
             contentContainerStyle={{
-              paddingHorizontal: 10,
-              paddingBottom: 100,
+              paddingHorizontal: 20,
+              paddingBottom: 150,
+              paddingTop: 20,
             }}
             onContentSizeChange={() =>
               scrollViewRef.current?.scrollToEnd({ animated: true })
@@ -281,7 +282,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
                   padding: 12,
                   marginVertical: 8,
                   borderRadius: 16,
-                  maxWidth: "75%",
+                  maxWidth: message.role === "user" ? "80%" : "100%",
                   shadowColor: "#000",
                   shadowOpacity: 0.1,
                   shadowRadius: 4,
@@ -289,30 +290,33 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
                 }}
                 className="w-auto"
                 >
-                  <Text
-                    style={{
-                      color: message.role === "user" ? "#fff" : "#333",
-                      fontSize: 16,
-                    }}
-                    className="font-geistRegular text-wrap break-words mx-2"
-                    >
-                      {message.role === "user" || Platform.os !== "ios" ? 
-                        message.parts[0].text
-                        : (
-                          <Markdown
-                          style={{maxWidth: "75%", flex: 1, flexWrap: "wrap"}}
-                          markdownit={
-                            MarkdownIt({
-                              typographer: true,
-                              breaks: true
-                            }).disable(['blockquote', 'list', 'code'])
-                          }
-                          >
-                          {message.parts[0].text}
-                        </Markdown>
-  
-                      )}
-                    </Text>
+                  {message.role === "user" ? (
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontSize: 16,
+                      }}
+                      className="font-geistRegular text-wrap break-words mx-2"
+                      >
+                        {message.parts[0].text}
+                      </Text>
+                  ) : (
+                    <Markdown
+                      style={{
+                        body: { color: "#333", fontSize: 16, fontFamily: "Geist-Regular" },
+                        paragraph: { marginBottom: 10 },
+                        list: { marginBottom: 10 },
+                        listItem: { marginBottom: 5 },
+                        text: {flexShrink: 1, flexWrap: 'wrap'}
+                      }}
+                      markdownit={MarkdownIt({
+                        typographer: true,
+                        breaks: true,
+                      }).enable(["list"])} 
+                      >
+                      {message.parts[0].text}
+                    </Markdown>
+                  )}
                 </Animated.View>
               ))}
   
