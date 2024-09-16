@@ -93,7 +93,7 @@ const CourseDetail = () => {
 
   const handleUpdate = async () => {
     setIsPlay(true);
-    const histories = user.courses_history.filter((cour) => id !== cour.$id);
+    const histories = user?.courses_history.filter((cour) => id !== cour.$id);
     histories.push(course);
 
     const updatedHistory = {

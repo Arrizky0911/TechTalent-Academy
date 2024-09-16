@@ -73,8 +73,8 @@ const RoadmapResponse = () => {
     } else {
       setActiveAccordion(accordion);
       openAnimation();
-      setSelectedRoadmap(path); 
-      setModalVisible(true); 
+      setSelectedRoadmap(path);
+      setModalVisible(true);
     }
   };
 
@@ -121,11 +121,11 @@ const RoadmapResponse = () => {
   );
 
   const getModalHeight = () => {
-    if (!selectedRoadmap) return '50%';
+    if (!selectedRoadmap) return "50%";
     const stepCount = selectedRoadmap.length;
-    if (stepCount <= 2) return '40%';
-    if (stepCount <= 4) return '60%';
-    return '85%';
+    if (stepCount <= 2) return "40%";
+    if (stepCount <= 4) return "60%";
+    return "85%";
   };
 
   return (
@@ -153,7 +153,7 @@ const RoadmapResponse = () => {
         </Animated.View>
 
         {!jobs || jobs.length < 1 ? (
-          <Animated.View 
+          <Animated.View
             entering={FadeInDown.delay(500).duration(1000)}
             className="items-center justify-center h-[65vh]"
           >
@@ -164,14 +164,15 @@ const RoadmapResponse = () => {
               resizeMode="contain"
             />
             <Text className="font-geistRegular  text-[#a8aaac] text-center">
-              We're sorry, but we couldn't find any IT jobs related to your hobby.
+              We're sorry, but we couldn't find any IT jobs related to your
+              hobby.
             </Text>
           </Animated.View>
         ) : (
           jobs?.map(({ name, path }, index) => {
             return (
-              <Animated.View 
-                key={index} 
+              <Animated.View
+                key={index}
                 entering={FadeInDown.delay(300 + index * 100).duration(500)}
                 style={{ marginBottom: 16 }}
               >
@@ -196,11 +197,11 @@ const RoadmapResponse = () => {
         transparent={true}
         onRequestClose={() => setModalVisible(false)}
       >
-        <Animated.View 
+        <Animated.View
           entering={FadeIn.duration(300)}
           className="flex-1 justify-center items-center bg-black/70"
         >
-          <Animated.View 
+          <Animated.View
             entering={FadeInUp.springify()}
             className={`bg-[#111315] rounded-xl w-[95%] p-4`}
             style={{ height: getModalHeight() }}
@@ -233,7 +234,7 @@ const RoadmapResponse = () => {
 
       {/* Done Button */}
       <TouchableOpacity
-        onPress={() => router.push(`aiFeature`)}
+        onPress={() => router.push(`main/hobby`)}
         className="bg-blue-500 py-3 px-6 mb-4 mx-6 absolute bottom-0 left-0 right-0 rounded-md"
         style={{ opacity: modalVisible ? 0.5 : 1 }}
       >

@@ -97,7 +97,9 @@ const Home = () => {
                   className="border-[1px] border-white py-0.5 px-2 rounded-xl"
                   onPress={() => router.push("/createCategory")}
                 >
-                  <Text className="text-white font-geistRegular">Add category</Text>
+                  <Text className="text-white font-geistRegular">
+                    Add category
+                  </Text>
                 </TouchableOpacity>
               </View>
             </>
@@ -106,7 +108,7 @@ const Home = () => {
               <View className="justify-center">
                 <Text className="text-white/70 text-[12px]">Hello👋</Text>
                 <Text className="text-white capitalize font-geistMedium text-md">
-                  {user.username}
+                  {user?.username}
                 </Text>
               </View>
               <Image

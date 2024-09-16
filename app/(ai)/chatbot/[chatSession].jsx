@@ -1,43 +1,49 @@
 import {
-    View,
-    Text,
-    SafeAreaView,
-    TouchableOpacity,
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    ActivityIndicator,
-    Keyboard,
-  } from "react-native";
-  import React, { useState, useEffect, useRef } from "react";
-  import { router, useLocalSearchParams } from "expo-router";
-  import Animated, { FadeIn, SlideInDown } from "react-native-reanimated";
-  import BgImage from "../../../components/BgImage";
-  import UserDisplay from "../../../components/UserDisplay";
-  import { useGlobalContext } from "../../../context/GlobalProvider";
-  import { icons } from "../../../constants";
-  import BotTextFields from "../../../components/BotTextFields";
-  import Markdown, {MarkdownIt} from "react-native-markdown-display";
-  import { ChevronRightIcon } from "react-native-heroicons/outline";
-  import { chatAI } from "../../../lib/chatAI";
-  import { addChatHistory, loadChatHistory, updateChatHistory } from "../../../lib/AstraDBConfig";
-  import Loading from "../../../components/Loading"
-  import { randomUUID } from "expo-crypto";
-  import { ClockIcon } from "react-native-heroicons/outline";
-  
-  const Chatbot = () => {
-    const { user } = useGlobalContext();
-    const { chatSession } = useLocalSearchParams();
-    const [chat, setChat] = useState([]);
-    const [sessionID, setSessionID] = useState("");
-    const [userInput, setUserInput] = useState("");
-    const [isLoadChat, setIsLoadChat] = useState(false);
-    const [isLoadResponse, setIsLoadResponse] = useState(false);
-    const [isNewChat, setIsNewChat] = useState(true);
-    const [isChatting, setIsChatting] = useState(false);
-    const [greeting, setGreeting] = useState("");
-    const scrollViewRef = useRef(null);
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  ActivityIndicator,
+  Keyboard,
+} from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import Animated, { FadeIn, SlideInDown } from "react-native-reanimated";
+import BgImage from "../../../components/BgImage";
+import UserDisplay from "../../../components/UserDisplay";
+import { useGlobalContext } from "../../../context/GlobalProvider";
+import { icons } from "../../../constants";
+import BotTextFields from "../../../components/BotTextFields";
+import Markdown, { MarkdownIt } from "react-native-markdown-display";
+import { ChevronRightIcon } from "react-native-heroicons/outline";
+import { chatAI } from "../../../lib/chatAI";
+import {
+  addChatHistory,
+  loadChatHistory,
+  updateChatHistory,
+} from "../../../lib/AstraDBConfig";
+import Loading from "../../../components/Loading";
+import { randomUUID } from "expo-crypto";
+import AiFeature from "../../(tabs)/aiFeature";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ClockIcon } from "react-native-heroicons/outline";
+
+const Chatbot = () => {
+  const { user } = useGlobalContext();
+  const { chatSession } = useLocalSearchParams();
+  const [chat, setChat] = useState([]);
+  const [sessionID, setSessionID] = useState("");
+  const [userInput, setUserInput] = useState("");
+  const [isLoadChat, setIsLoadChat] = useState(false);
+  const [isChatting, setIsChatting] = useState(false);
+  const [isLoadResponse, setIsLoadResponse] = useState(false);
+  const [isNewChat, setIsNewChat] = useState(true);
+  const [greeting, setGreeting] = useState("");
+  const scrollViewRef = useRef(null);
 
   const fetchChatHistory = async (session) => {
     setIsLoadChat(true);
@@ -75,6 +81,7 @@ import {
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
+    setIsChatting(true);
     Keyboard.dismiss();
     let updatedChat = [
       ...chat,
@@ -134,59 +141,54 @@ import {
       >
         <BgImage />
         <Animated.View
-          entering={FadeIn.duration(300)}
-          className="h-full relative"
-          >
-          <BgImage />
-          <Animated.View entering={FadeIn.delay(100).duration(300)} className="mx-5 mt-5">
-            <View>
-              <View className="flex-row items-center justify-between">
-                <Animated.View entering={FadeIn.delay(200).duration(300)} className="items-start">
-                  <TouchableOpacity onPress={() => {
-                    if (isChatting) {
-                      setChat([]);
-                      setIsChatting(false);
-                      setIsNewChat(true);
-                    } else {
-                      if (chatSession === "noSession") {
-                        router.push("aiFeature")
-                      } else {
-                        router.back();
-                      }
-                    }}}>
-                    <Image
-                      source={icons.arrowLeft}
-                      className="h-6 w-6 mt-10 mb-6"
-                      resizeMethod="contain"
-                      tintColor="white"
-                      />
-                  </TouchableOpacity>
-                </Animated.View>
-                <Animated.Text entering={FadeIn.delay(300).duration(300)} className="text-white text-center text-xl font-geistMedium mt-10 mb-6 mx-10">
-                  Guidance
-                </Animated.Text>
-                <Animated.View entering={FadeIn.delay(200).duration(300)}>
-                  {(isNewChat && !isChatting) || (chatSession !== "noSession") ? (
-                    <TouchableOpacity
-                      className="items-end mt-4 opacity-0"
-                      disabled={true}
-                      >
-                        <ClockIcon size={24} color="white"/>
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity onPress={() => {
-                      router.push('history/chatbothistory')}}
-                      className="items-end mt-4"
-                      >
-                        <ClockIcon size={24} color="white"/>
-                    </TouchableOpacity>
+          entering={FadeIn.delay(100).duration(300)}
+          className="mx-5 mt-5"
+        >
+          <View>
+            <View className="flex-row items-center justify-between">
+              <Animated.View
+                entering={FadeIn.delay(200).duration(300)}
+                className="items-start"
+              >
+                <TouchableOpacity onPress={() => router.push("aiFeature")}>
+                  <Image
+                    source={icons.arrowLeft}
+                    className="h-6 w-6 mt-10 mb-6"
+                    resizeMethod="contain"
+                    tintColor="white"
+                  />
+                </TouchableOpacity>
+              </Animated.View>
+              <Animated.Text
+                entering={FadeIn.delay(300).duration(300)}
+                className="text-white text-center text-xl font-geistMedium mt-10 mb-6 mx-10"
+              >
+                Guidance
+              </Animated.Text>
 
-                  )}
-                </Animated.View>
-              </View>
+              <Animated.View entering={FadeIn.delay(200).duration(300)}>
+                {(isNewChat && !isChatting) || chatSession !== "noSession" ? (
+                  <TouchableOpacity
+                    className="items-end mt-4 opacity-0"
+                    disabled={true}
+                  >
+                    <ClockIcon size={24} color="white" />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      router.push("history/chatbothistory");
+                    }}
+                    className="items-end mt-4"
+                  >
+                    <ClockIcon size={24} color="white" />
+                  </TouchableOpacity>
+                )}
+              </Animated.View>
             </View>
-          </Animated.View>
+          </View>
         </Animated.View>
+
         {isNewChat && !isChatting ? (
           <>
             <Animated.View
@@ -215,7 +217,7 @@ import {
                 >
                   <View className="mt-[10%]">
                     <Text className="text-white text-center text-xl font-geistMedium">
-                      {greeting}, {user.username} 👋
+                      {greeting}, {user?.username} 👋
                     </Text>
                     <Text className="text-white text-center text-xl font-geistMedium">
                       What can I do for you?
@@ -307,11 +309,10 @@ import {
         ) : (
           <ScrollView
             ref={scrollViewRef}
-            style={{ flex: 1, marginTop: 6 }}
+            style={{ flex: 1 }}
             contentContainerStyle={{
-              paddingHorizontal: 20,
-              paddingBottom: 150,
-              paddingTop: 20,
+              paddingHorizontal: 10,
+              paddingBottom: 100,
             }}
             onContentSizeChange={() =>
               scrollViewRef.current?.scrollToEnd({ animated: true })
@@ -329,50 +330,40 @@ import {
                   padding: 12,
                   marginVertical: 8,
                   borderRadius: 16,
-                  maxWidth: message.role === "user" ? "80%" : "100%",
+                  maxWidth: "75%",
                   shadowColor: "#000",
                   shadowOpacity: 0.1,
                   shadowRadius: 4,
                   elevation: 2,
                 }}
                 className="w-auto"
+              >
+                <Text
+                  style={{
+                    color: message.role === "user" ? "#fff" : "#333",
+                    fontSize: 16,
+                  }}
+                  className="font-geistRegular text-wrap break-words mx-2"
                 >
-                  {message.role === "user" ? (
-                  <Text
-                    style={{
-                      color: "#fff",
-                      fontSize: 16,
-                    }}
-                    className="font-geistRegular text-wrap break-words mx-2"
-                  >
-                    {message.parts[0].text}
-                  </Text>
-                ) : (
-                  <Markdown
-                    style={{
-                      body: {
-                        color: "#fff",
-                        fontSize: 16,
-                        fontFamily: "Geist-Regular",
-                      },
-                      paragraph: { marginBottom: 10 },
-                      list: { marginBottom: 10 },
-                      listItem: { marginBottom: 5 },
-                      text: { flexShrink: 1, flexWrap: "wrap" },
-                    }}
-                    markdownit={MarkdownIt({
-                      typographer: true,
-                      breaks: true,
-                    }).enable(["list"])}
-                  >
-                    {message.parts[0].text}
-                  </Markdown>
-                )}
-                </Animated.View>
-              ))}
-  
-              {isLoadResponse && (
-                <Animated.View
+                  {message.role === "user" || Platform.OS !== "ios" ? (
+                    message.parts[0].text
+                  ) : (
+                    <Markdown
+                      style={{ maxWidth: "75%", flex: 1, flexWrap: "wrap" }}
+                      markdownit={MarkdownIt({
+                        typographer: true,
+                        breaks: true,
+                      }).disable(["blockquote", "list", "code"])}
+                    >
+                      {message.parts[0].text}
+                    </Markdown>
+                  )}
+                </Text>
+              </Animated.View>
+            ))}
+
+            {isLoadResponse && (
+              <Animated.View
                 entering={FadeIn.duration(300)}
                 style={{
                   alignSelf: "flex-start",

@@ -50,7 +50,7 @@ const HistoryCard = ({ course }) => (
 const History = () => {
   const { user, setUser } = useGlobalContext();
 
-  const { courses_history: history } = user;
+  const history = user?.courses_history;
 
   const [refreshing, setRefreshing] = useState(false);
 

@@ -18,7 +18,7 @@ import { loadInterviewResult } from "../../../lib/AstraDBConfig";
 
 const MockFeedback = () => {
   const bottomSheetRef = useRef(null);
-  const {user} = useGlobalContext();
+  const { user } = useGlobalContext();
   const result = useLocalSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState([]);
@@ -28,13 +28,19 @@ const MockFeedback = () => {
     try {
       console.log(result.isNew);
       if (result.isNew === "new") {
-        setResults(await getFeedbacks(result.questions.split("#$%,"), result.answers.split("#$%,"), user.$id, result.interviewResult));
+        setResults(
+          await getFeedbacks(
+            result.questions.split("#$%,"),
+            result.answers.split("#$%,"),
+            user.$id,
+            result.interviewResult
+          )
+        );
       } else {
-        setResults(await loadInterviewResult(result.session))
+        setResults(await loadInterviewResult(result.session));
       }
     } catch (error) {
       console.error(error);
-
     } finally {
       setIsLoading(false);
     }
@@ -154,7 +160,7 @@ const MockFeedback = () => {
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity
-                  onPress={() => router.push('history/interviewhistory')}
+                  onPress={() => router.push("history/interviewhistory")}
                   className="bg-blue-500 py-3 px-6 rounded-md mb-4 w-full"
                 >
                   <Text className="text-white text-center font-geistSemiBold">
