@@ -28,7 +28,8 @@ import useFetchData from "../../../lib/useFetchData";
 import Loading from "../../../components/Loading";
 import { images } from "../../../constants";
 
-let header = undefined;
+let header, display;
+
 const DateHeader = ({ title }) => (
   <View className="flex-row items-center my-4">
     <View className="flex-1 h-[1px] bg-gray-600" />
@@ -106,13 +107,33 @@ const ArchivedChats = () => {
   };
 
   const renderArchivedItem = (item, index) => {
-    if (item.lastUpdate !== header) {
-      header = item.lastUpdate;
+    let date = new Date(item.lastUpdate);
+    let d;
+    if (header) {
+      d = dateDiffInDays(date, header);
+    } else {
+      d = 1;
+    }
+    if (d !== 0) {
+      let now = new Date();
+      let diff = dateDiffInDays(date ,now);
+      if (diff == 0) {
+        display = "Today";
+      } else if (diff <= 1) {
+        display = "Yesterday";
+      } else if (diff <= 7) {
+        display = "This Week";
+      } else if (date.getFullYear == now.getFullYear && date.getMonth == now.getMonth) {
+        display = "This Month";
+      } else if (date.getFullYear == now.getFullYear) {
+        display = "This Year";
+      }
+      header = date;
       index = 0;
     }
     return (
       <View key={item._id}>
-        {index === 0 && <DateHeader title={item.lastUpdate} />}
+        {index === 0 && <DateHeader title={display} />}
         <TouchableOpacity
           onPress={() => router.push(`/chatbot/${item._id}`)}
           className="mb-4"

@@ -1,5 +1,4 @@
 node_modules/
-eas.json
 .env
 .expo/
 dist/
@@ -21,3 +20,5 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+eas.json
+

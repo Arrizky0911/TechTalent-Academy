@@ -28,8 +28,6 @@ import {
 } from "../../../lib/AstraDBConfig";
 import Loading from "../../../components/Loading";
 import { randomUUID } from "expo-crypto";
-import AiFeature from "../../(tabs)/aiFeature";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ClockIcon } from "react-native-heroicons/outline";
 
 const Chatbot = () => {
@@ -262,7 +260,7 @@ const Chatbot = () => {
                         className="w-[48%] rounded-2xl bg-[#353535] p-4 justify-between"
                         onPress={() =>
                           handlePromptClick(
-                            "How to use the interview simulation feature"
+                            "How to use the interview simulation feature?"
                           )
                         }
                       >
@@ -273,7 +271,7 @@ const Chatbot = () => {
                           tintColor="white"
                         />
                         <Text className="text-white text-sm font-geistRegular m-2">
-                          How to use the interview simulation feature
+                          How to use the interview simulation feature?
                         </Text>
                       </TouchableOpacity>
                     </Animated.View>
